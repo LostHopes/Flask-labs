@@ -38,7 +38,3 @@ def main():
     recv(host, port)
 
 main()
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
