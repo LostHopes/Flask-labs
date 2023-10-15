@@ -1,0 +1,21 @@
+/* Base html file styles */
+
+.links{
+    display: flex;
+}
+
+.links > li{
+    list-style: none;
+    margin: 3vh;
+}
+
+.links > li > a {
+    text-decoration: none;
+    color: black;
+}
+
+/* skills file styles */
+
+.skills > li {
+    list-style: upper-roman;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} page</title>
+    {% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    {% endblock %}
+</head>
+
+<body>
+    {% block header %} 
+    <header>
+        <nav>
+            <ul class="links">
+                <li><a href="{{ url_for('index') }}">Головна</a></li>
+                <li><a href="{{ url_for('about') }}">Про сайт</a></li>
+                <li><a href="{{ url_for('contact') }}">Контакти</a></li>
+                <li><a href="{{ url_for('albums') }}">Музичні альбоми</a></li>
+                <li><a href="{{ url_for('skills') }}">Навички</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% endblock %}
+
+    {% block content %}
+
+    {% endblock %}
+
+    {% block footer %}
+    <footer>
+        <p>&copy; Cosmic Sounds LTD</p>
+        <p>Operating system: {{ platform.system() }}</p>
+        <p>Time: {{ time }}</p>
+    </footer>
+    {% endblock %}
+</body>
+
+</html>
