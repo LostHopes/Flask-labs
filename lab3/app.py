@@ -3,7 +3,9 @@ from jinja2.exceptions import TemplateNotFound
 import platform
 from datetime import datetime
 
+
 app = Flask(__name__)
+
 
 @app.context_processor
 def base():
@@ -13,6 +15,7 @@ def base():
         platform=platform,
         agent=request.user_agent,
         time=time)
+
 
 @app.route("/")
 def index():
