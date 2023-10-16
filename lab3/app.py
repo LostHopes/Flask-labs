@@ -14,6 +14,7 @@ def base():
         agent=request.user_agent,
         time=time)
 
+
 @app.route("/")
 def index():
     title = "Home"
