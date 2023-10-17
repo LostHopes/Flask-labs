@@ -33,7 +33,7 @@
     {% block footer %}
     <footer id="footer">
         <p>&copy; Cosmic Sounds LTD</p>
-        <p>Operating system: {{ platform.system() }}</p>
+        <p>Operating system and agent: {{ platform.system() }}, {{ agent }}</p>
         <p>Time: {{ time }}</p>
     </footer>
     {% endblock %}
