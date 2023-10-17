@@ -13,14 +13,14 @@
 
 <body>
     {% block header %} 
-    <header>
+    <header id="header">
         <nav>
             <ul class="links">
                 <li><a href="{{ url_for('index') }}">Головна</a></li>
-                <li><a href="{{ url_for('about') }}">Про сайт</a></li>
-                <li><a href="{{ url_for('contact') }}">Контакти</a></li>
                 <li><a href="{{ url_for('albums') }}">Музичні альбоми</a></li>
+                <li><a href="{{ url_for('contact') }}">Контакти</a></li>
                 <li><a href="{{ url_for('skills') }}">Навички</a></li>
+                <li><a href="{{ url_for('about') }}">Про сайт</a></li>
             </ul>
         </nav>
     </header>
@@ -31,7 +31,7 @@
     {% endblock %}
 
     {% block footer %}
-    <footer>
+    <footer id="footer">
         <p>&copy; Cosmic Sounds LTD</p>
         <p>Operating system: {{ platform.system() }}</p>
         <p>Time: {{ time }}</p>

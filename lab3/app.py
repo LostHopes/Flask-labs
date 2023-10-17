@@ -55,7 +55,8 @@ def skills(s_id=None):
         5: "Fast reading and comprehension",
         6: "Tinkering",
     }
-    skills_amount = len(my_skills) + 1
+    
+    skills_amount = my_skills.keys()
     return render_template("skills.html", title=title, my_skills=my_skills, skills_amount=skills_amount, s_id=s_id)
 
 
