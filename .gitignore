@@ -1,2 +1,3 @@
 *.tar.gz
 lab3/.env/
+__pycache__
