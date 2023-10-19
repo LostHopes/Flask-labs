@@ -4,6 +4,7 @@ import platform
 from datetime import datetime
 from data import data
 from app import app
+from app.api.skills import get_skills
 
 @app.context_processor
 def base():
