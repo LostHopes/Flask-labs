@@ -1,2 +1,7 @@
 *.tar.gz
+<<<<<<< HEAD
 lab3/.env/*
+=======
+.env
+__pycache__
+>>>>>>> main
