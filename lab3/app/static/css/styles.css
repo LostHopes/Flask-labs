@@ -93,7 +93,8 @@ ul.skills {
 }
 
 .title,
-.skills > li > a {
+.skills > li > a,
+.skill-desc {
   font-family: "Pixelify Sans", sans-serif;
 }
 
@@ -101,4 +102,9 @@ h1.title,
 .title {
   text-align: center;
   font-size: var(--title);
+}
+
+.skill-desc{
+  padding: 0 20%;
+  font-size: var(--content);
 }

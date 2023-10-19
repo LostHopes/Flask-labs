@@ -10,21 +10,23 @@
 <body>
     {% extends "base.html" %}
     {% block content %}
-    {% if s_id != None %}
-    <h1 class="title">{{ my_skills.get(s_id) }}</h1>
-    {% else %}
+    {% if s_id == None %}
     <nav>
         <ul name="skills" class="skills">
             <label class="title" for="skills">My skills: </label>
-            {% for skill in my_skills %}
+            {% for s_id, (name,desc) in my_skills.items() %}
             <li>
-                <a href="{{ url_for('skills', s_id=skill) }}">{{ my_skills.get(skill) }}</a>
+                <a href="{{ url_for('skills', s_id=s_id) }}">{{ name }}</a>
             </li>
             {% endfor %}
             <img class="background" src="{{ url_for('static', filename='images/background.png') }}" alt="background">
         </ul>
     </nav>
+    {% else %}
+    <h1 class="title">{{ my_skills.get(s_id)[0] }}</h1>
+    <p class="skill-desc">{{ my_skills.get(s_id)[1] }}</p>
     {% endif %}
+
     {% endblock %}
 </body>
 

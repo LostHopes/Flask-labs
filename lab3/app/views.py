@@ -1,11 +1,10 @@
-from flask import Flask, request, render_template, abort
+from flask import request, render_template, Flask
 from jinja2.exceptions import TemplateNotFound
 import platform
 from datetime import datetime
-
+from data import data
 
 app = Flask(__name__)
-
 
 @app.context_processor
 def base():
@@ -15,7 +14,6 @@ def base():
         platform=platform,
         agent=request.user_agent,
         time=time)
-
 
 @app.route("/")
 def index():
@@ -45,17 +43,7 @@ def albums():
 @app.route("/skills/<int:s_id>/")
 def skills(s_id=None):
     title = "My skills"
-    my_skills = {
-        1: "Programming",
-        2: "Running",
-        3: "Linguistics",
-        4: "Soft skills",
-        5: "Fast reading and comprehension",
-        6: "Tinkering",
-    }
-
+    if s_id is not None:
+        title = title.rstrip("s")
+    my_skills = data.my_skills
     return render_template("skills.html", title=title, my_skills=my_skills, s_id=s_id)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
