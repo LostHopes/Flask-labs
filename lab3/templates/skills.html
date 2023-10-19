@@ -16,8 +16,10 @@
     <nav>
         <ul name="skills" class="skills">
             <label class="title" for="skills">My skills: </label>
-            {% for skill in skills_amount %}
-            <li><a href="{{ url_for('skills', s_id=skill) }}">{{ my_skills.get(skill)}}</a></li>
+            {% for skill in my_skills %}
+            <li>
+                <a href="{{ url_for('skills', s_id=skill) }}">{{ my_skills.get(skill) }}</a>
+            </li>
             {% endfor %}
             <img class="background" src="{{ url_for('static', filename='images/background.png') }}" alt="background">
         </ul>

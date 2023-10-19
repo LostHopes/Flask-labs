@@ -44,8 +44,6 @@ def albums():
 @app.route("/skills/")
 @app.route("/skills/<int:s_id>/")
 def skills(s_id=None):
-    print(f"s_id: {s_id}")
-
     title = "My skills"
     my_skills = {
         1: "Programming",
@@ -55,9 +53,8 @@ def skills(s_id=None):
         5: "Fast reading and comprehension",
         6: "Tinkering",
     }
-    
-    skills_amount = my_skills.keys()
-    return render_template("skills.html", title=title, my_skills=my_skills, skills_amount=skills_amount, s_id=s_id)
+
+    return render_template("skills.html", title=title, my_skills=my_skills, s_id=s_id)
 
 
 if __name__ == '__main__':

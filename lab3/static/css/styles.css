@@ -46,7 +46,8 @@ header#header {
 }
 
 .links > li > a:hover {
-  color: aqua;
+  color: white;
+  background-color: rgb(0, 0, 0);
 }
 
 footer#footer {
