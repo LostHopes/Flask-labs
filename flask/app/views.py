@@ -3,8 +3,7 @@ from jinja2.exceptions import TemplateNotFound
 import platform
 from datetime import datetime
 from data import data
-
-app = Flask(__name__)
+from app import app
 
 @app.context_processor
 def base():
