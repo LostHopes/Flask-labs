@@ -53,6 +53,6 @@ def skills(s_id=None):
 @app.route("/login", methods=["GET", "POST"])
 def login():
     title = "Login"
-    if request.method == "GET":
+    if request.method == "POST":
         return render_template("login.html", title=title)
     return render_template("login.html", title=title)
