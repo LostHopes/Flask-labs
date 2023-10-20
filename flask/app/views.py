@@ -48,3 +48,11 @@ def skills(s_id=None):
         title = title.rstrip("s")
     my_skills = data.my_skills
     return render_template("skills.html", title=title, my_skills=my_skills, s_id=s_id)
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    title = "Login"
+    if request.method == "GET":
+        return render_template("login.html", title=title)
+    return render_template("login.html", title=title)
