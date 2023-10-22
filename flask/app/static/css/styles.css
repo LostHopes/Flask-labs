@@ -13,6 +13,7 @@
 
 .links {
   display: flex;
+  justify-content: center;
 }
 
 body {
@@ -108,3 +109,4 @@ h1.title,
   padding: 0 20%;
   font-size: var(--content);
 }
+
