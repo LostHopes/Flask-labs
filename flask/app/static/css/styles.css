@@ -11,63 +11,16 @@
   --content: 20px;
 }
 
-.links {
-  display: flex;
-  justify-content: center;
+/* Bootstrap Style Addition */
+
+.content{
+  padding: 10vh;
 }
 
-body {
-  --default-padding: 150px;
-  padding-top: var(--default-padding);
-  padding-bottom: var(--default-padding);
-}
+/* End of the addition to the bootstrap styles */
 
-.background {
-  background-size: cover;
-}
 
-header#header {
-  background-color: #f5f5f5;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-}
-
-.links > li {
-  list-style: none;
-  margin: 3vh;
-}
-
-.links > li > a {
-  text-decoration: none;
-  color: black;
-  background-color: #f5f5f5;
-}
-
-.links > li > a:hover {
-  color: white;
-  background-color: rgb(0, 0, 0);
-}
-
-footer#footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  color: #333;
-  text-align: center;
-  background-color: #f5f5f5;
-}
-
-.links,
-footer#footer {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 16px;
-}
-
-/* skills file styles */
+/* Skills file styles */
 
 @counter-style emojis {
   system: cyclic;
@@ -110,3 +63,6 @@ h1.title,
   font-size: var(--content);
 }
 
+.skills li > a:hover{
+  color: #177cdb9d;
+}
