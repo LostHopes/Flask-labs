@@ -4,4 +4,7 @@
 {% endblock %}
 {% block content %}
 <h1 class="title">Home page</h1>
+    {% if session['username'] %}
+    <h1 class="title"> {{ session['username'] }} </h1>
+{% endif %}
 {% endblock %}

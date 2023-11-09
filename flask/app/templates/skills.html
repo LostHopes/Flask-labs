@@ -5,16 +5,21 @@
 
 {% block content %}
 {% if s_id == None %}
-<nav>
+<nav class="nav container justify-content-center text-center">
     <ul name="skills" class="skills">
         <label class="title" for="skills">My skills: </label>
-        {% for s_id, (name,desc) in my_skills.items() %}
+        {% for s_id, (name, desc, percent) in my_skills.items() %}
         <li>
-            <a href="{{ url_for('skills', s_id=s_id) }}">{{ name }}</a>
+            <a href="{{ url_for('skills', s_id=s_id) }}" class="p-sm-1">
+                {{ name }}
+                <div class="progress">
+                    <div class="progress-bar w-{{ percent }}" role="progressbar"></div>
+                </div>
+            </a>
         </li>
         {% endfor %}
-        <img class="background" src="{{ url_for('static', filename='images/background.png') }}" alt="background">
     </ul>
+    <img class="background w-auto px-5" src="{{ url_for('static', filename='images/background.png') }}" alt="background">
 </nav>
 {% else %}
 <h1 class="title">{{ my_skills.get(s_id)[0] }}</h1>

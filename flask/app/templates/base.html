@@ -7,39 +7,23 @@
     {% block title %}
     <title>{{ title }}</title>
     {% endblock %}
-    {% include "styles.html" %}
     {% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.theme.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    {% endblock %}
+    {% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     {% endblock %}
 </head>
 
 <body>
-    {% block header %} 
-    <header id="header">
-        <nav>
-            <ul class="links">
-                <li><a href="{{ url_for('index') }}">Головна</a></li>
-                <li><a href="{{ url_for('albums') }}">Музичні альбоми</a></li>
-                <li><a href="{{ url_for('contact') }}">Контакти</a></li>
-                <li><a href="{{ url_for('skills') }}">Навички</a></li>
-                <li><a href="{{ url_for('about') }}">Про сайт</a></li>
-                <li><a href="{{ url_for('login') }}">| Логін |</a></li>
-            </ul>
-        </nav>
-    </header>
-    {% endblock %}
+    {% include "header.html" %}
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
 
-    {% block content %}
-
-    {% endblock %}
-
-    {% block footer %}
-    <footer id="footer">
-        <p>&copy; Cosmic Sounds LTD</p>
-        <p>Operating system and agent: {{ platform.system() }}, {{ agent }}</p>
-        <p>Time: {{ time }}</p>
-    </footer>
-    {% endblock %}
+    {% include "footer.html" %}
 </body>
 
 </html>
