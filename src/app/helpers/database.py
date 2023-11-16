@@ -4,7 +4,7 @@ from app import app
 
 
 with app.app_context():
-    db.create_all(bind_key=None)
+    db.create_all()
     print("Database created")
 
 
