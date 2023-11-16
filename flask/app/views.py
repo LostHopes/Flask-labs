@@ -21,6 +21,7 @@ def base():
         {"text": "Feedback", "link": url_for("feedback")},
         {"text": "Login", "link": url_for("login")},
     ]
+    
     return dict(
         platform=platform,
         time=time,
@@ -48,7 +49,26 @@ def contact():
 @app.route("/albums")
 def albums():
     title="Albums"
-    return render_template("albums.html", title=title)
+
+    albums = [
+        {
+            "title": "The Night Shift",
+            "artist": "Larry June",
+            "url": "60hrxgJN3QfheGpVzEcUFR"
+        },
+        {
+            "title": "Sunnasritual",
+            "artist": "Kveld",
+            "url": "49BaLxo4HMWHyGOHpEzuHD"
+        },
+        {
+            "title": "And Then You Pray For Me",
+            "artist": "Westside Gunn",
+            "url": "3CXoPCQuBb7kP9vEFcfXKU"
+        }
+    ]
+
+    return render_template("albums.html", title=title, albums=albums)
 
 
 @app.route("/skills/")
@@ -76,7 +96,7 @@ def login():
             flash("Login incorrect", "danger")
             return render_template("login.html", title=title, form=form)
         session['username'] = username
-        return redirect(url_for("info")) # changed from index to profile
+        return redirect(url_for("info"))
     return render_template("login.html", title=title, form=form)
 
 
@@ -94,6 +114,7 @@ def info():
         new_password = password_form.new_password.data
         repeat_password = password_form.repeat_password.data
         if new_password == repeat_password:
+            flash("Password changed successfully", "success")
             data.auth(session["username"], new_password)
 
     cookies_form = CookiesForm()
@@ -113,11 +134,16 @@ def info():
 def add_cookie():
     name = request.form.get("name")
     value = request.form.get("value")
-
     expire_date = datetime.datetime.now() + datetime.timedelta(days=1)
 
     response = make_response(redirect(url_for("info")))
+
+    if name in request.cookies:
+        flash(f"Cookie with {name} already exist", "warning")
+        return response
+
     response.set_cookie(name, value, expires=expire_date)
+    flash(f"You successfully added cookie {name} that expires in {expire_date.date()}", "success")
         
     return response
 
@@ -128,13 +154,14 @@ def remove_cookie():
     response = make_response(redirect(url_for("info")))
     name = request.form.get("name")
     response.delete_cookie(name)
-
+    flash(f"You successfully removed cookie {name}", "success")
     return response
 
 
 @app.route("/logout", methods=["POST"])
 def logout():
     session.pop('username', None)
+    flash("You successfully logged out", "success")
     return redirect(url_for("index"))
 
 
@@ -175,4 +202,4 @@ def feedback():
 
 @app.route("/profile")
 def profile():
-    return
+    return 
