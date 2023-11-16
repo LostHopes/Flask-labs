@@ -3,12 +3,12 @@
 {% block title %} {{ super() }} {% endblock %}
 {% block content %}
 
-<div class="container mx-auto">
-    <div class="col-md-6 offset-md-3 border rounded p-3">
+<div class="container mx-auto p-3">
+    <div class="col-md-6 offset-md-3 border rounded p-5">
         <form action="{{ url_for('add_todo') }}" method="post">
             {{ field.todo_form(form) }}
         </form>
-        <table aria-describedby="todo" class="table table-bordered mb-2 w-100">
+        <table aria-describedby="todo" class="table table-bordered mb-2 w-auto">
             <thead>
                 <th colspan="5" class="text-center">
                     Todo list
@@ -28,7 +28,8 @@
                 <td>{{ task.status }}</td>
                 <td>{{ task.category }}</td>
                 <td>
-                    
+                    <input type="submit" value="Update" class="btn btn-success w-auto">
+                    <input type="submit" value="Remove" class="btn btn-danger w-auto">
                 </td>
             </tr>
             {% endfor %}
