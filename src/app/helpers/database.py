@@ -4,14 +4,9 @@ from app import app
 
 
 with app.app_context():
-    db.create_all()
-    print("Database created")
-
+    db.create_all(bind_key=None)
 
 class HandleUsers(Users):
-    def __init__(self):
-        pass
-
     def remove(self):
         pass
 
@@ -20,11 +15,15 @@ class HandleUsers(Users):
 
 
 class HandleTodos(Todo):
-    def __init__(self):
-        pass
+    def show(self):
+        query = db.session.query(Todo)
+        return query
 
     def remove(self):
         pass
 
-    def add(self):
-        pass
+    def add(self, name: str):
+        task = Todo(task=name)
+        db.session.add(task)
+        db.session.commit()
+        return name

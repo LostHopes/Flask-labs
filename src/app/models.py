@@ -16,25 +16,21 @@ class Users(db.Model):
     name = db.Column(db.String, nullable=False)
     surname = db.Column(db.String, nullable=False)
 
-    def __init__(self):
-        pass
-
-    def __repr__(self):
-        return
-
 
 class Todo(db.Model):
     __tablename__ = "todo"
-    id = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
-    task_name = db.Column(db.Text, nullable=False)
-    task_status = db.Column(db.Enum("Planning", "Completed", "Disgarded"), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    task = db.Column(db.Text, nullable=False)
+    status = db.Column(db.Enum("Planning", "Completed", "Disgarded"), default="Planning", nullable=False)
+    category = db.Column(db.String, default="Empty", nullable=False)
+    # user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
 
 class Skills(db.Model):
     __tablename__ = "skills"
-    id = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     skill_name = db.Column(db.String, nullable=False)
     skill_desc = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    # user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    
 # TODO: add user comments!

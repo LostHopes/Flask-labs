@@ -129,8 +129,7 @@ def info():
         cookies=cookies)
 
 
-@app.route("/cookie/", methods=["POST"])
-@app.route("/add/", methods=["POST"])
+@app.route("/cookie/add/", methods=["POST"])
 def add_cookie():
     name = request.form.get("name")
     value = request.form.get("value")
@@ -148,8 +147,7 @@ def add_cookie():
     return response
 
 
-@app.route("/cookie/", methods=["POST"])
-@app.route("/remove/", methods=["POST"])
+@app.route("/cookie/remove/", methods=["POST"])
 def remove_cookie():
     response = make_response(redirect(url_for("info")))
     name = request.form.get("name")
@@ -169,27 +167,27 @@ def logout():
 def todo_list():
     title = "Todo list"
     form = TodoForm()
+    handle = database.HandleTodos()
+    todo = handle.show()
 
-    return render_template("todo.html", title=title, form=form)
+    return render_template("todo.html", title=title, form=form, todo=todo)
 
 
-@app.route("/todo/", methods=["POST"])
-@app.route("/add/", methods=["POST"])
+@app.route("/todo/add/", methods=["POST"])
 def add_todo():
 
-    
+    todo = database.HandleTodos()
+    todo.add(request.form.get("task"))
 
     return redirect(url_for("todo_list"))
 
 
-@app.route("/todo/", methods=["POST"])
-@app.route("/remove/", methods=["POST"])
+@app.route("/todo/remove/", methods=["POST"])
 def remove_todo():
     return redirect(url_for("todo_list"))
 
 
-@app.route("/todo/", methods=["POST"])
-@app.route("/update/", methods=["POST"])
+@app.route("/todo/update", methods=["POST"])
 def update_todo():
     return redirect(url_for("todo_list"))
 

@@ -8,8 +8,8 @@ class LogoutForm(FlaskForm):
 
 
 class UserForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired(), Length(min=4, max=16)])
-    password = PasswordField("Password", validators=[DataRequired(), Length(min=4, max=16)])
+    username = StringField("Username", validators=[DataRequired(), Length(min=4, max=16)], render_kw={"placeholder": "Enter an username here"})
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=4, max=16)], render_kw={"placeholder": "Enter a password here"})
     submit = SubmitField("Sign in", id="btn-signin")
 
 
@@ -26,5 +26,5 @@ class CookiesForm(FlaskForm):
 
 
 class TodoForm(FlaskForm):
-    task = StringField("Task", validators=[DataRequired(), Length(min=4, max=50)], render_kw={"placeholder": "Enter a task here"})
+    task = StringField("Task", validators=[DataRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Enter a task here"})
     save = SubmitField("Save")

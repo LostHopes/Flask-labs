@@ -5,7 +5,7 @@
 
 <div class="container mx-auto">
     <div class="col-md-6 offset-md-3 border rounded p-3">
-        <form action="" method="post">
+        <form action="{{ url_for('add_todo') }}" method="post">
             {{ field.todo_form(form) }}
         </form>
         <table aria-describedby="todo" class="table table-bordered mb-2 w-100">
@@ -21,9 +21,17 @@
                 <td>Category</td>
                 <td>Actions</td>
             </tr>
+            {% for task in todo %}
             <tr>
-                <td></td>
+                <td>{{ task.id }}</td>
+                <td>{{ task.task }}</td>
+                <td>{{ task.status }}</td>
+                <td>{{ task.category }}</td>
+                <td>
+                    
+                </td>
             </tr>
+            {% endfor %}
         </table>
     </div>
 </div>
