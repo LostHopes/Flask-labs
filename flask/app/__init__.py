@@ -2,4 +2,4 @@ from flask import Flask
 
 app = Flask(__name__)
 
-from app import views, models, error_handler
+from app import views, models, error_handler, config, forms
