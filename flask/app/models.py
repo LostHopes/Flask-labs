@@ -10,10 +10,11 @@ from app.config import db
 class Users(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    login = db.Column(db.String(16), nullable=False)
-    password = db.Column(db.String(256), nullable=False)
-    name = db.Column(db.String(16), nullable=False)
-    surname = db.Column(db.String(16), nullable=False)
+    login = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
+    password = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False)
+    surname = db.Column(db.String, nullable=False)
 
     def __init__(self):
         pass
@@ -26,7 +27,7 @@ class Todo(db.Model):
     __tablename__ = 'todo'
     id = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
     task_name = db.Column(db.Text, nullable=False)
-    task_status = db.Column(db.String, nullable=False)
+    task_status = db.Column(db.Enum("Planning", "Completed", "Disgarded"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 
