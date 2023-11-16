@@ -19,6 +19,7 @@ def base():
         {"text": "Skills", "link": url_for("skills")},
         {"text": "Todo", "link": url_for("todo_list")},
         {"text": "About", "link": url_for("about")},
+        {"text": "Feedback", "link": url_for("feedback")},
         {"text": "Login", "link": url_for("login")},
     ]
     return dict(
@@ -169,7 +170,8 @@ def update_todo():
 
 @app.route("/feedback/")
 def feedback():
-    return
+    title = "Feedback"
+    return render_template("feedback.html", title=title)
 
 
 @app.route("/profile")
