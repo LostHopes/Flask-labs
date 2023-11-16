@@ -1,7 +1,3 @@
-*My Flask labs*
+# Lab 6 - Database manipulation with "todo" route
 
-<h1>
-  <center>Results of execution </center>
-</h1>
-
-<h3>lab6</h3>
+![task1](/screenshots/)
