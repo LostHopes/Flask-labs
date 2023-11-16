@@ -170,3 +170,8 @@ def update_todo():
 @app.route("/feedback/")
 def feedback():
     return
+
+
+@app.route("/profile")
+def profile():
+    return
