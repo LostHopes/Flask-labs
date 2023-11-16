@@ -19,11 +19,18 @@
         </li>
         {% endfor %}
     </ul>
-    <img class="background w-auto px-5" src="{{ url_for('static', filename='images/background.png') }}" alt="background">
+    <img class="background w-auto px-5" src="{{ url_for('static', filename='images/background.png') }}"
+        alt="background">
 </nav>
 {% else %}
-<h1 class="title">{{ my_skills.get(s_id)[0] }}</h1>
-<p class="skill-desc">{{ my_skills.get(s_id)[1] }}</p>
+<div class="d-flex flex-column">
+    <div class="p-3">
+        <h1 class="title">{{ my_skills.get(s_id)[0] }}</h1>
+    </div>
+    <div class="p-5">
+        <p class="skill-desc">{{ my_skills.get(s_id)[1] }}</p>
+    </div>
+</div>
 {% endif %}
 
 {% endblock %}

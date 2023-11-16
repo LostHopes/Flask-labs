@@ -3,7 +3,7 @@
 {% block content %}
 {% import '_fields.html' as field %}
 
-
+{% include "_flashes.html" %}
 <div class="container mx-auto">
     <div class="col-sm-6 offset-md-3">
         <form action="{{ url_for('logout') }}" method="post" class="form-check">
