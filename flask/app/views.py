@@ -116,7 +116,7 @@ def add_cookie():
 
     expire_date = datetime.datetime.now() + datetime.timedelta(days=1)
 
-    response = make_response(redirect(url_for("profile")))
+    response = make_response(redirect(url_for("info")))
     response.set_cookie(name, value, expires=expire_date)
         
     return response
@@ -125,7 +125,7 @@ def add_cookie():
 @app.route("/cookie/", methods=["POST"])
 @app.route("/remove/", methods=["POST"])
 def remove_cookie():
-    response = make_response(redirect(url_for("profile")))
+    response = make_response(redirect(url_for("info")))
     name = request.form.get("name")
     response.delete_cookie(name)
 
