@@ -5,7 +5,6 @@ from data import data
 from app import app
 from .api.skills import get_skills
 from app.forms import UserForm, ChangePasswordForm, CookiesForm, LogoutForm, TodoForm
-from app.config import db
 from app.functions import database
 
 
