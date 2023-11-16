@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+{% block title %} {{ super() }} {% endblock %}
+{% block content %}
+
+<div class="container mx-auto">
+    <div class="col-md-6 offset-md-3 border rounded p-3">
+        <form action="" method="post">
+            {{ macros.todo_form(form) }}
+        </form>
+        <table aria-describedby="todo" class="table table-bordered mb-2 w-100">
+            <thead>
+                <th colspan="4">
+                    Todo list
+                </th>
+            </thead>
+            <tr class="">
+                <td>№</td>
+                <td>Task to complete</td>
+                <td>Status</td>
+                <td>Actions</td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
