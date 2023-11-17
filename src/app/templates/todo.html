@@ -29,11 +29,11 @@
                     <td>{{ task.status }}</td>
                     <td>{{ task.category }}</td>
                     <td>
-                        <div class="p-2 form-inline">
-                            <form action="{{ url_for('update_todo', id=task.id) }}" method="post" class="p-2">
+                        <div class="d-flex p-2">
+                            <form action="{{ url_for('update_todo', id=task.id) }}" method="post" class="p-1">
                                 <input type="submit" value="Update" class="btn btn-success">
                             </form>
-                            <form action="{{ url_for('remove_todo', id=task.id) }}" method="post" class="p-2">
+                            <form action="{{ url_for('remove_todo', id=task.id) }}" method="post" class="p-1">
                                 <input type="submit" value="Remove" class="btn btn-danger">
                             </form>
                         </div>
