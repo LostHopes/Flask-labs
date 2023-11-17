@@ -16,11 +16,14 @@ class HandleUsers(Users):
 
 class HandleTodos(Todo):
     def show(self):
-        query = db.session.query(Todo)
-        return query
+        todos = db.session.query(Todo)
+        return todos
 
-    def remove(self):
-        pass
+    def remove(self, id: int | None):
+        todo = Todo.query.filter_by(id=id).first()
+        db.session.delete(todo)
+        db.session.commit()
+
 
     def add(self, name: str):
         task = Todo(task=name)

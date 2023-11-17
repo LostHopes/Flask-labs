@@ -138,7 +138,7 @@ def add_cookie():
     response = make_response(redirect(url_for("info")))
 
     if name in request.cookies:
-        flash(f"Cookie with {name} already exist", "warning")
+        flash(f"Cookie with name {name} already exist", "warning")
         return response
 
     response.set_cookie(name, value, expires=expire_date)
@@ -151,6 +151,11 @@ def add_cookie():
 def remove_cookie():
     response = make_response(redirect(url_for("info")))
     name = request.form.get("name")
+
+    if name not in request.cookies:
+        flash(f"Cookie with name {name} doesn't exist", "warning")
+        return response
+
     response.delete_cookie(name)
     flash(f"You successfully removed cookie {name}", "success")
     return response
@@ -182,8 +187,13 @@ def add_todo():
     return redirect(url_for("todo_list"))
 
 
-@app.route("/todo/remove/", methods=["POST"])
-def remove_todo():
+@app.route("/todo/delete/<int:id>/", methods=["POST"])
+def remove_todo(id=None):
+
+    if id is not None:
+        todo = database.HandleTodos()
+        todo.remove(id)
+
     return redirect(url_for("todo_list"))
 
 

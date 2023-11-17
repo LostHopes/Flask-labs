@@ -8,32 +8,40 @@
         <form action="{{ url_for('add_todo') }}" method="post">
             {{ field.todo_form(form) }}
         </form>
-        <table aria-describedby="todo" class="table table-bordered mb-2 w-auto">
-            <thead>
-                <th colspan="5" class="text-center">
-                    Todo list
-                </th>
-            </thead>
-            <tr class="">
-                <td>№</td>
-                <td>Task to complete</td>
-                <td>Status</td>
-                <td>Category</td>
-                <td>Actions</td>
-            </tr>
-            {% for task in todo %}
-            <tr>
-                <td>{{ task.id }}</td>
-                <td>{{ task.task }}</td>
-                <td>{{ task.status }}</td>
-                <td>{{ task.category }}</td>
-                <td>
-                    <input type="submit" value="Update" class="btn btn-success w-auto">
-                    <input type="submit" value="Remove" class="btn btn-danger w-auto">
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+        <div class="table-responsive">
+            <table aria-describedby="todo" class="table table-bordered mb-2">
+                <thead>
+                    <th colspan="5" class="text-center">
+                        Todo list
+                    </th>
+                </thead>
+                <tr class="">
+                    <td>№</td>
+                    <td>Task to complete</td>
+                    <td>Status</td>
+                    <td>Category</td>
+                    <td>Actions</td>
+                </tr>
+                {% for task in todo %}
+                <tr>
+                    <td>{{ task.id }}</td>
+                    <td>{{ task.task }}</td>
+                    <td>{{ task.status }}</td>
+                    <td>{{ task.category }}</td>
+                    <td>
+                        <div class="p-2 form-inline">
+                            <form action="{{ url_for('update_todo', id=task.id) }}" method="post" class="p-2">
+                                <input type="submit" value="Update" class="btn btn-success">
+                            </form>
+                            <form action="{{ url_for('remove_todo', id=task.id) }}" method="post" class="p-2">
+                                <input type="submit" value="Remove" class="btn btn-danger">
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
 </div>
 
