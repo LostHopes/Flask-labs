@@ -183,6 +183,7 @@ def add_todo():
 
     todo = database.HandleTodos()
     todo.add(request.form.get("task"))
+    flash("Task have been added to the list", "success")
 
     return redirect(url_for("todo_list"))
 
@@ -193,6 +194,7 @@ def remove_todo(id=None):
     if id is not None:
         todo = database.HandleTodos()
         todo.remove(id)
+        flash("Item was successfully removed from todo list", "success")
 
     return redirect(url_for("todo_list"))
 
