@@ -1,16 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, EmailField, BooleanField, FileField
 from wtforms.validators import DataRequired, Length
 
 
 class LogoutForm(FlaskForm):
     submit = SubmitField("Logout", id="btn-logout")
-
-
-class UserForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired(), Length(min=4, max=16)], render_kw={"placeholder": "Enter an username here"})
-    password = PasswordField("Password", validators=[DataRequired(), Length(min=4, max=16)], render_kw={"placeholder": "Enter a password here"})
-    submit = SubmitField("Sign in", id="btn-signin")
 
 
 class ChangePasswordForm(FlaskForm):
@@ -28,3 +22,22 @@ class CookiesForm(FlaskForm):
 class TodoForm(FlaskForm):
     task = StringField("Task", validators=[DataRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Enter a task here"})
     save = SubmitField("Save")
+
+
+class RegisterForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Enter a name here"})
+    surname = StringField("Surname", validators=[DataRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Enter a surname here"})
+    login = StringField("Login", validators=[DataRequired(), Length(min=6, max=20)], render_kw={"placeholder": "Enter an username here"})
+    email = EmailField("Email", validators=[DataRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Enter an email here"})
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Enter a password here"})
+    confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Enter a  password here"})
+    submit = SubmitField("Register")
+
+
+class LoginForm(FlaskForm):
+    email = EmailField("Email", validators=[DataRequired(), Length(min=5, max=255)], render_kw={"placeholder": "Enter an email here"})
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Enter a password here"})
+    remember = BooleanField("Remember me")
+    submit = SubmitField("Login")
+
+

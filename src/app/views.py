@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from data import data
 from app import app
 from .api.skills import get_skills
-from app.forms import UserForm, ChangePasswordForm, CookiesForm, LogoutForm, TodoForm
+from app.forms import LoginForm, RegisterForm, ChangePasswordForm, CookiesForm, LogoutForm, TodoForm
 from app.helpers import database
 
 
@@ -22,6 +22,7 @@ def base():
         {"text": "About", "link": url_for("about")},
         {"text": "Feedback", "link": url_for("feedback")},
         {"text": "Login", "link": url_for("login")},
+        {"text": "Register", "link": url_for("register")},
     ]
     
     return dict(
@@ -83,22 +84,46 @@ def skills(s_id=None):
     return render_template("skills.html", title=title, my_skills=my_skills, s_id=s_id)
 
 
+@app.route("/register", methods=["GET","POST"])
+def register():
+    try:
+        title = "Register"
+        form = RegisterForm()
+        user = database.HandleUsers()
+        
+        if form.validate_on_submit():
+            user.register(form.name.data, form.surname.data, form.login.data, form.email.data, form.password.data)
+            flash("User was registered", "success")
+            return redirect(url_for("login"))
+    except IntegrityError:
+        flash("User already exist", "danger")
+        return redirect(url_for("register"))
+    
+    return render_template("register.html", title=title, form=form)
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if "username" in session:
-        return redirect(url_for("info"))
     
     title = "Login"
-    form = UserForm()
-    if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
-        auth = data.auth()
-        if auth["user"] != username or auth["password"] != password:
-            flash("Login incorrect", "danger")
-            return render_template("login.html", title=title, form=form)
-        session['username'] = username
-        return redirect(url_for("info"))
+    form = LoginForm()
+    user = database.HandleUsers()
+
+    try:
+        if form.validate_on_submit():
+            email = form.email.data
+            password = form.password.data
+            info = user.login(email, password)
+            if info.email == email and info.password == password:
+                flash("Login successful", "success")
+                return redirect(url_for("profile"))
+            else:
+                flash("Login failed", "danger")
+                return redirect(url_for("login"))
+    except NoneType:
+        flash("User don't exist", "danger")
+        return redirect(url_for("login"))
+        
     return render_template("login.html", title=title, form=form)
 
 
@@ -219,6 +244,7 @@ def feedback():
     return render_template("feedback.html", title=title)
 
 
-@app.route("/profile")
+@app.route("/profile", methods=["GET", "POST"])
 def profile():
-    return 
+    title = "Profile"
+    return render_template("profile.html", title=title)

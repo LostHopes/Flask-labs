@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% import "_fields.html" as field %}
+{% block title %} {{ super() }} {% endblock %}
+{% block content %}
+
+<div>
+    <div class="col-lg-12 border rounded-5 p-5">
+        {% include "_flashes.html" %}
+    </div>
+</div>
+
+{% endblock %}

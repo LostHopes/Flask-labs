@@ -4,15 +4,50 @@
 </div>
 {% endmacro %}
 
-{% macro login_form(form) %}
+{% macro register_form(form) %}
 {{ form.csrf_token() }}
 <div class="form-group p-2">
-    {{ form.username.label }}
-    {{ form.username(class="form-control") }}
+    {{ form.name.label }}
+    {{ form.name(class="form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.surname.label }}
+    {{ form.surname(class="form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.login.label }}
+    {{ form.login(class="form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.email.label }}
+    {{ form.email(class="form-control") }}
 </div>
 <div class="form-group p-2">
     {{ form.password.label }}
     {{ form.password(class="form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.confirm_password.label }}
+    {{ form.confirm_password(class="form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.submit(class="btn btn-primary") }}
+</div>
+{% endmacro %}
+
+{% macro login_form(form) %}
+{{ form.csrf_token() }}
+<div class="form-group p-2">
+    {{ form.email.label }}
+    {{ form.email(class="form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.password.label }}
+    {{ form.password(class="form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.remember }}
+    {{ form.remember.label }}
 </div>
 <div class="form-group p-2">
     {{ form.submit(class="btn btn-primary") }}

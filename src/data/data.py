@@ -11,17 +11,3 @@ my_skills = {
         5: ["Fast reading and comprehension", "Skill 5", 100],
         6: ["Tinkering", "Skill 6", 75]
 }
-
-
-def auth(user=None, password=None):
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "auth.json")
-
-    with open(path, "r") as f:
-        data = json.load(f)
-
-    if user is not None and password is not None:
-        data["user"] = user
-        data["password"] = password
-        with open(path, 'w') as f:
-            json.dump(data, f)
-    return data
