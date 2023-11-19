@@ -29,4 +29,9 @@ class HandleTodos(Todo):
         task = Todo(task=name)
         db.session.add(task)
         db.session.commit()
-        return name
+
+    def update(self, id: int):
+        task = db.session.query(Todo).filter(Todo.id == id).first()
+        task.status = "Completed"
+        db.session.commit()
+

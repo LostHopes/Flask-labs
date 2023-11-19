@@ -1,6 +1,8 @@
 from flask import request, render_template, redirect, url_for, session, flash, make_response
 import platform
 import datetime
+from sqlalchemy.exc import IntegrityError
+
 from data import data
 from app import app
 from .api.skills import get_skills
@@ -181,14 +183,19 @@ def todo_list():
 @app.route("/todo/add/", methods=["POST"])
 def add_todo():
 
-    todo = database.HandleTodos()
-    todo.add(request.form.get("task"))
-    flash("Task have been added to the list", "success")
+    try:
+        todo = database.HandleTodos()
+        todo.add(request.form.get("task"))
+        flash("Task have been added to the list", "success")
+    except IntegrityError:
+        flash("Task with this name already exist", "danger")
+        return redirect(url_for("todo_list"))
+
 
     return redirect(url_for("todo_list"))
 
 
-@app.route("/todo/delete/<int:id>/", methods=["POST"])
+@app.route("/todo/<int:id>/delete/", methods=["POST"])
 def remove_todo(id=None):
 
     if id is not None:
@@ -199,8 +206,10 @@ def remove_todo(id=None):
     return redirect(url_for("todo_list"))
 
 
-@app.route("/todo/update", methods=["POST"])
-def update_todo():
+@app.route("/todo/<int:id>/update/", methods=["POST"])
+def update_todo(id=None):
+    todo = database.HandleTodos()
+    todo.update(id)
     return redirect(url_for("todo_list"))
 
 
