@@ -1,4 +1,5 @@
 from flask import request, render_template, redirect, url_for, session, flash, make_response
+from flask_bcrypt import check_password_hash
 import platform
 import datetime
 from sqlalchemy.exc import IntegrityError
@@ -92,7 +93,14 @@ def register():
         user = database.HandleUsers()
         
         if form.validate_on_submit():
-            user.register(form.name.data, form.surname.data, form.login.data, form.email.data, form.password.data)
+            user.register(
+                form.name.data,
+                form.surname.data, 
+                form.login.data, 
+                form.email.data, 
+                form.password.data,
+                form.confirm_password.data
+            )
             flash("User was registered", "success")
             return redirect(url_for("login"))
     except IntegrityError:
@@ -109,20 +117,16 @@ def login():
     form = LoginForm()
     user = database.HandleUsers()
 
-    try:
-        if form.validate_on_submit():
-            email = form.email.data
-            password = form.password.data
-            info = user.login(email, password)
-            if info.email == email and info.password == password:
-                flash("Login successful", "success")
-                return redirect(url_for("profile"))
-            else:
-                flash("Login failed", "danger")
-                return redirect(url_for("login"))
-    except NoneType:
-        flash("User don't exist", "danger")
-        return redirect(url_for("login"))
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        info = user.login(email, password)
+        if info.email == email and check_password_hash(info.password, password):
+            flash("Login successful", "success")
+            return redirect(url_for("profile"))
+        else:
+            flash("Login failed", "danger")
+            return redirect(url_for("login"))
         
     return render_template("login.html", title=title, form=form)
 

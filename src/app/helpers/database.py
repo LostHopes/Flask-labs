@@ -1,8 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from app.models import db, Todo, Users
 from app import app
-from flask import url_for, redirect, flash
-from sqlalchemy.exc import IntegrityError
+from flask_bcrypt import generate_password_hash, check_password_hash
 
 
 with app.app_context():
@@ -10,17 +9,19 @@ with app.app_context():
 
 
 class HandleUsers(Users):
-    def register(self, name, surname, login, email, password):
+    def register(self, name, surname, login, email, password, confirm_password):
         
-        user = Users(
-            name=name,
-            surname=surname,
-            login=login,
-            email=email,
-            password=password
-        )
-        db.session.add(user)
-        db.session.commit()
+        password_hash = generate_password_hash(password)
+        if check_password_hash(password_hash, confirm_password):
+            user = Users(
+                name=name,
+                surname=surname,
+                login=login,
+                email=email,
+                password=password_hash
+            )
+            db.session.add(user)
+            db.session.commit()
     
     def profile(self):
         user_info = db.session.query(Users)
@@ -33,6 +34,9 @@ class HandleUsers(Users):
         if exist:
             info = Users.query.filter_by(email=email).first()
             return info
+    
+    def delete():
+        pass
 
 
 
