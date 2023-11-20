@@ -121,7 +121,7 @@ def login():
         email = form.email.data
         password = form.password.data
         info = user.login(email, password)
-        if info.email == email and check_password_hash(info.password, password):
+        if info:
             flash("Login successful", "success")
             return redirect(url_for("profile"))
         else:

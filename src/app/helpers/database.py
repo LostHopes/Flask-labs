@@ -33,7 +33,8 @@ class HandleUsers(Users):
                 .exists()).scalar()
         if exist:
             info = Users.query.filter_by(email=email).first()
-            return info
+            validation = info.email == email and check_password_hash(info.password, password)
+            return validation
     
     def delete():
         pass
