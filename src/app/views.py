@@ -110,6 +110,12 @@ def register():
     return render_template("register.html", title=title, form=form)
 
 
+@app.route("/users")
+def users():
+    handler = database.HandleUsers()
+    get_all = handler.get_all()
+    return render_template("users.html", users=get_all)
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     
