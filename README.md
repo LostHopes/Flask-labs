@@ -1,3 +1,3 @@
-# Lab 6 - Database manipulation with "todo" route
+# Lab 7 - Users and Database
 
 ![task1](/screenshots/)
