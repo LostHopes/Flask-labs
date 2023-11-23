@@ -8,13 +8,13 @@
 
 ![image](/screenshots/lab4/lab4_2.png)
 
-```
+```json
 {"user": "admin", "password": "password"}
 ```
 
 ## 2.2 Перевірка автентифікації та перенаправлення користувача на сторінку info
 
-```
+```python
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if "username" in session:
