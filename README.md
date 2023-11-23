@@ -1,19 +1,39 @@
-*My Flask labs*
+# Лабораторна робота No4 Об’єкт запиту request. Сесії та кукі.
 
-<h1>
-  <center>Results of execution </center>
-</h1>
+## 1. Зміна розташування файлів:
 
-<h3>lab1</h3>
+![image](/screenshots/lab4/lab4_1.png)
 
-![lab1](/screenshots/lab1/lab1.png)
+## 2.1 Форма користувача і json файл з даними:
 
-<h3>lab2</h3>
+![image](/screenshots/lab4/lab4_2.png)
 
-![lab2](/screenshots/lab2/lab2.png)
-![lab2](/screenshots/lab2/lab2_2.png)
-![lab2](/screenshots/lab2/lab2_3.png)
+```
+{"user": "admin", "password": "password"}
+```
 
-<h3>lab3</h3>
+## 2.2 Перевірка автентифікації та перенаправлення користувача на сторінку info
 
-![lab3](/screenshots/lab3/lab3_1.png) ![lab3](/screenshots/lab3/lab3_2.png) ![lab3](/screenshots/lab3/lab3_3.png) ![lab3](/screenshots/lab3/lab3_4.png)
+```
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if "username" in session:
+        return redirect(url_for("info"))
+    
+    title = "Login"
+    form = UserForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        auth = data.auth()
+        if auth["user"] != username or auth["password"] != password:
+            flash("Login incorrect", "danger")
+            return render_template("login.html", title=title, form=form)
+        session['username'] = username
+        return redirect(url_for("info")) # changed from index to profile
+    return render_template("login.html", title=title, form=form)
+```
+
+## 2.3 Привітання користувача, який авторизувався
+
+![image](/screenshots/lab4/lab4_3.png)

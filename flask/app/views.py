@@ -6,7 +6,6 @@ from app import app
 from .api.skills import get_skills
 from app.forms import UserForm, ChangePasswordForm, CookiesForm, LogoutForm, TodoForm
 from app.config import db
-from app.functions import database
 
 
 @app.context_processor
@@ -76,7 +75,7 @@ def login():
             flash("Login incorrect", "danger")
             return render_template("login.html", title=title, form=form)
         session['username'] = username
-        return redirect(url_for("info")) # changed from index to profile
+        return redirect(url_for("info"))
     return render_template("login.html", title=title, form=form)
 
 
@@ -116,7 +115,7 @@ def add_cookie():
 
     expire_date = datetime.datetime.now() + datetime.timedelta(days=1)
 
-    response = make_response(redirect(url_for("profile")))
+    response = make_response(redirect(url_for("info")))
     response.set_cookie(name, value, expires=expire_date)
         
     return response
