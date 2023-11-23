@@ -3,11 +3,14 @@
 {% block title %} {{ super() }} {% endblock %}
 {% block content %}
 
-<div>
-    <div class="col-lg-12 border rounded-5 p-5">
+<div class="justify-content-center">
+    <div class="border rounded-5 p-5">
         {% for user in users %}
         <div class="text-center">
-            {{ user.login }}
+            <div class="list-group" role="tablist">
+                <a class="list-group-item list-group-item-action list-users" data-toggle="list" href="{{ user.id }}"
+                    role="tab"> {{ user.login }} </a>
+            </div>
         </div>
         {% endfor %}
     </div>
