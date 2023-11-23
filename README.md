@@ -6,7 +6,7 @@
 ## 2. Запити здійснюються за допомогою допоміжних функції в папці helpers
 
 Вміст *database.py*
-```
+```python
 class HandleTodos(Todo):
     def show(self):
         todos = db.session.query(Todo)
@@ -29,7 +29,7 @@ class HandleTodos(Todo):
 ```
 
 Вміст *views.py*
-```
+```python
 @app.route("/todo")
 def todo_list():
     title = "Todo list"
@@ -80,7 +80,7 @@ def update_todo(id=None):
 3. flask db upgrade | downgrade - оновлення бази даних(міграція) або відкат до попередньої версії 
 
 Вміст міграції методи upgrade та downgrade для виконання скрипта
-```
+```python
 """added category in the todo list
 
 Revision ID: 455e5721ce8d
