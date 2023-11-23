@@ -76,7 +76,7 @@ def login():
             flash("Login incorrect", "danger")
             return render_template("login.html", title=title, form=form)
         session['username'] = username
-        return redirect(url_for("info")) # changed from index to profile
+        return redirect(url_for("info"))
     return render_template("login.html", title=title, form=form)
 
 
