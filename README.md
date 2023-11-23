@@ -3,7 +3,7 @@
 ## 1. Модель користувача
 
 Вміст з файлу *models.py*
-```
+```python
 class Users(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -18,7 +18,7 @@ class Users(db.Model):
 ## 2. Форми реєстрації та входу
 
 Вміст з файлу *forms.py*
-```
+```python
 class RegisterForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Enter a name here"})
     surname = StringField("Surname", validators=[DataRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Enter a surname here"})
@@ -40,7 +40,7 @@ class LoginForm(FlaskForm):
 ## 3. Роути register та login
 
 Вміст з файлу *views.py*
-```
+```python
 @app.route("/register", methods=["GET","POST"])
 def register():
     try:
@@ -91,7 +91,7 @@ def login():
 
 Оскільки значення в стопців username та email унікальні, я обробляю помилку IntegrityError, а отже користувач не може добавити логін або пошту існуючого.
 
-```
+```python
 class HandleUsers(Users):
     def register(self, name, surname, login, email, password, confirm_password):
         
