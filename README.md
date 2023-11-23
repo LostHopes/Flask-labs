@@ -2,7 +2,7 @@
 
 ## 1. Форма входу
 
-```
+```python
 class UserForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired(), Length(min=4, max=16)])
     password = PasswordField("Password", validators=[DataRequired(), Length(min=4, max=16)])
@@ -11,7 +11,7 @@ class UserForm(FlaskForm):
 
 ## 2. Шаблон _fields.html
 
-```
+```html
 {% macro logout_form(form) %}
 <div class="form-group p-2">
     {{ form.submit(class="btn btn-primary") }}
@@ -89,7 +89,7 @@ class UserForm(FlaskForm):
 
 ## 3. Перенаправлення на сторінку info при успішній авторизації
 
-```
+```python
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if "username" in session:
