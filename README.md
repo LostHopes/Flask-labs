@@ -2,6 +2,7 @@
 
 ## 1. Модель користувача
 
+Вмыст з файлу *models.py*
 ```
 class Users(db.Model):
     __tablename__ = "users"
