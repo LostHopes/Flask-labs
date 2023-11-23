@@ -37,3 +37,7 @@ def login():
 ## 2.3 Привітання користувача, який авторизувався
 
 ![image](/screenshots/lab4/lab4_3.png)
+
+## 2.4 Вихід, зміна паролю, додавання та видалення cookie на сторінці info
+
+![image](/screenshots/lab4/lab4_4.png)
