@@ -126,8 +126,8 @@ def login():
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
-        info = user.login(email, password)
-        if info:
+        success = user.login(email, password)
+        if success:
             flash("Login successful", "success")
             return redirect(url_for("profile"))
         else:
