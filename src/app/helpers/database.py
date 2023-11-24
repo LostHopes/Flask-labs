@@ -27,6 +27,10 @@ class HandleUsers(Users):
         user_info = db.session.query(Users)
         return user_info
 
+    def get_username(self, email):
+        username = db.session.query(Users).filter_by(email=email).first()
+        return username
+
     def get_all(self):
         users = db.session.query(Users).all()
         return users

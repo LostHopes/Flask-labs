@@ -21,7 +21,7 @@ def page_not_found(request):
 @app.errorhandler(401)
 def unauthorized(request):
     title = "Unauthorized access"
-    error = "Server requires authorization"
+    error = "You must be authorized"
     return render_template(_ERROR_FILE, title=title, error=error)
 
 

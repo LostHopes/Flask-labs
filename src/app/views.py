@@ -1,5 +1,6 @@
 from flask import request, render_template, redirect, url_for, session, flash, make_response
 from flask_bcrypt import check_password_hash
+from flask_login import login_user, current_user, logout_user, login_required
 import platform
 import datetime
 from sqlalchemy.exc import IntegrityError
@@ -22,9 +23,17 @@ def base():
         {"text": "Todo", "link": url_for("todo_list")},
         {"text": "About", "link": url_for("about")},
         {"text": "Feedback", "link": url_for("feedback")},
-        {"text": "Login", "link": url_for("login")},
-        {"text": "Register", "link": url_for("register")},
     ]
+
+    if current_user.is_anonymous:
+        menu.append([
+            {"text": "Login", "link": url_for("login")},
+            {"text": "Register", "link": url_for("register")},
+        ])
+    else:
+        menu.append(
+            {"text": "Account", "link": url_for("account")},
+        )
     
     return dict(
         platform=platform,
@@ -87,6 +96,10 @@ def skills(s_id=None):
 
 @app.route("/register", methods=["GET","POST"])
 def register():
+
+    if current_user.is_authenticated:
+        return redirect(url_for("account"))
+
     try:
         title = "Register"
         form = RegisterForm()
@@ -116,9 +129,13 @@ def users():
     get_all = handler.get_all()
     return render_template("users.html", users=get_all)
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    
+
+    if current_user.is_authenticated:
+        return redirect(url_for("account"))
+
     title = "Login"
     form = LoginForm()
     user = database.HandleUsers()
@@ -128,8 +145,9 @@ def login():
         password = form.password.data
         success = user.login(email, password)
         if success:
+            login_user(user.get_username(email), remember=form.remember.data)
             flash("Login successful", "success")
-            return redirect(url_for("profile"))
+            return redirect(url_for("account"))
         else:
             flash("Login failed", "danger")
             return redirect(url_for("login"))
@@ -199,10 +217,11 @@ def remove_cookie():
 
 
 @app.route("/logout", methods=["POST"])
+@login_required
 def logout():
-    session.pop('username', None)
+    logout_user()
     flash("You successfully logged out", "success")
-    return redirect(url_for("index"))
+    return redirect(url_for("login"))
 
 
 @app.route("/todo")
@@ -254,7 +273,8 @@ def feedback():
     return render_template("feedback.html", title=title)
 
 
-@app.route("/profile", methods=["GET", "POST"])
-def profile():
-    title = "Profile"
-    return render_template("profile.html", title=title)
+@app.route("/account", methods=["GET", "POST"])
+@login_required
+def account():
+    title = "Account"
+    return render_template("account.html", title=title)
