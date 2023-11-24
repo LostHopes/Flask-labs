@@ -3,6 +3,7 @@ from app import app
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 
 # Database connection
 basedir = basedir = os.path.abspath(os.path.dirname(__file__))
@@ -11,6 +12,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "db
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
 
 
 # session key
