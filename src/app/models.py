@@ -2,13 +2,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Enum
 from app import config
 from app import app
-from app.config import db, login_manager
+from app.config import db
 from flask_login import UserMixin
-
-
-@login_manager.user_loader
-def user_loader(user_id):
-    return Users.query.get(user_id)
 
 
 class Users(db.Model, UserMixin):

@@ -123,6 +123,7 @@ def register():
 
 
 @app.route("/users")
+@login_required
 def users():
     handler = database.HandleUsers()
     get_all = handler.get_all()
@@ -155,6 +156,7 @@ def login():
 
 
 @app.route("/info", methods=["GET", "POST"])
+@login_required
 def info():
     if "username" not in session:
         return redirect(url_for("login"))

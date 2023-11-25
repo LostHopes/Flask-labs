@@ -2,11 +2,15 @@ from flask_sqlalchemy import SQLAlchemy
 from app.models import db, Todo, Users
 from app import app
 from flask_bcrypt import generate_password_hash, check_password_hash
+from app.config import login_manager
 
 
 with app.app_context():
     db.create_all(bind_key=None)
 
+@login_manager.user_loader
+def user_loader(user_id):
+    return Users.query.get(user_id)
 
 class HandleUsers(Users):
     def register(self, name, surname, login, email, password, confirm_password):
