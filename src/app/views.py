@@ -26,9 +26,9 @@ def base():
     ]
 
     if current_user.is_anonymous:
-        menu.append([
+        menu.extend([
             {"text": "Login", "link": url_for("login")},
-            {"text": "Register", "link": url_for("register")},
+            {"text": "Register", "link": url_for("register")}
         ])
     else:
         menu.append(
@@ -225,6 +225,7 @@ def logout():
 
 
 @app.route("/todo")
+@login_required
 def todo_list():
     title = "Todo list"
     form = TodoForm()
@@ -277,4 +278,6 @@ def feedback():
 @login_required
 def account():
     title = "Account"
-    return render_template("account.html", title=title)
+    form = LogoutForm()
+
+    return render_template("account.html", title=title, form=form)
