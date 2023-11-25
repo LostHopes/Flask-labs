@@ -98,6 +98,7 @@
 {% endmacro %}
 
 {% macro todo_form(form) %}
+{{ form.csrf_token() }}
 <div class="form-group p-2">
     {{ form.task.label }}
     {{ form.task(class="border rounded form-control w-75") }}
@@ -109,6 +110,7 @@
 
 
 {% macro update_account_form(form) %}
+
 <div class="form-group p-2">
     {{ form.username.label }}
     {{ form.username(class="border rounded form-control") }}
@@ -120,6 +122,15 @@
 <div class="form-group p-2">
     {{ form.image.label }}
     {{ form.image(class="border rounded form-control") }}
+    {% if form.image.errors %}
+    {% for error in form.image.errors %}
+    <div class="alert alert-danger p-3 mt-3 alert-dismissible" role="alert">
+        {{ error }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick=delete_flash(this)>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
 </div>
 <div class="form-group p-2 text-center">
     {{ form.about.label }}
