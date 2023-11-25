@@ -48,6 +48,9 @@ class HandleUsers(Users):
             validation = info.email == email and check_password_hash(info.password, password)
             return validation
     
+    def update(self, username, email):
+        pass
+    
     def delete():
         pass
 

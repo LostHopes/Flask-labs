@@ -281,11 +281,22 @@ def feedback():
 @app.route("/account", methods=["GET", "POST"])
 @login_required
 def account():
-    title = "Account"
+    try:
+        title = "Account"
 
-    if current_user.is_active:
+        # TODO: add response if user isn't active
+
         logout_form = LogoutForm()
         update_form = UpdateAccountForm()
+        update_form.username.data = current_user.login
+        update_form.email.data = current_user.email
+
+        if update_form.validate_on_submit():
+            current_user.login = update_form.username.data
+            current_user.email = update_form.email.data
+            # TODO: add validation
+            flash("Your account has been updated!", "success")
+
         image_file = url_for("static", filename=f"images/profile_pics/{current_user.image}")
         return render_template(
             "account.html",
@@ -294,6 +305,6 @@ def account():
             update_form=update_form,
             image_file=image_file
         )
-
-
-    return render_template("account.html", title)
+    except IntegrityError:
+        flash("The user already exists", "danger")
+        return redirect(url_for("account"))
