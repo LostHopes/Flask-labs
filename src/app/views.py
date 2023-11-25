@@ -221,7 +221,7 @@ def remove_cookie():
 @login_required
 def logout():
     logout_user()
-    flash("You successfully logged out", "success")
+    flash("You have successfully logged out", "success")
     return redirect(url_for("login"))
 
 
