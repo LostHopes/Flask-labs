@@ -254,7 +254,7 @@ def account():
 
 [див. Завдання №1](#1-ініціалізація-loginmanager)
 
-Після додавання *login_view* і *login_message_category* 
+Після додавання *login_view* і *login_message_category*,
 перша - перенаправляє користувача на сторінку автентифікації,
 друга - надсилає flash повідомлення з категорією *info*
 
