@@ -203,7 +203,7 @@ def account():
     return render_template("account.html", title)
 ```
 
-### Шаблон *account*
+### 7.2 Шаблон *account*
 
 Вміст файлу *account.html*
 
