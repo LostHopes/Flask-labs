@@ -11,7 +11,6 @@ from .api.skills import get_skills
 from app.forms import LoginForm, RegisterForm, ChangePasswordForm, CookiesForm, LogoutForm, TodoForm
 from app.helpers import database
 
-
 @app.context_processor
 def base():
     now = datetime.datetime.now()
@@ -230,7 +229,7 @@ def todo_list():
     title = "Todo list"
     form = TodoForm()
     handle = database.HandleTodos()
-    todo = handle.show()
+    todo = handle.show(current_user.get_id())
 
     return render_template("todo.html", title=title, form=form, todo=todo)
 
@@ -240,7 +239,9 @@ def add_todo():
 
     try:
         todo = database.HandleTodos()
-        todo.add(request.form.get("task"))
+        task = request.form.get("task")
+        user_id = current_user.get_id()
+        todo.add(task, user_id)
         flash("Task have been added to the list", "success")
     except IntegrityError:
         flash("Task with this name already exist", "danger")
@@ -278,6 +279,10 @@ def feedback():
 @login_required
 def account():
     title = "Account"
-    form = LogoutForm()
 
-    return render_template("account.html", title=title, form=form)
+    if current_user.is_active:
+        form = LogoutForm()
+        return render_template("account.html", title=title, form=form)
+
+
+    return render_template("account.html", title)

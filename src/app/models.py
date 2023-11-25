@@ -19,16 +19,17 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
     name = db.Column(db.String, nullable=False)
     surname = db.Column(db.String, nullable=False)
+    is_active = db.Column(db.Boolean, default=True, nullable=False)
     image = db.Column(db.String(20), nullable=False, default="default.jpg")
 
 
 class Todo(db.Model):
     __tablename__ = "todo"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    task = db.Column(db.Text, nullable=False, unique=True)
+    task = db.Column(db.Text, nullable=False)
     status = db.Column(db.String, default="Planning", nullable=False)
     category = db.Column(db.String, default="Empty", nullable=False)
-    #user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
 
 class Skills(db.Model):

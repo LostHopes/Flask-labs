@@ -6,6 +6,7 @@
 <div class="col-lg-12 border rounded-5 p-5">
     {% include "_flashes.html" %}
     <div class="container text-center form-group py-5">
+        <h2>Account info</h2>
         <div class="container py-2">
             User: {{ current_user.login }}
             <form action="{{ url_for('logout') }}" method="post">

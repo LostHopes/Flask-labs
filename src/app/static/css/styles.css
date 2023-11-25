@@ -4,7 +4,7 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
 
 /* Default font for content */
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Pixelify+Sans&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Open+Sans&display=swap');
 
 :root {
   --title: 40px;
@@ -15,6 +15,7 @@
 
 .content{
   padding: 10vh;
+  font-family: 'Open Sans', sans-serif;
 }
 
 /* End of the addition to the bootstrap styles */
@@ -46,11 +47,6 @@ ul.skills {
   text-align: center;
 }
 
-.title,
-.skills > li > a,
-.skill-desc {
-  font-family: "Pixelify Sans", sans-serif;
-}
 
 h1.title,
 .title {
