@@ -1,5 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, EmailField, BooleanField, FileField
+from wtforms import StringField, PasswordField, SubmitField, EmailField, \
+BooleanField, FileField, FileField, TextAreaField
+
 from wtforms.validators import DataRequired, Length
 
 
@@ -41,3 +43,9 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 
+class UpdateAccountForm(FlaskForm):
+    username = StringField("Username", validators=[Length(min=6, max=20)], render_kw={"placeholder": "Enter a new username here"})
+    email = StringField("Email", validators=[Length(min=4, max=20)], render_kw={"placeholder": "Enter a new email here"})
+    about = TextAreaField("About Me", render_kw={"rows": "3"})
+    image = FileField("Image")
+    submit = SubmitField("Update")

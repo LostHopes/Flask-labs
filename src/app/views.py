@@ -3,12 +3,13 @@ from flask_bcrypt import check_password_hash
 from flask_login import login_user, current_user, logout_user, login_required
 import platform
 import datetime
+import os
 from sqlalchemy.exc import IntegrityError
 
 from data import data
 from app import app
 from .api.skills import get_skills
-from app.forms import LoginForm, RegisterForm, ChangePasswordForm, CookiesForm, LogoutForm, TodoForm
+from app.forms import LoginForm, RegisterForm, ChangePasswordForm, CookiesForm, LogoutForm, TodoForm, UpdateAccountForm
 from app.helpers import database
 
 @app.context_processor
@@ -283,8 +284,16 @@ def account():
     title = "Account"
 
     if current_user.is_active:
-        form = LogoutForm()
-        return render_template("account.html", title=title, form=form)
+        logout_form = LogoutForm()
+        update_form = UpdateAccountForm()
+        image_file = url_for("static", filename=f"images/profile_pics/{current_user.image}")
+        return render_template(
+            "account.html",
+            title=title,
+            logout_form=logout_form,
+            update_form=update_form,
+            image_file=image_file
+        )
 
 
     return render_template("account.html", title)

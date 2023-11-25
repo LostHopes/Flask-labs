@@ -8,20 +8,25 @@
     <div class="container text-center form-group py-5">
         <h2>Account info</h2>
         <div class="container py-2">
-            User: {{ current_user.login }}
-            <form action="{{ url_for('logout') }}" method="post">
-                {{ field.logout_form(form) }}
-            </form>
+            <div>
+                <img src="{{ image_file }}" 
+                alt="profile" class="rounded-circle account-img w-25 h-25">
+            </div>
+            <div>
+                <form action="{{ url_for('logout') }}" method="post">
+                    {{ field.logout_form(logout_form) }}
+                </form>
+                User: {{ current_user.login }}
+            </div>
         </div>
         <div class="p-2">
-           Email: {{ current_user.email }}
+            Email: {{ current_user.email }}
         </div>
-        <div class="col-lg-8 offset-lg-2">
-            <div class="form-group">
-              <label for="about">About me</label>
-              <textarea id="about" name="about" class="form-control" rows="3"></textarea>
-            </div>
-          </div>
+    </div>
+    <div class="w-50 offset-lg-3 offset-sm-3">
+        <form action="#" method="post">
+            {{ field.update_account_form(update_form) }}
+        </form>
     </div>
 </div>
 
