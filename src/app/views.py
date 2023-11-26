@@ -3,7 +3,7 @@ from flask_bcrypt import check_password_hash
 from flask_login import login_user, current_user, logout_user, login_required
 import platform
 import datetime
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, StatementError
 
 from data import data
 from app import app
@@ -323,3 +323,15 @@ def update_account():
     except IntegrityError:
         flash("The user already exists", "danger")
         return redirect(url_for("account"))
+
+@app.after_request
+def after_request(response):
+    now = datetime.datetime.now().replace(second=0, microsecond=0)
+    current_user.last_seen = now
+    try:
+        db = database.HandleUsers()
+        db.commit()
+    except StatementError:
+        flash('Error while updating user last seen!', 'danger')
+    return response
+

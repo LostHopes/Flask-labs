@@ -1,9 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Enum
-from app import config
-from app import app
-from app.config import db
 from flask_login import UserMixin
+
+from datetime import datetime
+
+from app import app, config
+from app.config import db
 
 
 class Users(db.Model, UserMixin):
@@ -16,6 +17,7 @@ class Users(db.Model, UserMixin):
     surname = db.Column(db.String, nullable=False)
     is_active = db.Column(db.Boolean, default=True, nullable=False)
     image = db.Column(db.String(20), nullable=False, default="default.jpg")
+    last_seen = db.Column(db.DateTime, default=datetime.now().replace(second=0, microsecond=0))
 
 
 class Todo(db.Model):

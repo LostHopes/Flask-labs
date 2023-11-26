@@ -74,6 +74,10 @@ class HandleUsers(Users):
         if image:
             current_user.image = self.save_picture(image)
 
+        self.commit()
+
+    @staticmethod
+    def commit():
         db.session.commit()
 
     
