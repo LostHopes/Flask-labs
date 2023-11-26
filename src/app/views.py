@@ -3,13 +3,13 @@ from flask_bcrypt import check_password_hash
 from flask_login import login_user, current_user, logout_user, login_required
 import platform
 import datetime
-import os
 from sqlalchemy.exc import IntegrityError
 
 from data import data
 from app import app
 from .api.skills import get_skills
-from app.forms import LoginForm, RegisterForm, ChangePasswordForm, CookiesForm, LogoutForm, TodoForm, UpdateAccountForm
+from app.forms import LoginForm, RegisterForm, ChangePasswordForm,\
+    CookiesForm, LogoutForm, TodoForm, UpdateAccountForm
 from app.helpers import database
 
 @app.context_processor
@@ -278,33 +278,48 @@ def feedback():
     return render_template("feedback.html", title=title)
 
 
-@app.route("/account", methods=["GET", "POST"])
+@app.route("/account")
 @login_required
 def account():
+
+    title = "Account"
+    logout_form = LogoutForm()
+    update_form = UpdateAccountForm()
+    update_form.username.data = current_user.login
+    update_form.email.data = current_user.email
+    # TODO: add response if user isn't active
+
+    if update_form.validate_on_submit():
+        return redirect(url_for("update_account"))
+
+
+    image_file = url_for("static", filename=f"images/profile_pics/{current_user.image}")
+    return render_template(
+        "account.html",
+        title=title,
+        logout_form=logout_form,
+        update_form=update_form,
+        image_file=image_file
+    )
+
+
+@app.route("/account/update", methods=["POST"])
+@login_required
+def update_account():
     try:
-        title = "Account"
-
-        # TODO: add response if user isn't active
-
-        logout_form = LogoutForm()
-        update_form = UpdateAccountForm()
-        update_form.username.data = current_user.login
-        update_form.email.data = current_user.email
-
-        if update_form.validate_on_submit():
-            current_user.login = update_form.username.data
-            current_user.email = update_form.email.data
-            # TODO: add validation
-            flash("Your account has been updated!", "success")
-
-        image_file = url_for("static", filename=f"images/profile_pics/{current_user.image}")
-        return render_template(
-            "account.html",
-            title=title,
-            logout_form=logout_form,
-            update_form=update_form,
-            image_file=image_file
+        user = database.HandleUsers()
+            
+        user.update(
+            request.form.get("username"),
+            request.form.get("email"),
+            request.files.get("image")
         )
+        
+        flash("Your account has been updated!", "success")
+        return redirect(url_for("account"))
+
+        flash("Validation failed", "danger")
+        return redirect(url_for("account"))
     except IntegrityError:
         flash("The user already exists", "danger")
         return redirect(url_for("account"))

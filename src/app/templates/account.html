@@ -23,8 +23,8 @@
             Email: {{ current_user.email }}
         </div>
     </div>
-    <div class="w-50 offset-lg-3 offset-sm-3">
-        <form action="#" method="post">
+    <div class="d-flex justify-content-center">
+        <form action="{{ url_for('update_account') }}" method="post" enctype="multipart/form-data">
             {{ field.update_account_form(update_form) }}
         </form>
     </div>

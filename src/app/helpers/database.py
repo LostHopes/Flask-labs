@@ -1,7 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_login import current_user
+import os
+import secrets
+from PIL import Image
+
 from app.models import db, Todo, Users
 from app import app
-from flask_bcrypt import generate_password_hash, check_password_hash
 from app.config import login_manager
 
 
@@ -47,9 +52,29 @@ class HandleUsers(Users):
             info = Users.query.filter_by(email=email).first()
             validation = info.email == email and check_password_hash(info.password, password)
             return validation
+        
+    @staticmethod
+    def save_picture(form_picture):
+        random_hex = secrets.token_hex(8)
+        _, file_extension = os.path.split(form_picture.filename)
+        picture_filename = random_hex + file_extension
+        picture_path = os.path.join(app.root_path, "static", "images", "profile_pics", picture_filename)
+        image = Image.open(form_picture)
+        image_size = (125, 125)
+        image.thumbnail(image_size)
+        image.save(picture_path)
+        return picture_filename
     
-    def update(self, username, email):
-        pass
+    
+    def update(self, username, email, image):
+        current_user.login = username
+        current_user.email = email
+
+        if image:
+            current_user.image = self.save_picture(image)
+
+        db.session.commit()
+
     
     def delete():
         pass
