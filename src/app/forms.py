@@ -46,6 +46,6 @@ class LoginForm(FlaskForm):
 class UpdateAccountForm(FlaskForm):
     username = StringField("Username", validators=[Length(min=6, max=20)], render_kw={"placeholder": "Enter a new username here"})
     email = StringField("Email", validators=[Length(min=4, max=20)], render_kw={"placeholder": "Enter a new email here"})
-    about = TextAreaField("About Me", render_kw={"rows": "3"})
-    image = FileField("Select image to update", validators=[FileAllowed(["jpg", "png", "webp"])])
+    about = TextAreaField("About Me")
+    image = FileField("Select image to update", validators=[FileAllowed(["jpg", "png", "webp"], "Wrong file extension! Allowed formats: jpg, png, webp")])
     submit = SubmitField("Update")

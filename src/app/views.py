@@ -159,7 +159,7 @@ def login():
 @app.route("/info", methods=["GET", "POST"])
 @login_required
 def info():
-    if "username" not in session:
+    if current_user.is_anonymous:
         return redirect(url_for("login"))
 
     title = "Info"
@@ -238,6 +238,7 @@ def todo_list():
 
 
 @app.route("/todo/add/", methods=["POST"])
+@login_required
 def add_todo():
 
     try:
@@ -255,6 +256,7 @@ def add_todo():
 
 
 @app.route("/todo/<int:id>/delete/", methods=["POST"])
+@login_required
 def remove_todo(id=None):
 
     if id is not None:
@@ -266,6 +268,7 @@ def remove_todo(id=None):
 
 
 @app.route("/todo/<int:id>/update/", methods=["POST"])
+@login_required
 def update_todo(id=None):
     todo = database.HandleTodos()
     todo.update(id)
@@ -308,7 +311,6 @@ def account():
 def update_account():
     try:
         user = database.HandleUsers()
-            
         user.update(
             request.form.get("username"),
             request.form.get("email"),
@@ -318,8 +320,6 @@ def update_account():
         flash("Your account has been updated!", "success")
         return redirect(url_for("account"))
 
-        flash("Validation failed", "danger")
-        return redirect(url_for("account"))
     except IntegrityError:
         flash("The user already exists", "danger")
         return redirect(url_for("account"))

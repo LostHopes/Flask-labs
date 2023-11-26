@@ -1,9 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import current_user
+from PIL import Image
+
 import os
 import secrets
-from PIL import Image
 
 from app.models import db, Todo, Users
 from app import app
@@ -60,13 +61,13 @@ class HandleUsers(Users):
         picture_filename = random_hex + file_extension
         picture_path = os.path.join(app.root_path, "static", "images", "profile_pics", picture_filename)
         image = Image.open(form_picture)
-        image_size = (125, 125)
-        image.thumbnail(image_size)
-        image.save(picture_path)
+        new_image = image.resize((300, 300))
+        new_image.save(picture_path)
         return picture_filename
     
     
     def update(self, username, email, image):
+
         current_user.login = username
         current_user.email = email
 

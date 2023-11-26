@@ -123,13 +123,13 @@
     {{ form.image.label }}
     {{ form.image(class="border rounded form-control") }}
     {% if form.image.errors %}
-    {% for error in form.image.errors %}
-    <div class="alert alert-danger p-3 mt-3 alert-dismissible" role="alert">
-        {{ error }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick=delete_flash(this)>
-        </button>
-    </div>
-    {% endfor %}
+        {% for error in form.image.errors %}
+            <div class="alert alert-danger p-3 mt-3 alert-dismissible" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick=delete_flash(this)>
+                </button>
+            </div>
+        {% endfor %}
     {% endif %}
 </div>
 <div class="form-group p-2 text-center">
