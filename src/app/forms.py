@@ -12,7 +12,7 @@ class LogoutForm(FlaskForm):
 class ChangePasswordForm(FlaskForm):
     new_password = PasswordField("New password", validators=[DataRequired(), Length(min=4, max=16)])
     repeat_password = PasswordField("Repeat new password", validators=[DataRequired(), Length(min=4, max=16)])
-    submit = SubmitField("Change Password", id="btn-chpasswd")
+    submit = SubmitField("Change", id="btn-chpasswd")
 
 
 class CookiesForm(FlaskForm):

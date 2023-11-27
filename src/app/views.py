@@ -288,12 +288,16 @@ def account():
     title = "Account"
     logout_form = LogoutForm()
     update_form = UpdateAccountForm()
+    password_form = ChangePasswordForm()
     update_form.username.data = current_user.login
     update_form.email.data = current_user.email
     # TODO: add response if user isn't active
 
     if update_form.validate_on_submit():
         return redirect(url_for("update_account"))
+
+    if password_form.validate_on_submit():
+        return redirect(url_for("change_password"))
 
 
     image_file = url_for("static", filename=f"images/profile_pics/{current_user.image}")
@@ -302,6 +306,7 @@ def account():
         title=title,
         logout_form=logout_form,
         update_form=update_form,
+        password_form=password_form,
         image_file=image_file
     )
 
@@ -324,6 +329,22 @@ def update_account():
         flash("The user already exists", "danger")
         db.rollback()
         return redirect(url_for("account"))
+
+
+@app.route("/account/update/credentials", methods=["POST"])
+@login_required
+def change_password():
+    user = database.HandleUsers()
+    if user.change_password(
+        request.form.get("new_password"),
+        request.form.get("repeat_password")
+        ):
+        
+        flash("Password changed!", "success")
+        return redirect(url_for("account"))
+
+    flash("Passwords isn't the same!", "danger")
+    return redirect(url_for("account"))
 
 @app.after_request
 def after_request(response):

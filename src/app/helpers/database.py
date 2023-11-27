@@ -53,6 +53,20 @@ class HandleUsers(Users):
             info = Users.query.filter_by(email=email).first()
             validation = info.email == email and check_password_hash(info.password, password)
             return validation
+
+    def change_password(self, new_password, repeat_password):
+        succeed = False
+        
+        validation = new_password == repeat_password
+
+        if validation:
+            password_hash = generate_password_hash(new_password)
+            current_user.password = password_hash
+            db.session.commit()
+            succeed = True
+            return succeed
+
+        return succeed
         
     @staticmethod
     def save_picture(form_picture):
