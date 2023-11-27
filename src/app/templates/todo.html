@@ -24,7 +24,7 @@
                 </tr>
                 {% for task in todo %}
                 <tr class="container text-center">
-                    <td>{{ task.id }}</td>
+                    <td>{{ loop.index }}</td> <!-- TODO: add list id -->
                     <td>{{ task.task }}</td>
                     <td>
                         {% if task.status != "Completed" %}
