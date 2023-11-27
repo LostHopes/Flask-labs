@@ -310,8 +310,8 @@ def account():
 @login_required
 def update_account():
     try:
-        user = database.HandleUsers()
-        user.update(
+        db = database.HandleUsers()
+        db.update(
             request.form.get("username"),
             request.form.get("email"),
             request.files.get("image")
@@ -322,6 +322,7 @@ def update_account():
 
     except IntegrityError:
         flash("The user already exists", "danger")
+        db.rollback()
         return redirect(url_for("account"))
 
 @app.after_request

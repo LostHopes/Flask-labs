@@ -80,6 +80,10 @@ class HandleUsers(Users):
     def commit():
         db.session.commit()
 
+    @staticmethod
+    def rollback():
+        db.session.rollback()
+
     
     def delete():
         pass
