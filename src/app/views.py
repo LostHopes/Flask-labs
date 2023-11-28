@@ -4,6 +4,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 import platform
 import datetime
 from sqlalchemy.exc import IntegrityError, StatementError
+from PIL import UnidentifiedImageError
 
 from data import data
 from app import app
@@ -328,6 +329,9 @@ def update_account():
     except IntegrityError:
         flash("The user already exists", "danger")
         db.rollback()
+        return redirect(url_for("account"))
+    except UnidentifiedImageError:
+        flash("Unsupported image format", "danger")
         return redirect(url_for("account"))
 
 
