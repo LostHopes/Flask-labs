@@ -98,11 +98,45 @@
 {% endmacro %}
 
 {% macro todo_form(form) %}
+{{ form.csrf_token() }}
 <div class="form-group p-2">
     {{ form.task.label }}
     {{ form.task(class="border rounded form-control w-75") }}
 </div>
 <div class="form-group p-2">
     {{ form.save(class="btn btn-primary form-control w-auto") }}
+</div>
+{% endmacro %}
+
+
+{% macro update_account_form(form) %}
+
+<div class="form-group p-2">
+    {{ form.username.label }}
+    {{ form.username(class="border rounded form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.email.label }}
+    {{ form.email(class="border rounded form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.image.label }}
+    {{ form.image(class="border rounded form-control") }}
+    {% if form.image.errors %}
+        {% for error in form.image.errors %}
+            <div class="alert alert-danger p-3 mt-3 alert-dismissible" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick=delete_flash(this)>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="form-group p-2 text-center">
+    {{ form.about.label }}
+    {{ form.about(class="form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.submit(class="btn btn-primary btn-md form-control w-auto") }}
 </div>
 {% endmacro %}

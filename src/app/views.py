@@ -3,12 +3,14 @@ from flask_bcrypt import check_password_hash
 from flask_login import login_user, current_user, logout_user, login_required
 import platform
 import datetime
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, StatementError
+from PIL import UnidentifiedImageError
 
 from data import data
 from app import app
 from .api.skills import get_skills
-from app.forms import LoginForm, RegisterForm, ChangePasswordForm, CookiesForm, LogoutForm, TodoForm
+from app.forms import LoginForm, RegisterForm, ChangePasswordForm,\
+    CookiesForm, LogoutForm, TodoForm, UpdateAccountForm
 from app.helpers import database
 
 @app.context_processor
@@ -104,6 +106,7 @@ def register():
         form = RegisterForm()
         user = database.HandleUsers()
         
+        register_date = datetime.datetime.now().replace(second=0, microsecond=0)
         if form.validate_on_submit():
             user.register(
                 form.name.data,
@@ -111,7 +114,8 @@ def register():
                 form.login.data, 
                 form.email.data, 
                 form.password.data,
-                form.confirm_password.data
+                form.confirm_password.data,
+                register_date
             )
             flash("User was registered", "success")
             return redirect(url_for("login"))
@@ -158,7 +162,7 @@ def login():
 @app.route("/info", methods=["GET", "POST"])
 @login_required
 def info():
-    if "username" not in session:
+    if current_user.is_anonymous:
         return redirect(url_for("login"))
 
     title = "Info"
@@ -237,6 +241,7 @@ def todo_list():
 
 
 @app.route("/todo/add/", methods=["POST"])
+@login_required
 def add_todo():
 
     try:
@@ -254,6 +259,7 @@ def add_todo():
 
 
 @app.route("/todo/<int:id>/delete/", methods=["POST"])
+@login_required
 def remove_todo(id=None):
 
     if id is not None:
@@ -265,6 +271,7 @@ def remove_todo(id=None):
 
 
 @app.route("/todo/<int:id>/update/", methods=["POST"])
+@login_required
 def update_todo(id=None):
     todo = database.HandleTodos()
     todo.update(id)
@@ -277,14 +284,84 @@ def feedback():
     return render_template("feedback.html", title=title)
 
 
-@app.route("/account", methods=["GET", "POST"])
+@app.route("/account")
 @login_required
 def account():
+
     title = "Account"
+    logout_form = LogoutForm()
+    update_form = UpdateAccountForm()
+    password_form = ChangePasswordForm()
+    update_form.username.data = current_user.login
+    update_form.email.data = current_user.email
+    update_form.about.data = current_user.about
+    # TODO: add response if user isn't active
 
-    if current_user.is_active:
-        form = LogoutForm()
-        return render_template("account.html", title=title, form=form)
+    if update_form.validate_on_submit():
+        return redirect(url_for("update_account"))
+
+    if password_form.validate_on_submit():
+        return redirect(url_for("change_password"))
 
 
-    return render_template("account.html", title)
+    image_file = url_for("static", filename=f"images/profile_pics/{current_user.image}")
+    return render_template(
+        "account.html",
+        title=title,
+        logout_form=logout_form,
+        update_form=update_form,
+        password_form=password_form,
+        image_file=image_file
+    )
+
+
+@app.route("/account/update", methods=["POST"])
+@login_required
+def update_account():
+    try:
+        db = database.HandleUsers()
+        db.update(
+            request.form.get("username"),
+            request.form.get("email"),
+            request.files.get("image"),
+            request.form.get("about")
+        )
+        
+        flash("Your account has been updated!", "success")
+        return redirect(url_for("account"))
+
+    except IntegrityError:
+        flash("The user already exists", "danger")
+        db.rollback()
+        return redirect(url_for("account"))
+    except UnidentifiedImageError:
+        flash("Unsupported image format", "danger")
+        return redirect(url_for("account"))
+
+
+@app.route("/account/update/credentials", methods=["POST"])
+@login_required
+def change_password():
+    user = database.HandleUsers()
+    if user.change_password(
+        request.form.get("new_password"),
+        request.form.get("repeat_password")
+        ):
+        
+        flash("Password changed!", "success")
+        return redirect(url_for("account"))
+
+    flash("Passwords isn't the same!", "danger")
+    return redirect(url_for("account"))
+
+@app.after_request
+def after_request(response):
+    now = datetime.datetime.now().replace(second=0, microsecond=0)
+    current_user.last_seen = now
+    try:
+        db = database.HandleUsers()
+        db.commit()
+    except StatementError:
+        flash('Error while updating user last seen!', 'danger')
+    return response
+

@@ -1,5 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, EmailField, BooleanField, FileField
+from wtforms import StringField, PasswordField, SubmitField, EmailField, \
+    BooleanField, TextAreaField
+from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired, Length
 
 
@@ -10,7 +12,7 @@ class LogoutForm(FlaskForm):
 class ChangePasswordForm(FlaskForm):
     new_password = PasswordField("New password", validators=[DataRequired(), Length(min=4, max=16)])
     repeat_password = PasswordField("Repeat new password", validators=[DataRequired(), Length(min=4, max=16)])
-    submit = SubmitField("Change Password", id="btn-chpasswd")
+    submit = SubmitField("Change", id="btn-chpasswd")
 
 
 class CookiesForm(FlaskForm):
@@ -41,3 +43,9 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 
+class UpdateAccountForm(FlaskForm):
+    username = StringField("Username", validators=[Length(min=6, max=20)], render_kw={"placeholder": "Enter a new username here"})
+    email = EmailField("Email", validators=[Length(min=4, max=20)], render_kw={"placeholder": "Enter a new email here"})
+    about = TextAreaField("About Me")
+    image = FileField("Select image to update", validators=[FileAllowed(["jpg", "png", "webp"], "Wrong file extension! Allowed formats: jpg, png, webp")])
+    submit = SubmitField("Update")
