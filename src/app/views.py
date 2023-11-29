@@ -121,6 +121,7 @@ def register():
             return redirect(url_for("login"))
     except IntegrityError:
         flash("User already exist", "danger")
+        user.rollback()
         return redirect(url_for("register"))
     
     return render_template("register.html", title=title, form=form)
