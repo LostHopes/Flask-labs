@@ -18,6 +18,8 @@ class Users(db.Model, UserMixin):
     is_active = db.Column(db.Boolean, default=True, nullable=False)
     image = db.Column(db.String(20), nullable=False, default="default.jpg")
     last_seen = db.Column(db.DateTime, default=datetime.now().replace(second=0, microsecond=0))
+    about = db.Column(db.Text , default="", nullable=False)
+    register_date = db.Column(db.DateTime, nullable=False)
 
 
 class Todo(db.Model):

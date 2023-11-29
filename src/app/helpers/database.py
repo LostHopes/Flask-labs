@@ -19,7 +19,7 @@ def user_loader(user_id):
     return Users.query.get(user_id)
 
 class HandleUsers(Users):
-    def register(self, name, surname, login, email, password, confirm_password):
+    def register(self, name, surname, login, email, password, confirm_password, register_date):
         
         password_hash = generate_password_hash(password)
         if check_password_hash(password_hash, confirm_password):
@@ -28,7 +28,8 @@ class HandleUsers(Users):
                 surname=surname,
                 login=login,
                 email=email,
-                password=password_hash
+                password=password_hash,
+                register_date=register_date
             )
             db.session.add(user)
             db.session.commit()
@@ -80,13 +81,16 @@ class HandleUsers(Users):
         return picture_filename
     
     
-    def update(self, username, email, image):
+    def update(self, username, email, image, about):
 
         current_user.login = username
         current_user.email = email
 
         if image:
             current_user.image = self.save_picture(image)
+
+        current_user.about = about
+
 
         self.commit()
 

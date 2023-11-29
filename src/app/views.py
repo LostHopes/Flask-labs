@@ -106,6 +106,7 @@ def register():
         form = RegisterForm()
         user = database.HandleUsers()
         
+        register_date = datetime.datetime.now().replace(second=0, microsecond=0)
         if form.validate_on_submit():
             user.register(
                 form.name.data,
@@ -113,7 +114,8 @@ def register():
                 form.login.data, 
                 form.email.data, 
                 form.password.data,
-                form.confirm_password.data
+                form.confirm_password.data,
+                register_date
             )
             flash("User was registered", "success")
             return redirect(url_for("login"))
@@ -292,6 +294,7 @@ def account():
     password_form = ChangePasswordForm()
     update_form.username.data = current_user.login
     update_form.email.data = current_user.email
+    update_form.about.data = current_user.about
     # TODO: add response if user isn't active
 
     if update_form.validate_on_submit():
@@ -320,7 +323,8 @@ def update_account():
         db.update(
             request.form.get("username"),
             request.form.get("email"),
-            request.files.get("image")
+            request.files.get("image"),
+            request.form.get("about")
         )
         
         flash("Your account has been updated!", "success")
