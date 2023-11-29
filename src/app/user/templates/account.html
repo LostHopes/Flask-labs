@@ -12,7 +12,7 @@
                 <img src="{{ image_file }}" alt="profile" class="rounded-circle account-img">
             </div>
             <div>
-                <form action="{{ url_for('logout') }}" method="post">
+                <form action="{{ url_for('user.logout') }}" method="post">
                     {{ field.logout_form(logout_form) }}
                 </form>
             </div>
@@ -38,12 +38,12 @@
     </div>
     <div class="d-flex gap-5 flex-wrap justify-content-center">
         <div>
-            <form action="{{ url_for('update_account') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ url_for('user.update_account') }}" method="post" enctype="multipart/form-data">
                 {{ field.update_account_form(update_form) }}
             </form>
         </div>
         <div>
-            <form action="{{ url_for('change_password') }}" method="post">
+            <form action="{{ url_for('user.change_password') }}" method="post">
                 {{ field.change_password_form(password_form) }}
             </form>
         </div>

@@ -1,6 +1,6 @@
 from flask import jsonify
 from app import app
-from data import data
+from ..skills.data import data
 
 
 app.add_url_rule("/api/skills/", endpoint="get_skills")

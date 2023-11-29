@@ -6,9 +6,9 @@ from PIL import Image
 import os
 import secrets
 
-from app.models import db, Todo, Users
-from app import app
-from app.config import login_manager
+from app.user.models import Users
+from app.todo.models import Todo
+from app import app, login_manager, db
 
 
 with app.app_context():
