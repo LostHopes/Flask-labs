@@ -7,7 +7,6 @@ from sqlalchemy.exc import IntegrityError, StatementError
 from PIL import UnidentifiedImageError
 
 from app import app
-from .api.skills import get_skills
 from app.helpers import database
 
 @app.context_processor
