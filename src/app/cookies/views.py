@@ -1,5 +1,6 @@
-from flask_login import login_required
-from flask import render_template, redirect, url_for, request, make_response
+from flask_login import login_required, current_user
+from flask import render_template, redirect, url_for, request, make_response, flash
+import datetime
 
 from .forms import CookiesForm
 from . import cookies
@@ -9,11 +10,9 @@ from . import cookies
 @login_required
 def info():
     if current_user.is_anonymous:
-        return redirect(url_for("login"))
+        return redirect(url_for("user.login"))
 
     title = "Info"
-
-    logout_form = LogoutForm()
 
     cookies_form = CookiesForm()
     cookies = request.cookies
@@ -21,7 +20,6 @@ def info():
     return render_template(
         "info.html",
         title=title,
-        logout_form=logout_form,
         cookies_form=cookies_form,
         cookies=cookies)
 
@@ -32,7 +30,7 @@ def add_cookie():
     value = request.form.get("value")
     expire_date = datetime.datetime.now() + datetime.timedelta(days=1)
 
-    response = make_response(redirect(url_for("info")))
+    response = make_response(redirect(url_for("cookies.info")))
 
     if name in request.cookies:
         flash(f"Cookie with name {name} already exist", "warning")

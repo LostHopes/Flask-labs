@@ -4,58 +4,40 @@
 {% import '_fields.html' as field %}
 
 {% include "_flashes.html" %}
-<div class="container mx-auto">
-    <div class="col-sm-6 offset-md-3 p-5">
-        <form action="{{ url_for('logout') }}" method="post" class="form-check">
-            {{ field.logout_form(logout_form) }}
-        </form>
+
+
+<div class="d-flex">
+    <div class="row justify-content-center flex-wrap gap-5">
+        <div class="border rounded w-50">
+            <form action="{{ url_for('cookies.add_cookie') }}" method="post" class="form-check">
+                {{ field.add_cookies_form(cookies_form) }}
+            </form>
+        </div>
+        <div class="rounded w-50">
+            <form action="{{ url_for('cookies.remove_cookie') }}" method="post" class="form-check">
+                {{ field.rm_cookies_form(cookies_form) }}
+            </form>
+        </div>
+        <div class="rounded">
+            <table class="border" aria-describedby="Show list of cookies">
+                <thead>
+                    <tr>
+                        <th colspan="2">Cookies:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for name in cookies %}
+                    <tr>
+                        <td> {{ name }}: </td>
+                        <td> {{ cookies.get(name) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-
-<div class="container mx-auto p-3">
-    <div class="col-sm-6 offset-md-3 border rounded p-5">
-        <form action="{{ url_for('info') }}" method="post" class="form-check">
-            {{ field.change_password_form(password_form) }}
-        </form>
-    </div>
-</div>
-
-
-<div class="container mx-auto p-3">
-    <div class="col-sm-6 offset-md-3 border rounded p-5">
-        <form action="{{ url_for('add_cookie') }}" method="post" class="form-check">
-            {{ field.add_cookies_form(cookies_form) }}
-        </form>
-    </div>
-</div>
-
-<div class="container mx-auto p-3">
-    <div class="col-sm-6 offset-md-3 border rounded p-5">
-        <form action="{{ url_for('remove_cookie') }}" method="post" class="form-check">
-            {{ field.rm_cookies_form(cookies_form) }}
-        </form>
-    </div>
-</div>
-
-
-<div class="p-3">
-    <table class="border" aria-describedby="Show list of cookies">
-        <thead>
-            <tr>
-                <th colspan="2">Cookies:</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for name in cookies %}
-            <tr>
-                <td> {{ name }}: </td>
-                <td> {{ cookies.get(name) }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
 
 
 {% endblock %}
