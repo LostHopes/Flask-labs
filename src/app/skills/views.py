@@ -4,9 +4,9 @@ from flask_login import login_required, current_user
 from .data import data
 from . import skills
 
-@skills.route("/skills/")
-@skills.route("/skills/<int:s_id>/")
-def s_list(s_id=None):
+@skills.route("/list/")
+@skills.route("/list/<int:s_id>/")
+def skills_list(s_id=None):
     title = "My skills"
     if s_id is not None:
         title = title.rstrip("s")

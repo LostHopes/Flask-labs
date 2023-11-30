@@ -3,13 +3,15 @@
 {% block title %} {{ super() }} {% endblock %}
 {% block content %}
 {% include "_flashes.html" %}
-<div class="container mx-auto p-3">
-    <div class="col-md-7 offset-md-3 border rounded p-3">
+<div class="d-flex justify-content-center flex-wrap py-5 gap-5">
+    <div class="flex-row border rounded-5 px-5">
         <form action="{{ url_for('todo.add_todo') }}" method="post">
             {{ field.todo_form(form) }}
         </form>
-        <div class="table-responsive">
-            <table aria-describedby="todo" class="table table-bordered mb-2">
+    </div>
+    <div class="flex-row border rounded-5">
+        <div class="table-responsive p-5">
+            <table aria-describedby="todo" class="table table-hover table-bordered">
                 <thead>
                     <th colspan="5" class="text-center">
                         Todo list
@@ -23,9 +25,8 @@
                     <td>Actions</td>
                 </tr>
                 {% for task in todo %}
-                <tr class="container text-center">
-                    <td>{{ loop.index }}</td> 
-                    <!-- TODO: add list id -->
+                <tr class="text-center">
+                    <td>{{ loop.index }}</td>
                     <td>{{ task.task }}</td>
                     <td>
                         {% if task.status != "Completed" %}

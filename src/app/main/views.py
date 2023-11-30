@@ -16,7 +16,7 @@ def base():
     menu = [
         {"text": "Albums", "link": url_for("albums")},
         {"text": "Contact", "link": url_for("contact")},
-        {"text": "Skills", "link": url_for("skills.s_list")},
+        {"text": "Skills", "link": url_for("skills.skills_list")},
         {"text": "Todo", "link": url_for("todo.todo_list")},
         {"text": "About", "link": url_for("about")},
         {"text": "Feedback", "link": url_for("user.feedback")},

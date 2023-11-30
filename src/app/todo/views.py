@@ -7,7 +7,7 @@ from .forms import TodoForm
 
 _todo_list = "todo.todo_list"
 
-@todo.route("/todo")
+@todo.route("/list")
 @login_required
 def todo_list():
     title = "Todo list"
@@ -18,7 +18,7 @@ def todo_list():
     return render_template("todo.html", title=title, form=form, todo=todo)
 
 
-@todo.route("/todo/add/", methods=["POST"])
+@todo.route("/add", methods=["POST"])
 @login_required
 def add_todo():
 
@@ -36,7 +36,7 @@ def add_todo():
     return redirect(url_for(_todo_list))
 
 
-@todo.route("/todo/<int:id>/delete/", methods=["POST"])
+@todo.route("<int:id>/delete/", methods=["POST"])
 @login_required
 def remove_todo(id=None):
 
@@ -48,7 +48,7 @@ def remove_todo(id=None):
     return redirect(url_for(_todo_list))
 
 
-@todo.route("/todo/<int:id>/update/", methods=["POST"])
+@todo.route("<int:id>/update/", methods=["POST"])
 @login_required
 def update_todo(id=None):
     todo = database.HandleTodos()

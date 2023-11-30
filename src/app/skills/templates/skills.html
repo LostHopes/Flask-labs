@@ -5,13 +5,13 @@
 
 {% block content %}
 {% if s_id == None %}
-<div class="col-md-12 col-lg-12">
-    <nav class="nav container justify-content-center text-center">
+<div class="d-flex justify-content-center text-center flex-wrap gap-5 p-5 border rounded-3 fs-5">
+    <div class="row">
         <ul name="skills" class="skills">
             <label class="title" for="skills">My skills: </label>
             {% for s_id, (name, desc, percent) in my_skills.items() %}
             <li>
-                <a href="{{ url_for('skills.s_list', s_id=s_id) }}" class="p-sm-3">
+                <a href="{{ url_for('skills.skills_list', s_id=s_id) }}" class="p-sm-2">
                     {{ name }}
                     <div class="progress">
                         <div class="progress-bar w-{{ percent }}" role="progressbar"></div>
@@ -20,12 +20,10 @@
             </li>
             {% endfor %}
         </ul>
-        <div class="col-md-8">
-            <img class="px-5 img-fluid" src="{{ url_for('static', filename='images/background.png') }}"
-                alt="background">
-        </div>
-
-    </nav>
+    </div>
+    <div class="row">
+        <img class="px-5 img-fluid" src="{{ url_for('static', filename='images/background.png') }}" alt="background">
+    </div>
 </div>
 {% else %}
 <div>
