@@ -8,11 +8,7 @@ import secrets
 
 from app.user.models import Users
 from app.todo.models import Todo
-from app import app, login_manager, db
-
-
-with app.app_context():
-    db.create_all(bind_key=None)
+from app import login_manager, db, app
 
 @login_manager.user_loader
 def user_loader(user_id):

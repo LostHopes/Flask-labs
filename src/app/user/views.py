@@ -127,7 +127,7 @@ def register():
 def login():
 
     if current_user.is_authenticated:
-        return redirect(url_for("account"))
+        return redirect(url_for("user.account"))
 
     title = "Login"
     form = LoginForm()
