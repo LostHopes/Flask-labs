@@ -8,3 +8,4 @@ class FeedbackForm(FlaskForm):
     text = TextAreaField("Text", validators=[DataRequired(), Length(min=40)])
     file = FileField("File", validators=[FileAllowed(["jpg", "png"], "Images only!")])
     submit = SubmitField("Publish")
+

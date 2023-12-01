@@ -1,13 +1,10 @@
-from flask import request, render_template, redirect, url_for, session, flash, make_response
-from flask_bcrypt import check_password_hash
+from flask import render_template, url_for
 from flask_login import current_user
 import platform
 import datetime
-from sqlalchemy.exc import IntegrityError, StatementError
-from PIL import UnidentifiedImageError
 
 from app import app
-from app.helpers import database
+
 
 @app.context_processor
 def base():
