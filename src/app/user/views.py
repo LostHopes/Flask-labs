@@ -156,13 +156,6 @@ def users():
     return render_template("users.html", users=get_all)
 
 
-
-@user.route("/feedback/")
-def feedback():
-    title = "Feedback"
-    return render_template("feedback.html", title=title)
-
-
 @user.after_request
 def after_request(response):
     now = datetime.datetime.now().replace(second=0, microsecond=0)

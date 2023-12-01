@@ -19,7 +19,7 @@ def base():
         {"text": "Skills", "link": url_for("skills.skills_list")},
         {"text": "Todo", "link": url_for("todo.todo_list")},
         {"text": "About", "link": url_for("about")},
-        {"text": "Feedback", "link": url_for("user.feedback")},
+        {"text": "Feedback", "link": url_for("feedback.feedbacks")},
     ]
 
     if current_user.is_anonymous:

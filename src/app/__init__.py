@@ -25,6 +25,9 @@ def create_app(config_class=DevConfig):
     from .user import user
     app.register_blueprint(user)
 
+    from .feedback import feedback
+    app.register_blueprint(feedback, url_prefix="/feedback")
+
     from .todo import todo
     app.register_blueprint(todo, url_prefix="/todo")
 

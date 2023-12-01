@@ -20,7 +20,7 @@ def todo_list():
 
 @todo.route("/add", methods=["POST"])
 @login_required
-def add_todo():
+def add():
 
     try:
         todo = database.HandleTodos()
@@ -38,7 +38,7 @@ def add_todo():
 
 @todo.route("<int:id>/delete/", methods=["POST"])
 @login_required
-def remove_todo(id=None):
+def remove(id=None):
 
     if id is not None:
         todo = database.HandleTodos()
@@ -50,7 +50,7 @@ def remove_todo(id=None):
 
 @todo.route("<int:id>/update/", methods=["POST"])
 @login_required
-def update_todo(id=None):
+def update(id=None):
     todo = database.HandleTodos()
     todo.update(id)
     return redirect(url_for(_todo_list))
