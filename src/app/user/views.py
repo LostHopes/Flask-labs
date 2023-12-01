@@ -47,7 +47,7 @@ def account():
 @login_required
 def update_account():
     try:
-        db = user_db.HandleUsers()
+        db = user_db.UsersHelper()
         db.update(
             request.form.get("username"),
             request.form.get("email"),
@@ -70,7 +70,7 @@ def update_account():
 @user.route("/account/update/credentials", methods=["POST"])
 @login_required
 def change_password():
-    user = user_db.HandleUsers()
+    user = user_db.UsersHelper()
     if user.change_password(
         request.form.get("new_password"),
         request.form.get("repeat_password")
@@ -100,7 +100,7 @@ def register():
     try:
         title = "Register"
         form = RegisterForm()
-        user = user_db.HandleUsers()
+        user = user_db.UsersHelper()
         
         register_date = datetime.datetime.now().replace(second=0, microsecond=0)
         if form.validate_on_submit():
@@ -131,7 +131,7 @@ def login():
 
     title = "Login"
     form = LoginForm()
-    user = user_db.HandleUsers()
+    user = user_db.UsersHelper()
 
     if form.validate_on_submit():
         email = form.email.data
@@ -151,7 +151,7 @@ def login():
 @user.route("/users")
 @login_required
 def users():
-    handler = user_db.HandleUsers()
+    handler = user_db.UsersHelper()
     get_all = handler.get_all()
     return render_template("users.html", users=get_all)
 
@@ -161,7 +161,7 @@ def after_request(response):
     now = datetime.datetime.now().replace(second=0, microsecond=0)
     current_user.last_seen = now
     try:
-        db = user_db.HandleUsers()
+        db = user_db.UsersHelper()
         db.commit()
     except StatementError:
         flash('Error while updating user last seen!', 'danger')

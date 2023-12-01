@@ -2,7 +2,7 @@ from app import db
 from app.todo.models import Todo
 
 
-class HandleTodos(Todo):
+class TodosHelper(Todo):
     def show(self, id):
         todos = db.session.query(Todo).where(Todo.user_id == id)
         return todos

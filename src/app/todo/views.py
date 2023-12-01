@@ -12,7 +12,7 @@ _todo_list = "todo.todo_list"
 def todo_list():
     title = "Todo list"
     form = TodoForm()
-    handle = todo_db.HandleTodos()
+    handle = todo_db.TodosHelper()
     todo = handle.show(current_user.get_id())
 
     return render_template("todo.html", title=title, form=form, todo=todo)
@@ -23,7 +23,7 @@ def todo_list():
 def add():
 
     try:
-        todo = todo_db.HandleTodos()
+        todo = todo_db.TodosHelper()
         task = request.form.get("task")
         user_id = current_user.get_id()
         todo.add(task, user_id)
@@ -41,7 +41,7 @@ def add():
 def remove(id=None):
 
     if id is not None:
-        todo = todo_db.HandleTodos()
+        todo = todo_db.TodosHelper()
         todo.remove(id)
         flash("Item was successfully removed from todo list", "success")
 
@@ -51,6 +51,6 @@ def remove(id=None):
 @todo.route("<int:id>/update/", methods=["POST"])
 @login_required
 def update(id=None):
-    todo = todo_db.HandleTodos()
+    todo = todo_db.TodosHelper()
     todo.update(id)
     return redirect(url_for(_todo_list))

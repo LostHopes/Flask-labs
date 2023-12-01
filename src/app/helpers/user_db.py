@@ -13,7 +13,7 @@ from app import login_manager, db, app
 def user_loader(user_id):
     return Users.query.get(user_id)
 
-class HandleUsers(Users):
+class UsersHelper(Users):
     def register(self, name, surname, login, email, password, confirm_password, register_date):
         
         password_hash = generate_password_hash(password)
