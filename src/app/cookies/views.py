@@ -25,7 +25,7 @@ def info():
 
 
 @cookies.route("/cookie/add/", methods=["POST"])
-def add_cookie():
+def add():
     name = request.form.get("name")
     value = request.form.get("value")
     expire_date = datetime.datetime.now() + datetime.timedelta(days=1)
@@ -43,8 +43,8 @@ def add_cookie():
 
 
 @cookies.route("/cookie/remove/", methods=["POST"])
-def remove_cookie():
-    response = make_response(redirect(url_for("info")))
+def remove():
+    response = make_response(redirect(url_for("cookies.info")))
     name = request.form.get("name")
 
     if name not in request.cookies:
