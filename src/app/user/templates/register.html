@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "_fields.html" as field %}
+
+{% block title %} {{ super() }} {% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center">
+  <div class="border rounded p-5 centered-content">
+    <h1 class="title">Welcome to the register page</h1>
+    {% include "_flashes.html" %}
+    <form action="{{ url_for('user.register') }}" method="post">
+      {{ field.register_form(form) }}
+    </form>
+  </div>
+</div>
+
+{% endblock %}

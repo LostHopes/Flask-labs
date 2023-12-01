@@ -6,13 +6,9 @@ from PIL import Image
 import os
 import secrets
 
-from app.models import db, Todo, Users
-from app import app
-from app.config import login_manager
-
-
-with app.app_context():
-    db.create_all(bind_key=None)
+from app.user.models import Users
+from app.todo.models import Todo
+from app import login_manager, db, app
 
 @login_manager.user_loader
 def user_loader(user_id):

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container p-5">
+    <div>
+        <h1 class="title">Music albums</h1>
+    </div>
+    <div class="d-flex justify-content-center text-center flex-wrap gap-5 p-5 fs-5">
+        {% for album in albums%}
+        <div class="p-2">
+            <iframe title="{{ album.title }}" src="https://open.spotify.com/embed/album/{{ album.url }}"
+                class="w-auto h-auto" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="dynamic">
+            </iframe>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

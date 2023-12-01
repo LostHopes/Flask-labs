@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-center text-center flex-wrap gap-3 p-5 border rounded-3 fs-5">
+    <div class="flex-row">
+        <h1 class="title">Home page</h1>
+    </div>
+    {% if current_user.is_authenticated %}
+    <div class="flex-row w-100">
+        <div>
+            <h1 class="title"> Hello, {{ current_user.login }} </h1>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
