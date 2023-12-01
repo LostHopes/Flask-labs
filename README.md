@@ -2,7 +2,7 @@
 
 ## 1. Блюпринти
 
-*user*
+*user* blueprint
 
 ```python
 from flask import Blueprint
@@ -17,7 +17,7 @@ user = Blueprint(
 from . import views, forms, models
 ```
 
-*todo*
+*todo* blueprint
 
 ```python
 from flask import Blueprint
@@ -32,7 +32,7 @@ todo = Blueprint(
 from . import views, forms, models
 ```
 
-*skills*
+*skills* blueprint
 
 ```python
 from flask import Blueprint
@@ -47,7 +47,7 @@ skills = Blueprint(
 from . import views, models
 ```
 
-*cookies*
+*cookies* blueprint
 
 ```python
 from flask import Blueprint
@@ -62,7 +62,7 @@ cookies = Blueprint(
 from . import views, forms
 ```
 
-*main*
+*main* blueprint
 
 ```python
 from flask import Blueprint
