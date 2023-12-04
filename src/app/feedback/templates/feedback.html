@@ -5,14 +5,25 @@
 {% block content %}
 
 <div class="d-flex justify-content-center flex-wrap">
-    <div class="flex-row">
-        <h1 class="title">Feedback</h1>
+    <div class="flex-row w-100">
+        <h1 class="title p-3 text-center w-100">Feedback</h1>
     </div>
-    <div class="flex-row">
+    <div>
         {% for comment in comments %}
-            <div>{{ comment.comment }}</div>
-            <div>Published in: {{ comment.comment_date }}</div>
-            <!-- TODO: add button to delete or update the comment -->
+        <div>{{ comment.comment }}</div>
+        <div class="pt-3">Published in: {{ comment.comment_date }}</div>
+        <div class="d-flex pb-5 gap-2">
+            <div class="flex-row py-2">
+                <form action="{{ url_for('feedback.remove', id=comment.id) }}" method="post">
+                    <input type="submit" value="Remove" class="btn btn-danger">
+                </form>
+            </div>
+            <div class="py-2">
+                <form action="#" method="post">
+                    <input type="submit" value="Update" class="btn btn-success">
+                </form>
+            </div>
+        </div>
         {% endfor %}
     </div>
     <div class="flex-row">

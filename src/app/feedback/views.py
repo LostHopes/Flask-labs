@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 
 from app.feedback import feedback
@@ -33,9 +33,14 @@ def add():
     return redirect(url_for("feedback.feedbacks"))
 
 
-@feedback.route("/remove", methods=["POST"])
+@feedback.route("<int:id>/delete", methods=["POST"])
 @login_required
-def remove():
+def remove(id=None):
+    
+    db = feedback_db.FeedbackHelper()
+    db.remove(id)
+    flash("Feedback was successfully deleted!", "success")
+    
     return redirect(url_for("feedback.feedbacks"))
 
 

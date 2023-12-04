@@ -16,8 +16,12 @@ class FeedbackHelper(Feedback):
         db.session.add(feedback)
         db.session.commit()
 
-    def remove(self):
-        pass
+    def remove(self, id):
+        comment = Feedback.query.filter_by(id=id).first()
+        db.session.delete(comment)
+        db.session.commit()
+
+
 
     def update(self):
         pass
