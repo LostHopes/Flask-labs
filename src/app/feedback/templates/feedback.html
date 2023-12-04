@@ -6,9 +6,16 @@
 
 <div class="d-flex justify-content-center flex-wrap">
     <div class="flex-row">
-        <div>
-            <h1 class="title">Feedback</h1>
-        </div>
+        <h1 class="title">Feedback</h1>
+    </div>
+    <div class="flex-row">
+        {% for comment in comments %}
+            <div>{{ comment.comment }}</div>
+            <div>Published in: {{ comment.comment_date }}</div>
+            <!-- TODO: add button to delete or update the comment -->
+        {% endfor %}
+    </div>
+    <div class="flex-row">
         <div>
             <form action="{{ url_for('feedback.add') }}" method="post" enctype="multipart/form-data">
                 {{ field.feedback_form(form) }}
