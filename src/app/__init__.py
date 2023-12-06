@@ -36,6 +36,9 @@ def create_app(config_class=DevConfig):
 
     from .skills import skills
     app.register_blueprint(skills, url_prefix="/skills")
+
+    from .posts import posts
+    app.register_blueprint(posts, url_prefix="/posts")
     
     with app.app_context():
         app.config.from_object(config_class)
