@@ -4,11 +4,12 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-center flex-wrap">
+<div class="d-flex justify-content-center flex-wrap col-md-6 mx-auto">
     <div class="flex-row w-100">
         <h1 class="title p-3 text-center w-100">Feedback</h1>
     </div>
     <div>
+        {% include "_flashes.html" %}
         {% for comment, user in comments %}
         <div>{{ comment.comment }}</div>
         <div class="pt-3">Published in: {{ comment.comment_date }}</div>
@@ -18,11 +19,6 @@
             <div class="flex-row py-2">
                 <form action="{{ url_for('feedback.remove', id=comment.id) }}" method="post">
                     <input type="submit" value="Remove" class="btn btn-danger">
-                </form>
-            </div>
-            <div class="py-2">
-                <form action="#" method="post">
-                    <input type="submit" value="Update" class="btn btn-success">
                 </form>
             </div>
             {% endif %}

@@ -30,6 +30,7 @@ def add():
         request.form.get("file"),
         current_user.get_id()
     )
+    flash("Feedback added successfully!", "success")
     return redirect(url_for("feedback.feedbacks"))
 
 

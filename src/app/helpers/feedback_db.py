@@ -23,6 +23,5 @@ class FeedbackHelper(Feedback):
         db.session.commit()
 
 
-
     def update(self):
         pass

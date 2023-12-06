@@ -5,7 +5,6 @@ from app.helpers import todo_db
 from . import todo
 from .forms import TodoForm
 
-_todo_list = "todo.todo_list"
 
 @todo.route("/list")
 @login_required
@@ -30,22 +29,21 @@ def add():
         flash("Task have been added to the list", "success")
     except IntegrityError:
         flash("Task with this name already exist", "danger")
-        return redirect(url_for(_todo_list))
+        return redirect(url_for("todo.todo_list"))
 
 
-    return redirect(url_for(_todo_list))
+    return redirect(url_for("todo.todo_list"))
 
 
 @todo.route("<int:id>/delete/", methods=["POST"])
 @login_required
 def remove(id=None):
 
-    if id is not None:
-        todo = todo_db.TodosHelper()
-        todo.remove(id)
-        flash("Item was successfully removed from todo list", "success")
+    todo = todo_db.TodosHelper()
+    todo.remove(id)
+    flash("Item was successfully removed from todo list", "success")
 
-    return redirect(url_for(_todo_list))
+    return redirect(url_for("todo.todo_list"))
 
 
 @todo.route("<int:id>/update/", methods=["POST"])
@@ -53,4 +51,4 @@ def remove(id=None):
 def update(id=None):
     todo = todo_db.TodosHelper()
     todo.update(id)
-    return redirect(url_for(_todo_list))
+    return redirect(url_for("todo.todo_list"))
