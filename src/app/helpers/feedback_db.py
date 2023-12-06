@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from app.user.models import Users
 from app.feedback.models import Feedback
 from app import db
 
@@ -7,7 +8,7 @@ from app import db
 class FeedbackHelper(Feedback):
 
     def show(self):
-        feedbacks = Feedback.query.all()
+        feedbacks = db.session.query(Feedback, Users).join(Users).all()
         return feedbacks
 
     def add(self, comment, file, user_id):
