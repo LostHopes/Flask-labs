@@ -18,7 +18,7 @@ class Feedback(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 ```
 
-Для можливості додавати дані з інших таблиць (JOIN), ми створюємо зв'язок у моделі Users (див. Завдання 2)[#2]
+Для можливості додавати дані з інших таблиць (JOIN), ми створюємо зв'язок у моделі Users
 
 Вміст файлу *models.py* блюпринта user
 
