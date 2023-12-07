@@ -39,6 +39,9 @@ def create_app(config_class=config.DevConfig):
 
     from .posts import posts
     app.register_blueprint(posts, url_prefix="/posts")
+
+    from .api import api
+    app.register_blueprint(api, url_prefix="/api")
     
     with app.app_context():
         app.config.from_object(config_class)
