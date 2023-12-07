@@ -43,6 +43,10 @@ def update_task(id):
 
 @api.route("/todos/<int:id>", methods=["DELETE"])
 def delete_task(id):
-    pass
+    # TODO: handle errors
+    task = Todo.query.get(id)
+    db.session.delete(task)
+    db.session.commit()
+    return jsonify({"message": f"The task with id {id} was deleted"})
 
 
