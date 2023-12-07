@@ -27,7 +27,15 @@ def create_task():
 
 @api.route("/todos/<int:id>")
 def get_task(id):
-    pass
+    task = Todo.query.get(id)
+    # TODO: handle errors
+    return jsonify({
+        "id": task.id,
+        "task": task.task,
+        "status": task.status,
+        "category": task.category,
+        "user_id": task.user_id
+    })
 
 @api.route("/todos/<int:id>", methods=["PUT"])
 def update_task(id):
