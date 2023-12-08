@@ -55,6 +55,7 @@ def update_task(id):
     data = request.get_json()
     todo.task = data.get("task")
     todo.status = data.get("status")
+    todo.category = data.get("category")
     db.session.commit()
 
     return jsonify(), 204
