@@ -92,7 +92,7 @@ def delete_task(id):
     return jsonify({"message": f"The task with id {id} was deleted"}), 200
 ```
 
-## 2. TODO API tests (Тестування TODO API за допомогою Postman)
+## 2. TODO API tests using Postman (Тестування TODO API за допомогою Postman)
 
 ### 2.1 GET /todos - get list of todos (Отримання всіх завдань)
 
