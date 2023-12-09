@@ -5,10 +5,10 @@ from app.todo.models import Todo
 from app import db
 
 
-@api.route("/todos")
+@api.route("/todos/")
 def get_todos():
     todos = Todo.query.all()
-    todos_json = []
+    todos_list = []
     for todo in todos:
         todo_dict = {
             "id": todo.id,
@@ -17,18 +17,20 @@ def get_todos():
             "category": todo.category,
             "user_id": todo.user_id
         }
-        todos_json.append(todo_dict)
-    return jsonify(todos_json), 200
+        todos_list.append(todo_dict)
+    return jsonify(todos_list), 200
 
 
-@api.route("/todos", methods=["POST"])
+@api.route("/todos/", methods=["POST"])
 def create_task():
     data = request.get_json()
     task = data.get("task")
-    todo = Todo(task=task)
+    user_id = data.get("user_id")
+    todo = Todo(task=task, user_id=user_id)
     db.session.add(todo)
+    db.session.commit()
 
-    return jsonify(), 201
+    return jsonify({"message": "Task was added to the todo list"}), 201
 
 @api.route("/todos/<int:id>")
 def get_task(id):
@@ -56,9 +58,10 @@ def update_task(id):
     todo.task = data.get("task")
     todo.status = data.get("status")
     todo.category = data.get("category")
+    todo.user_id = data.get("user_id")
     db.session.commit()
 
-    return jsonify(), 204
+    return jsonify({"message": "Task was updated"}), 200
 
 @api.route("/todos/<int:id>", methods=["DELETE"])
 def delete_task(id):
@@ -69,6 +72,6 @@ def delete_task(id):
 
     db.session.delete(task)
     db.session.commit()
-    return jsonify({"message": f"The task with id {id} was deleted"})
+    return jsonify({"message": f"The task with id {id} was deleted"}), 200
 
 
