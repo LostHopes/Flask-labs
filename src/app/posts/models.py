@@ -19,3 +19,11 @@ class Posts(db.Model):
     type = db.Column(db.Enum(PostType), nullable=False, default=PostType.NEWS.value)
     enabled = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+
+
+class PostsCategory(db.Model):
+    pass
+
+
+class PostsTag(db.Model):
+    pass
