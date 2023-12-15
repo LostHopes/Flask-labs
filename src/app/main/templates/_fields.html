@@ -146,3 +146,19 @@
     {{ form.submit(class="btn btn-primary btn-md form-control w-auto") }}
 </div>
 {% endmacro %}
+
+{% macro write_post_form(form) %}
+<div class="form-group p-2">
+    {{ form.title.label }}
+    {{ form.title(class="border rounded form-control") }}
+</div>
+
+<div class="form-group p-2">
+    {{ form.text.label }}
+    {{ form.text(class="border rounded form-control") }}
+</div>
+
+<div class="form-group p-2">
+    {{ form.submit(class="btn btn-primary form-control w-auto") }}
+</div>
+{% endmacro %}
