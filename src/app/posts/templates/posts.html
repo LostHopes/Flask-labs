@@ -2,9 +2,26 @@
 {% block title %} {{ super() }} {% endblock %}
 {% block content %}
 
-<div class="d-flex justify-content-center gap-3">
-    <div>
-        <h1 class="title">Posts</h1>
+<div class="container">
+    {% include "_flashes.html" %}
+    <div class="row">
+        <div class="col">
+            <h1 class="title text-center fs-1">Posts</h1>
+        </div>
+    </div>
+    <div class="row p-5">
+        <div class="col">
+            <form action="{{ url_for('posts.write') }}" method="get">
+                <input type="submit" value="Write post" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+    <div class="row text-center text-wrap">
+        {% for post in posts %}
+        <div class="col p-3">
+            {{ post.title }}
+        </div>
+        {% endfor %}
     </div>
 </div>
 
