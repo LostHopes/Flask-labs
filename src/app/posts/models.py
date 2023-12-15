@@ -16,14 +16,18 @@ class Posts(db.Model):
     text = db.Column(db.Text, nullable=False)
     image = db.Column(db.String, nullable=False, default="postdefault.jpg")
     created_at = db.Column(db.TIMESTAMP, nullable=False, default=datetime.now().replace(microsecond=0))
-    type = db.Column(db.Enum(PostType), nullable=False, default=PostType.NEWS.value)
+    type = db.Column(db.Enum(PostType), nullable=False, default=PostType.NEWS)
     enabled = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
 
 class PostsCategory(db.Model):
-    pass
+    __tablename__ = "posts_category"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
 
 
 class PostsTag(db.Model):
-    pass
+    __tablename__ = "posts_tag"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
