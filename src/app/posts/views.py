@@ -64,5 +64,7 @@ def update(id=None):
 
 @posts.route("/<int:id>/delete", methods=["POST"])
 @login_required
-def delete(id=None):
-    pass
+def delete(id):
+    db = posts_db.PostsHelper()
+    db.delete(id)
+    return redirect(url_for("posts.show"))
