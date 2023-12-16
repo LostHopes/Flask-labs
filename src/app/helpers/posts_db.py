@@ -13,8 +13,10 @@ class PostsHelper(Posts):
         db.session.add(post)
         db.session.commit()
 
-    def remove():
-        pass
+    def delete(self, id):
+        post = Posts.query.filter_by(id=id).first()
+        db.session.delete(post)
+        db.session.commit()
 
-    def update():
+    def update(self):
         pass
