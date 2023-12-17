@@ -1,11 +1,12 @@
 from app.posts.models import Posts
+from app.user.models import Users
 from app import db
 
 
 class PostsHelper(Posts):
 
     def show(self):
-        query = Posts.query.all()
+        query = db.session.query(Posts, Users).join(Users).all()
         return query
     
     def create(self, title, text, user_id):
