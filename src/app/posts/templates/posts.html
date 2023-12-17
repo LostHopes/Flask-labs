@@ -17,9 +17,12 @@
         </div>
     </div>
     <div class="row text-center text-wrap">
-        {% for post in posts %}
+        {% for post, user in posts %}
         <div class="col p-3">
-            {{ post.title }}
+            <div>{{ loop.index }} {{ post.title }}</div>
+            <div> Category: {{ post.type.value }}</div>
+            <div>Written by: {{ user.login }}</div>
+            <div>Created at: {{ post.created_at }}</div>
 
             {% if current_user.id == post.user_id %}
             <div class="d-flex justify-content-center p-2 gap-2">
