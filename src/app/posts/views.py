@@ -1,4 +1,4 @@
-from flask import url_for, redirect, render_template, request
+from flask import url_for, redirect, render_template, request, flash
 from flask_login import login_required, current_user
 
 from app.helpers import posts_db
@@ -47,7 +47,7 @@ def create():
         request.form.get("text"),
         current_user.get_id()
     )
-
+    flash("Post was created", "success")
     return redirect(url_for("posts.show"))
 
 
@@ -67,4 +67,5 @@ def update(id=None):
 def delete(id):
     db = posts_db.PostsHelper()
     db.delete(id)
+    flash("Post was deleted", "success")
     return redirect(url_for("posts.show"))
