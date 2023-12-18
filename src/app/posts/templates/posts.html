@@ -26,8 +26,8 @@
 
             {% if current_user.id == post.user_id %}
             <div class="d-flex justify-content-center p-2 gap-2">
-                <form action="#" method="post">
-                    <input type="button" value="Edit" class="btn btn-primary">
+                <form action="{{ url_for('posts.edit', id=post.id) }}" method="get">
+                    <input type="submit" value="Edit" class="btn btn-primary">
                 </form>
                 <form action="{{ url_for('posts.delete', id=post.id) }}" method="post">
                     <input type="submit" value="Delete" class="btn btn-danger">
