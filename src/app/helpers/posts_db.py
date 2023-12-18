@@ -19,5 +19,8 @@ class PostsHelper(Posts):
         db.session.delete(post)
         db.session.commit()
 
-    def update(self):
-        pass
+    def update(self, id, title, text):
+        post = Posts.query.filter_by(id=id).first()
+        post.title = title
+        post.text = text
+        db.session.commit()
