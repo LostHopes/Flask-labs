@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "_fields.html" as field %}
+{% block title %} {{ super() }} {% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-center gap-5 flex-wrap">
+    <div>
+        <h1 class="title">Edit post</h1>
+    </div>
+    <div>
+        <form action="{{ url_for('posts.update', id=id) }}" method="post">
+            {{ field.edit_post_form(form) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
