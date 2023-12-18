@@ -2,7 +2,7 @@ from flask import url_for, redirect, render_template, request, flash
 from flask_login import login_required, current_user
 
 from app.helpers import posts_db
-from .forms import WritePostForm
+from .forms import WritePostForm, EditPostForm
 from . import posts
 
 
@@ -33,7 +33,14 @@ def write():
 @login_required
 def edit(id):
     title = "Edit post"
-    return render_template("post_edit.html", title=title)
+
+    form = EditPostForm()
+
+    if form.validate_on_submit():
+        return redirect(url_for("posts.update"))
+
+
+    return render_template("post_edit.html", title=title, form=form, id=id)
 
 
 @posts.route("/create", methods=["POST"])
@@ -56,13 +63,14 @@ def get(id=None):
     pass
 
 
-@posts.route("/<int:id>/update", methods=["POST"])
+@posts.route("/update/<int:id>", methods=["POST"])
 @login_required
-def update(id=None):
-    pass
+def update(id):
+    flash("Post was updated", "success")
+    return redirect(url_for("posts.show"))
 
 
-@posts.route("/<int:id>/delete", methods=["POST"])
+@posts.route("/delete/<int:id>", methods=["POST"])
 @login_required
 def delete(id):
     db = posts_db.PostsHelper()
