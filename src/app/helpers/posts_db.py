@@ -8,6 +8,10 @@ class PostsHelper(Posts):
     def show(self):
         query = db.session.query(Posts, Users).join(Users).all()
         return query
+
+    def get(self, id):
+        post = Posts.query.filter_by(id=id).first()
+        return post
     
     def create(self, title, text, user_id):
         post = Posts(title=title, text=text, user_id=user_id)
