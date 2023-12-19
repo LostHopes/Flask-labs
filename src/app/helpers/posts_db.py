@@ -13,8 +13,8 @@ class PostsHelper(Posts):
         post = Posts.query.filter_by(id=id).first()
         return post
     
-    def create(self, title, text, user_id):
-        post = Posts(title=title, text=text, user_id=user_id)
+    def create(self, title, text, category, user_id):
+        post = Posts(title=title, text=text, category=category, user_id=user_id)
         db.session.add(post)
         db.session.commit()
 
@@ -23,8 +23,9 @@ class PostsHelper(Posts):
         db.session.delete(post)
         db.session.commit()
 
-    def update(self, id, title, text):
+    def update(self, id, title, text, category):
         post = Posts.query.filter_by(id=id).first()
         post.title = title
         post.text = text
+        post.category = category
         db.session.commit()
