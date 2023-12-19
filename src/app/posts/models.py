@@ -16,7 +16,7 @@ class Posts(db.Model):
     text = db.Column(db.Text, nullable=False)
     image = db.Column(db.String, nullable=False, default="postdefault.jpg")
     created_at = db.Column(db.TIMESTAMP, nullable=False, default=datetime.now().replace(microsecond=0))
-    type = db.Column(db.Enum(PostType), nullable=False, default=PostType.NEWS)
+    category = db.Column(db.Enum(PostType), nullable=False, default=PostType.NEWS)
     enabled = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
