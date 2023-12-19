@@ -34,7 +34,13 @@ def write():
 def edit(id):
     title = "Edit post"
 
+    db = posts_db.PostsHelper()
+    post = db.get(id)
+
     form = EditPostForm()
+
+    form.title.data = post.title
+    form.text.data = post.text
 
     if form.validate_on_submit():
         return redirect(url_for("posts.update"))
@@ -59,13 +65,21 @@ def create():
 
 
 @posts.route("/<int:id>")
-def get(id=None):
-    pass
+def get(id):
+    db = posts_db.PostsHelper()
+    post = db.get(id)
+    return render_template("article.html", post=post)
 
 
 @posts.route("/update/<int:id>", methods=["POST"])
 @login_required
 def update(id):
+    db = posts_db.PostsHelper()
+
+    title = request.form.get("title")
+    text = request.form.get("text")
+    db.update(id, title, text)
+
     flash("Post was updated", "success")
     return redirect(url_for("posts.show"))
 
