@@ -12,14 +12,18 @@
     <div class="row p-5">
         <div class="col">
             <form action="{{ url_for('posts.write') }}" method="get">
-                <input type="submit" value="Write post" class="btn btn-primary">
+                <input type="submit" value="Write post" class="btn btn-primary justify-content-center">
             </form>
         </div>
     </div>
     <div class="row text-center text-wrap">
         {% for post, user in posts %}
         <div class="col p-3">
-            <div>{{ loop.index }} {{ post.title }}</div>
+            <div>
+                <a href="{{ url_for('posts.get', id=post.id) }}">
+                    {{ loop.index }} {{ post.title }}
+                </a>
+            </div>
             <div> Category: {{ post.type.value }}</div>
             <div>Written by: {{ user.login }}</div>
             <div>Created at: {{ post.created_at }}</div>
