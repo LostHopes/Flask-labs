@@ -58,6 +58,7 @@ def create():
     db.create(
         request.form.get("title"),
         request.form.get("text"),
+        request.form.get("category"),
         current_user.get_id()
     )
     flash("Post was created", "success")
@@ -78,7 +79,8 @@ def update(id):
 
     title = request.form.get("title")
     text = request.form.get("text")
-    db.update(id, title, text)
+    category = request.form.get("category")
+    db.update(id, title, text, category)
 
     flash("Post was updated", "success")
     return redirect(url_for("posts.show"))
