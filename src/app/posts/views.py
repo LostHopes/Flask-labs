@@ -11,9 +11,10 @@ def show():
     title = "Posts"
 
     db = posts_db.PostsHelper()
-    posts = db.show()
-
-    return render_template("posts.html", title=title, posts=posts)
+    items = 9
+    page = request.args.get("page", 1, type=int)
+    pagination = db.show(page, items)
+    return render_template("posts.html", title=title, pagination=pagination)
 
 
 @posts.route("/write")
