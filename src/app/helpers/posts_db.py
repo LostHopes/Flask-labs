@@ -8,7 +8,10 @@ from app import db
 class PostsHelper(Posts):
 
     def show(self, page, max_items):
-        query = db.session.query(Posts, Users).join(Users).order_by(Posts.created_at.desc()).paginate(page=page, per_page=max_items)
+        query = db.session.query(Posts, Users)\
+            .join(Users).\
+                order_by(Posts.created_at.desc())\
+                    .paginate(page=page, per_page=max_items)
         return query
 
 
