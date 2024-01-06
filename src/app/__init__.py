@@ -19,8 +19,8 @@ login_manager.login_message_category = "info"
 
 def create_app(config_class=config.DevConfig):
     
-    from .main import main
-    app.register_blueprint(main)
+    from .base import base
+    app.register_blueprint(base)
     
     from .user import user
     app.register_blueprint(user)
