@@ -1,11 +1,12 @@
 from datetime import datetime
 
-from tests.base import BaseTest, db
 from app.user.models import Users
+from app import db
+from tests.main import app
 
-class TestUser(BaseTest):
-    def test_create_user(self):
-        user = Users(
+
+def test_create_user(app):
+    user = Users(
             login="admin",
             email="admin@example.com",
             password="password",
@@ -13,6 +14,6 @@ class TestUser(BaseTest):
             surname="Admin",
             register_date=datetime.now().replace(second=0, microsecond=0)
         )
-        db.session.add(user)
-        db.session.commit()
-        assert user.id is not None
+    db.session.add(user)
+    db.session.commit()
+    assert user.id is not None
