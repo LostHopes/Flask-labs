@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for, flash, request
 from sqlalchemy.exc import IntegrityError, StatementError
 from PIL import UnidentifiedImageError
 from flask_login import login_required, current_user, logout_user, login_user
+import flask_jwt_extended as jwt
 
 import datetime
 
