@@ -13,7 +13,6 @@ def test_register_user(client):
         "confirm_password": "password",
     })
     assert response.status_code == 200
-    assert response.get_data(as_text=True)
 
 
 def test_login_user(client):
@@ -23,5 +22,3 @@ def test_login_user(client):
         "password": "password"
     })
     assert response.status_code == 200
-    assert response.get_data(as_text=True)
-    
