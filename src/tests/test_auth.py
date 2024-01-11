@@ -3,6 +3,7 @@ from app.user.models import Users
 
 
 def test_register_user(client):
+    """Test register user using register form"""
     response = client.post("/register", json={
         "name": "Test",
         "surname": "User",
@@ -16,6 +17,7 @@ def test_register_user(client):
 
 
 def test_login_user(client):
+    """Test register user using login form"""
     response = client.post("/login", json={
         "email": "test123@gmail.com",
         "password": "password"

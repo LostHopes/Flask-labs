@@ -5,6 +5,7 @@ from app.user.models import Users
 
 
 def test_create_user(client):
+    """Test creating a user"""
     with client.application.app_context():
         user = Users(
             login="admin",
@@ -19,6 +20,7 @@ def test_create_user(client):
 
 
 def test_delete_user(client):
+    """Test deleting a user"""
     with client.application.app_context():
         user = Users.query.filter_by(email="admin@example.com").first()
         db.session.delete(user)
