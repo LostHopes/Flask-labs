@@ -17,6 +17,18 @@ def test_create_user(client):
         )
         db.session.add(user)
         db.session.commit()
+        assert user.is_authenticated
+        assert user.is_active
+        assert not user.is_anonymous
+
+
+def test_user_info(client):
+    """Test user info"""
+    with client.application.app_context():
+        email = "admin@example.com"
+        user = Users.query.filter_by(email=email).first()
+        assert user.email == email
+
 
 
 def test_delete_user(client):
