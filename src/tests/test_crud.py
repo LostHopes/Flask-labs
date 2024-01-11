@@ -30,11 +30,19 @@ def test_user_info(client):
         assert user.email == email
 
 
+def test_user_update(client):
+    """Test updating the user"""
+    with client.application.app_context():
+        user = Users.query.filter_by(login="admin").first()
+        user.login = "user"
+        user.email = "user@example.com"
+        db.session.commit()
+
 
 def test_delete_user(client):
     """Test deleting a user"""
     with client.application.app_context():
-        user = Users.query.filter_by(email="admin@example.com").first()
+        user = Users.query.filter_by(email="user@example.com").first()
         db.session.delete(user)
         db.session.commit()
         assert user.id is not None
