@@ -6,6 +6,16 @@ from app import db
 
 # TODO: generate and refresh jwt token
 
+@api.route("/token/generate")
+def generate_token():
+    pass
+
+
+@api.route("/token/refresh")
+def refresh_token():
+    pass
+
+
 @api.route("/todos/")
 @jwt_required()
 def get_todos():
