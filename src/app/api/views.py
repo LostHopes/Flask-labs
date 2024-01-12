@@ -2,13 +2,16 @@ from flask import jsonify, request
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from . import api
 from app.todo.models import Todo
+from app.user.models import Users
 from app import db
 
 # TODO: generate and refresh jwt token
 
 @api.route("/token/generate")
 def generate_token():
-    pass
+    user = Users.query.filter_by(email="test@gmail.com").first()
+    access_token = create_access_token(identity=user.email)
+    return jsonify({"token": access_token})
 
 
 @api.route("/token/refresh")
