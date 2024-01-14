@@ -43,10 +43,10 @@ def create_app(config_class=config.DevConfig):
     app.register_blueprint(posts, url_prefix="/posts")
 
     from .api import api
-    app.register_blueprint(api, url_prefix="/api")
+    app.register_blueprint(api, url_prefix="/api/todo")
 
     from .films import films
-    app.register_blueprint(films, url_prefix="/films")
+    app.register_blueprint(films, url_prefix="/api/films")
     
     with app.app_context():
         app.config.from_object(config_class)
