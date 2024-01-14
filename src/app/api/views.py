@@ -1,56 +1,71 @@
 from flask import jsonify, request
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+import flask_jwt_extended as jwt
+
+from datetime import timedelta
+
 from . import api
 from app.todo.models import Todo
-from app.user.models import Users
+from app.helpers.user_db import Users, UsersHelper
 from app import db
 
-# TODO: generate and refresh jwt token
 
-@api.route("/token/generate")
+@api.route("/token/generate", methods=["POST"])
 def generate_token():
-    user = Users.query.filter_by(email="test@gmail.com").first()
-    access_token = create_access_token(identity=user.email)
-    return jsonify({"token": access_token})
+    data = request.get_json()
+    email = data.get("email")
+    password = data.get("password")
+    helper = UsersHelper()
+    succeed = helper.login(email, password)
+
+    if not succeed:
+        return jsonify({"message": "Invalid login or password"}), 401
+
+    user = Users.query.filter_by(email=email).first()
+    access_token = jwt.create_access_token(identity=user.email, expires_delta=timedelta(days=1))
+
+    response = jsonify(token=access_token), 200
+
+    return response
 
 
-@api.route("/token/refresh")
-def refresh_token():
-    pass
-
-
-@api.route("/todos/")
-@jwt_required()
+@api.route("/todos/", methods=["GET"])
+@jwt.jwt_required()
 def get_todos():
-    current_user = get_jwt_identity()
-    todos = Todo.query.filter_by(user_id=current_user).all()
+    identity = jwt.get_jwt_identity()
+    user = Users.query.filter_by(email=identity).first()
+    todos = Todo.query.filter_by(user_id=user.id).all()
+
     todos_list = []
     for todo in todos:
         todo_dict = {
             "id": todo.id,
             "task": todo.task,
             "status": todo.status,
-            "category": todo.category,
-            "user_id": todo.user_id
+            "category": todo.category
         }
         todos_list.append(todo_dict)
-    return jsonify(todos_list), 200
+
+    response = jsonify(todos_list), 200
+
+    return response
+
 
 @api.route("/todos/", methods=["POST"])
-@jwt_required()
+@jwt.jwt_required()
 def create_task():
-    current_user = get_jwt_identity()
+    identity = jwt.get_jwt_identity()
+    user = Users.query.filter_by(email=identity).first()
     data = request.get_json()
     task = data.get("task")
-    user_id = current_user
-    todo = Todo(task=task, user_id=user_id)
+    todo = Todo(task=task, user_id=user.id)
     db.session.add(todo)
     db.session.commit()
 
     return jsonify({"message": "Task was added to the todo list"}), 201
 
+
 @api.route("/todos/<int:id>")
-@jwt_required()
+@jwt.jwt_required()
 def get_task(id):
     task = Todo.query.get(id)
 
@@ -66,16 +81,18 @@ def get_task(id):
     }), 200
 
 @api.route("/todos/<int:id>", methods=["PUT"])
-@jwt_required()
+@jwt.jwt_required()
 def update_task(id):
+    identity = jwt.get_jwt_identity()
+    user = Users.query.filter_by(email=identity).first()
+
     todo = Todo.query.get(id)
 
     if not todo:
         return jsonify({"message": "Task not found"}), 404
 
-    current_user = get_jwt_identity()
-
-    if todo.user_id != current_user:
+   
+    if todo.user_id != user.id:
         return jsonify({"message": "Unauthorized"}), 401
 
     data = request.get_json()
@@ -86,17 +103,19 @@ def update_task(id):
 
     return jsonify({"message": "Task was updated"}), 200
 
+
 @api.route("/todos/<int:id>", methods=["DELETE"])
-@jwt_required()
+@jwt.jwt_required()
 def delete_task(id):
     task = Todo.query.get(id)
 
     if not task:
         return jsonify({"message": "Task not found"}), 404
 
-    current_user = get_jwt_identity()
+    identity = jwt.get_jwt_identity()
+    user = Users.query.filter_by(email=identity).first()
 
-    if task.user_id != current_user:
+    if task.user_id != user.id:
         return jsonify({"message": "Unauthorized"}), 401
 
     db.session.delete(task)

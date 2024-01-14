@@ -7,6 +7,7 @@ class Config:
     DEVELOPMENT = False
     SECRET_KEY = b"secretkey123"
     JWT_SECRET_KEY = b"secretkey123"
+    JWT_TOKEN_LOCATION = ["headers", "query_string", "json"]
     SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///" + os.path.join(basedir, "db", "users.sqlite")
 
 
