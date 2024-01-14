@@ -3,6 +3,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
 
 from . import config
 
@@ -13,14 +14,15 @@ db = SQLAlchemy()
 migrate = Migrate()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
+jwt = JWTManager(app)
 login_manager.login_view = "user.login"
 login_manager.login_message = "You should login before accessing this page"
 login_manager.login_message_category = "info"
 
 def create_app(config_class=config.DevConfig):
     
-    from .main import main
-    app.register_blueprint(main)
+    from .base import base
+    app.register_blueprint(base)
     
     from .user import user
     app.register_blueprint(user)
@@ -39,6 +41,9 @@ def create_app(config_class=config.DevConfig):
 
     from .posts import posts
     app.register_blueprint(posts, url_prefix="/posts")
+
+    from .api import api
+    app.register_blueprint(api, url_prefix="/api")
     
     with app.app_context():
         app.config.from_object(config_class)
@@ -47,6 +52,7 @@ def create_app(config_class=config.DevConfig):
         bcrypt.init_app(app)
         login_manager.init_app(app)
         db.create_all(bind_key=None)
+        jwt.init_app(app)
         
     return app
    

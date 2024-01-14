@@ -10,7 +10,7 @@ class PostType(enum.Enum):
 
 
 class Posts(db.Model):
-    _tablename__ = "posts"
+    __tablename__ = "posts"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String, nullable=False)
     text = db.Column(db.Text, nullable=False)
@@ -19,17 +19,3 @@ class Posts(db.Model):
     category = db.Column(db.Enum(PostType), nullable=False, default=PostType.NEWS)
     enabled = db.Column(db.Boolean, nullable=False, default=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-
-
-class PostsCategory(db.Model):
-    __tablename__ = "posts_category"
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    post_id = db.Column(db.Integer, db.ForeignKey("posts.id"))
-
-
-class PostsTag(db.Model):
-    __tablename__ = "posts_tag"
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    post_id = db.Column(db.Integer, db.ForeignKey("posts.id"))
