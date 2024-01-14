@@ -44,6 +44,9 @@ def create_app(config_class=config.DevConfig):
 
     from .api import api
     app.register_blueprint(api, url_prefix="/api")
+
+    from .films import films
+    app.register_blueprint(films, url_prefix="/films")
     
     with app.app_context():
         app.config.from_object(config_class)
