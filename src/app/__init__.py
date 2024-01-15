@@ -50,10 +50,6 @@ def create_app(config_class=config.DevConfig):
     from app.user_api import user_api
     app.register_blueprint(user_api)
 
-    from .user_api.resources import UserAPI, UsersGroupAPI
-    api.add_resource(UserAPI, "/api/users/<int:id>")
-    api.add_resource(UsersGroupAPI, "/api/users")
-
     with app.app_context():
         app.config.from_object(config_class)
         db.init_app(app)

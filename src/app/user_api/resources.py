@@ -1,6 +1,7 @@
 from flask_restful import Resource
 
 from . import user_api
+from app import api
 
 
 class UserAPI(Resource):
@@ -20,3 +21,7 @@ class UsersGroupAPI(Resource):
 
     def create(self):
         pass
+
+
+api.add_resource(UserAPI, "/api/users/<int:id>")
+api.add_resource(UsersGroupAPI, "/api/users")
