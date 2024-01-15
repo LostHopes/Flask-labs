@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for, flash, request
 from sqlalchemy.exc import IntegrityError, StatementError
 from PIL import UnidentifiedImageError
 from flask_login import login_required, current_user, logout_user, login_user
+import flask_jwt_extended as jwt
 
 import datetime
 
@@ -9,7 +10,7 @@ from .forms import ChangePasswordForm, LoginForm, \
     LogoutForm, RegisterForm, UpdateAccountForm
 from app.user import user
 from app import login_manager
-from app.helpers import database
+from app.helpers import user_db
 
 
 @user.route("/account")
@@ -47,7 +48,7 @@ def account():
 @login_required
 def update_account():
     try:
-        db = database.HandleUsers()
+        db = user_db.UsersHelper()
         db.update(
             request.form.get("username"),
             request.form.get("email"),
@@ -70,7 +71,7 @@ def update_account():
 @user.route("/account/update/credentials", methods=["POST"])
 @login_required
 def change_password():
-    user = database.HandleUsers()
+    user = user_db.UsersHelper()
     if user.change_password(
         request.form.get("new_password"),
         request.form.get("repeat_password")
@@ -100,7 +101,7 @@ def register():
     try:
         title = "Register"
         form = RegisterForm()
-        user = database.HandleUsers()
+        user = user_db.UsersHelper()
         
         register_date = datetime.datetime.now().replace(second=0, microsecond=0)
         if form.validate_on_submit():
@@ -131,7 +132,7 @@ def login():
 
     title = "Login"
     form = LoginForm()
-    user = database.HandleUsers()
+    user = user_db.UsersHelper()
 
     if form.validate_on_submit():
         email = form.email.data
@@ -151,16 +152,9 @@ def login():
 @user.route("/users")
 @login_required
 def users():
-    handler = database.HandleUsers()
+    handler = user_db.UsersHelper()
     get_all = handler.get_all()
     return render_template("users.html", users=get_all)
-
-
-
-@user.route("/feedback/")
-def feedback():
-    title = "Feedback"
-    return render_template("feedback.html", title=title)
 
 
 @user.after_request
@@ -168,7 +162,7 @@ def after_request(response):
     now = datetime.datetime.now().replace(second=0, microsecond=0)
     current_user.last_seen = now
     try:
-        db = database.HandleUsers()
+        db = user_db.UsersHelper()
         db.commit()
     except StatementError:
         flash('Error while updating user last seen!', 'danger')

@@ -9,12 +9,12 @@
 <div class="d-flex">
     <div class="row justify-content-center flex-wrap gap-5">
         <div class="border rounded w-50">
-            <form action="{{ url_for('cookies.add_cookie') }}" method="post" class="form-check">
+            <form action="{{ url_for('cookies.add') }}" method="post" class="form-check">
                 {{ field.add_cookies_form(cookies_form) }}
             </form>
         </div>
         <div class="rounded w-50">
-            <form action="{{ url_for('cookies.remove_cookie') }}" method="post" class="form-check">
+            <form action="{{ url_for('cookies.remove') }}" method="post" class="form-check">
                 {{ field.rm_cookies_form(cookies_form) }}
             </form>
         </div>

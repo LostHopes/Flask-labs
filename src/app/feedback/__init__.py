@@ -1,10 +1,10 @@
 from flask import Blueprint
 
-main = Blueprint(
-    "main",
+feedback = Blueprint(
+    "feedback",
     __name__,
     static_folder="static",
     template_folder="templates"
 )
 
-from . import views, errors
+from . import forms, models, views
