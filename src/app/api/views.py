@@ -28,6 +28,25 @@ def generate_token():
     return response
 
 
+@api.route("/token/refresh", methods=["POST"])
+def refresh_token():
+    data = request.get_json()
+    email = data.get("email")
+    password = data.get("password")
+    helper = UsersHelper()
+    succeed = helper.login(email, password)
+
+    if not succeed:
+        return jsonify({"message": "Invalid login or password"}), 401
+
+    user = Users.query.filter_by(email=email).first()
+    access_token = jwt.create_refresh_token(identity=user.email, expires_delta=timedelta(days=1))
+
+    response = jsonify(token=access_token), 200
+
+    return response
+
+
 @api.route("/todos/", methods=["GET"])
 @jwt.jwt_required()
 def get_todos():
