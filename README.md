@@ -1,6 +1,6 @@
 # Лабораторна №12 Тестування
 
-# 1. Тестування з допомогою фреймворка pytest з плагіном coverage
+## 1. Тестування з допомогою фреймворка pytest з плагіном coverage
 
 Конфігурація тестів у файлі *conftest.py*
 
@@ -40,7 +40,7 @@ def runner(app):
     
 ```
 
-## 1.1 Маршрути (routes)
+### 1.1 Маршрути (routes)
 
 ```python
 from datetime import datetime
@@ -87,7 +87,7 @@ def test_not_found_page(client):
 
 ```
 
-## 1.2 CRUD
+### 1.2 CRUD
 
 Вміст файла *test_crud.py*
 
@@ -143,7 +143,7 @@ def test_delete_user(client):
 
 ```
 
-## 1.3 Авторизація
+### 1.3 Авторизація
 
 ```python
 from datetime import datetime
@@ -203,15 +203,15 @@ def test_logout_user(client):
 
 ```
 
-# 2. Виконання тестів у режимі verbose
+## 2. Виконання тестів у режимі verbose
 
 ![image](/screenshots/lab12/lab12_1.png)
 
-# 3. Виконання pytest з розширенням coverage
+## 3. Виконання pytest з розширенням coverage
 
 ![image](/screenshots/lab12/lab12_2.png)
 
-# 4. Звіт покриття у форматі html
+## 4. Звіт покриття у форматі html
 
 ```
 python -v --cov --cov-report html
