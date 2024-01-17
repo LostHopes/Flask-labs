@@ -48,6 +48,9 @@ def create_app(config_class=config.DevConfig):
     from .todo_api import todo_api
     app.register_blueprint(todo_api, url_prefix="/api")
 
+    from .user_api import user_api
+    app.register_blueprint(user_api)
+
     from .films import films
     app.register_blueprint(films)
     
