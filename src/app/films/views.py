@@ -83,7 +83,8 @@ class GroupFilmAPI(Resource):
         film.time_added = datetime.now().replace(microsecond=0)
         film.genre = data.get("genre")
         film.user_id = user.id
-
+        
+        db.session.add(film)
         db.session.commit()
 
         return {"msg": "Film was successfully added"}
