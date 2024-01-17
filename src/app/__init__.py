@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
+from flask_restful import Api
 
 from . import config
 
@@ -14,7 +15,9 @@ db = SQLAlchemy()
 migrate = Migrate()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
-jwt = JWTManager(app)
+jwt = JWTManager()
+api = Api()
+
 login_manager.login_view = "user.login"
 login_manager.login_message = "You should login before accessing this page"
 login_manager.login_message_category = "info"
@@ -42,11 +45,11 @@ def create_app(config_class=config.DevConfig):
     from .posts import posts
     app.register_blueprint(posts, url_prefix="/posts")
 
-    from .api import api
-    app.register_blueprint(api, url_prefix="/api/todo")
+    from .todo_api import todo_api
+    app.register_blueprint(todo_api, url_prefix="/api")
 
     from .films import films
-    app.register_blueprint(films, url_prefix="/api/films")
+    app.register_blueprint(films)
     
     with app.app_context():
         app.config.from_object(config_class)
@@ -56,6 +59,7 @@ def create_app(config_class=config.DevConfig):
         login_manager.init_app(app)
         db.create_all(bind_key=None)
         jwt.init_app(app)
+        api.init_app(app)
         
     return app
    

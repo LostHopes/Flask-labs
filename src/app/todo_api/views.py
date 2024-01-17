@@ -3,13 +3,13 @@ import flask_jwt_extended as jwt
 
 from datetime import timedelta
 
-from . import api
+from . import todo_api
 from app.todo.models import Todo
 from app.helpers.user_db import Users, UsersHelper
 from app import db
 
 
-@api.route("/token/generate", methods=["POST"])
+@todo_api.route("/token/generate", methods=["POST"])
 def generate_token():
     data = request.get_json()
     email = data.get("email")
@@ -28,7 +28,7 @@ def generate_token():
     return response
 
 
-@api.route("/todos/", methods=["GET"])
+@todo_api.route("/todos/", methods=["GET"])
 @jwt.jwt_required()
 def get_todos():
     identity = jwt.get_jwt_identity()
@@ -50,7 +50,7 @@ def get_todos():
     return response
 
 
-@api.route("/todos/", methods=["POST"])
+@todo_api.route("/todos/", methods=["POST"])
 @jwt.jwt_required()
 def create_task():
     identity = jwt.get_jwt_identity()
@@ -64,7 +64,7 @@ def create_task():
     return jsonify({"message": "Task was added to the todo list"}), 201
 
 
-@api.route("/todos/<int:id>")
+@todo_api.route("/todos/<int:id>")
 @jwt.jwt_required()
 def get_task(id):
     task = Todo.query.get(id)
@@ -80,7 +80,7 @@ def get_task(id):
         "user_id": task.user_id
     }), 200
 
-@api.route("/todos/<int:id>", methods=["PUT"])
+@todo_api.route("/todos/<int:id>", methods=["PUT"])
 @jwt.jwt_required()
 def update_task(id):
     identity = jwt.get_jwt_identity()
@@ -104,7 +104,7 @@ def update_task(id):
     return jsonify({"message": "Task was updated"}), 200
 
 
-@api.route("/todos/<int:id>", methods=["DELETE"])
+@todo_api.route("/todos/<int:id>", methods=["DELETE"])
 @jwt.jwt_required()
 def delete_task(id):
     task = Todo.query.get(id)
