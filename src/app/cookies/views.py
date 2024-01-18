@@ -6,7 +6,7 @@ from .forms import CookiesForm
 from . import cookies
 
 
-@cookies.route("/info", methods=["GET", "POST"])
+@cookies.route("/", methods=["GET", "POST"])
 @login_required
 def info():
     if current_user.is_anonymous:
@@ -24,7 +24,7 @@ def info():
         cookies=cookies)
 
 
-@cookies.route("/cookie/add/", methods=["POST"])
+@cookies.route("/cookies/add/", methods=["POST"])
 def add():
     name = request.form.get("name")
     value = request.form.get("value")
@@ -42,7 +42,7 @@ def add():
     return response
 
 
-@cookies.route("/cookie/remove/", methods=["POST"])
+@cookies.route("/cookies/remove/", methods=["POST"])
 def remove():
     response = make_response(redirect(url_for("cookies.info")))
     name = request.form.get("name")

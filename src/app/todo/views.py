@@ -6,7 +6,7 @@ from . import todo
 from .forms import TodoForm
 
 
-@todo.route("/list")
+@todo.route("/")
 @login_required
 def todo_list():
     title = "Todo list"
