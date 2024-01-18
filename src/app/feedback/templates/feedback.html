@@ -6,10 +6,10 @@
 
 <div class="d-flex justify-content-center flex-wrap col-md-6 mx-auto">
     <div class="flex-row w-100">
+        {% include "_flashes.html" %}
         <h1 class="title p-3 text-center w-100">Feedback</h1>
     </div>
     <div>
-        {% include "_flashes.html" %}
         {% for comment, user in comments %}
         <div>{{ comment.comment }}</div>
         <div class="pt-3">Published in: {{ comment.comment_date }}</div>

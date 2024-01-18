@@ -6,7 +6,7 @@ from .forms import WritePostForm, EditPostForm
 from . import posts
 
 
-@posts.route("/list")
+@posts.route("/")
 def show():
     title = "Posts"
 
