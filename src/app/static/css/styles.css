@@ -16,6 +16,10 @@ footer{
   margin-top: auto;
 }
 
+a{
+  text-decoration: none;
+}
+
 :root {
   --title: 40px;
   --content: 20px;

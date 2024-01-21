@@ -14,7 +14,7 @@ def links():
     menu = [
         {"text": "Albums", "link": url_for("base.albums")},
         {"text": "Contact", "link": url_for("base.contact")},
-        {"text": "Skills", "link": url_for("skills.skills_list")},
+        {"text": "Skills", "link": url_for("skills.show")},
         {"text": "Todo", "link": url_for("todo.todo_list")},
         {"text": "Posts", "link": url_for("posts.show")},
         {"text": "About", "link": url_for("base.about")},

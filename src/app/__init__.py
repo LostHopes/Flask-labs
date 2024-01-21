@@ -15,8 +15,8 @@ db = SQLAlchemy()
 migrate = Migrate()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
-jwt = JWTManager(app)
-api = Api(app)
+jwt = JWTManager()
+api = Api()
 login_manager.login_view = "user.login"
 login_manager.login_message = "You should login before accessing this page"
 login_manager.login_message_category = "info"
@@ -43,6 +43,9 @@ def create_app(config_class=config.DevConfig):
 
     from .posts import posts
     app.register_blueprint(posts, url_prefix="/posts")
+
+    from app.swagger import swagger
+    app.register_blueprint(swagger, url_prefix="/api")
 
     from .todo_api import todo_api
     app.register_blueprint(todo_api, url_prefix="/api")
