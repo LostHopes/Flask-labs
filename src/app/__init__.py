@@ -50,6 +50,9 @@ def create_app(config_class=config.DevConfig):
     from app.user_api import user_api
     app.register_blueprint(user_api)
 
+    from app.films import films
+    app.register_blueprint(films)
+
     with app.app_context():
         app.config.from_object(config_class)
         db.init_app(app)
