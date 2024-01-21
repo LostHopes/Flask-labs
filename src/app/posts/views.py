@@ -1,16 +1,15 @@
 from flask import url_for, redirect, render_template, request, flash
 from flask_login import login_required, current_user
 
-from app.helpers import posts_db
+from . import posts, helper
 from .forms import WritePostForm, EditPostForm
-from . import posts
 
 
 @posts.route("/list")
 def show():
     title = "Posts"
 
-    db = posts_db.PostsHelper()
+    db = helper.PostsHelper()
     items = 9
     page = request.args.get("page", 1, type=int)
     pagination = db.show(page, items)
@@ -35,7 +34,7 @@ def write():
 def edit(id):
     title = "Edit post"
 
-    db = posts_db.PostsHelper()
+    db = helper.PostsHelper()
     post = db.get(id)
 
     form = EditPostForm()
@@ -54,12 +53,13 @@ def edit(id):
 @login_required
 def create():
 
-    db = posts_db.PostsHelper()
+    db = helper.PostsHelper()
 
     db.create(
         request.form.get("title"),
         request.form.get("text"),
         request.form.get("category"),
+        request.form.get("image"),
         current_user.get_id()
     )
     flash("Post was created", "success")
@@ -68,7 +68,7 @@ def create():
 
 @posts.route("/<int:id>")
 def get(id):
-    db = posts_db.PostsHelper()
+    db = helper.PostsHelper()
     post = db.get(id)
     return render_template("article.html", post=post)
 
@@ -76,7 +76,7 @@ def get(id):
 @posts.route("/update/<int:id>", methods=["POST"])
 @login_required
 def update(id):
-    db = posts_db.PostsHelper()
+    db = helper.PostsHelper()
 
     title = request.form.get("title")
     text = request.form.get("text")
@@ -90,7 +90,7 @@ def update(id):
 @posts.route("/delete/<int:id>", methods=["POST"])
 @login_required
 def delete(id):
-    db = posts_db.PostsHelper()
+    db = helper.PostsHelper()
     db.delete(id)
     flash("Post was deleted", "success")
     return redirect(url_for("posts.show"))

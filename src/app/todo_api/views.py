@@ -5,7 +5,7 @@ from datetime import timedelta
 
 from . import todo_api
 from app.todo.models import Todo
-from app.helpers.user_db import Users, UsersHelper
+from app.user.helper import Users, UsersHelper
 from app import db
 
 

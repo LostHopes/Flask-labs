@@ -19,8 +19,8 @@ class PostsHelper(Posts):
         post = Posts.query.filter_by(id=id).first()
         return post
     
-    def create(self, title, text, category, user_id):
-        post = Posts(title=title, text=text, category=category, user_id=user_id)
+    def create(self, title, text, category, image, user_id):
+        post = Posts(title=title, text=text, category=category, image=image, user_id=user_id)
         db.session.add(post)
         db.session.commit()
 

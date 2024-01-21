@@ -1,9 +1,8 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 
-from app.feedback import feedback
+from . import feedback, helper
 from .forms import FeedbackForm
-from app.helpers import feedback_db
 
 
 @feedback.route("/", methods=["GET", "POST"])
@@ -11,7 +10,7 @@ from app.helpers import feedback_db
 def feedbacks():
     title = "Feedback"
     form = FeedbackForm()
-    helper = feedback_db.FeedbackHelper()
+    helper = helper.FeedbackHelper()
     comments = helper.show()
 
     if form.validate_on_submit():
@@ -24,7 +23,7 @@ def feedbacks():
 @feedback.route("/add", methods=["POST"])
 @login_required
 def add():
-    db = feedback_db.FeedbackHelper()
+    db = helper.FeedbackHelper()
     db.add(
         request.form.get("comment"),
         request.form.get("file"),
@@ -38,7 +37,7 @@ def add():
 @login_required
 def remove(id=None):
     
-    db = feedback_db.FeedbackHelper()
+    db = helper.FeedbackHelper()
     db.remove(id)
     flash("Feedback was successfully deleted!", "success")
     
