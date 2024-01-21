@@ -50,4 +50,5 @@ def remove(id=None):
 def update(id=None):
     todo = helper.TodosHelper()
     todo.update(id)
+    flash("Task was successfully updated", "success")
     return redirect(url_for("todo.todo_list"))

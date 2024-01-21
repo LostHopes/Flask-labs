@@ -10,8 +10,8 @@ from .forms import FeedbackForm
 def feedbacks():
     title = "Feedback"
     form = FeedbackForm()
-    helper = helper.FeedbackHelper()
-    comments = helper.show()
+    db = helper.FeedbackHelper()
+    comments = db.show()
 
     if form.validate_on_submit():
         return redirect(url_for("feedback.add"))
