@@ -28,7 +28,7 @@
             <div class="text-center">Written by: {{ user.login }}</div>
             <div class="text-center">Created at: {{ post.created_at }}</div>
             <div class="text-center">
-                <img src="{{ image(post.image) }}" alt="">
+                <img src="{{ image(post.image) }}" alt="Post image">
             </div>
 
             {% if current_user.id == post.user_id %}
