@@ -23,7 +23,7 @@ class PostsHelper(Posts):
         post = Posts.query.filter_by(id=id).first()
         return post
     
-    def create(self, title, text, category, image, user_id):
+    def create(self, title, text, category, user_id):
         post = Posts(title=title, text=text, category=category, user_id=user_id)
         db.session.add(post)
         db.session.commit()
@@ -40,7 +40,7 @@ class PostsHelper(Posts):
         post.category = category
 
         if image:
-            current_user.image = self.save_picture(image)
+            post.image = self.save_picture(image)
 
         db.session.commit()
 
@@ -51,6 +51,6 @@ class PostsHelper(Posts):
         full_filename = random_hex + file_extension
         path = os.path.join(app.root_path, "static", "images", "posts_thumbnails", full_filename)
         image = Image.open(file)
-        new_image = image.resize((150, 150))
+        new_image = image.resize((200, 200))
         new_image.save(path)
         return full_filename

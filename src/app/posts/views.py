@@ -43,7 +43,6 @@ def edit(id):
 
     form.title.data = post.title
     form.text.data = post.text
-    form.image.data = post.image
 
     if form.validate_on_submit():
         return redirect(url_for("posts.update"))
@@ -62,7 +61,6 @@ def create():
         request.form.get("title"),
         request.form.get("text"),
         request.form.get("category"),
-        request.form.get("image"),
         current_user.get_id()
     )
     flash("Post was created", "success")

@@ -67,7 +67,7 @@ def update_account():
         return redirect(url_for("user.account"))
 
 
-@user.route("/account/update/credentials", methods=["POST"])
+@user.route("/account", methods=["POST"])
 @login_required
 def change_password():
     user = helper.UsersHelper()
