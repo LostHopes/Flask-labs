@@ -9,7 +9,7 @@
     </div>
     <div class="flex-row">
         <div class="flex-column">
-            <form action="{{ url_for('posts.create') }}" method="post">
+            <form action="{{ url_for('posts.create') }}" method="post" enctype="multipart/form-data">
                 {{ field.write_post_form(form) }}
             </form>
         </div>

@@ -12,7 +12,7 @@ class WritePostForm(FlaskForm):
         DataRequired(), Length(min=250, max=5000)],
         render_kw={"cols": "50", "rows": "15", "placeholder": "Enter post content here:"})
     category = SelectField("Category", validators=[DataRequired()], choices=[("NEWS", "News"), ("PUBLICATIONS", "Publications"), ("OTHER", "Other")])
-    image = FileField("Image")
+    image = FileField("Image", validators=[FileAllowed(["jpg", "png", "webp"], "Wrong file extension! Allowed formats: jpg, png, webp")])
     submit = SubmitField("Publish")
 
 

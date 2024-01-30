@@ -8,7 +8,7 @@
         <h1 class="title">Edit post</h1>
     </div>
     <div>
-        <form action="{{ url_for('posts.update', id=id) }}" method="post">
+        <form action="{{ url_for('posts.update', id=id) }}" method="post" enctype="multipart/form-data">
             {{ field.edit_post_form(form) }}
         </form>
     </div>

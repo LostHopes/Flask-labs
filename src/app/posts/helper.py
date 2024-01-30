@@ -19,12 +19,22 @@ class PostsHelper(Posts):
                     .paginate(page=page, per_page=max_items)
         return query
 
-    def get(self, id):
+    def get(self, id=None):
+
+        if id is None:
+            posts = Posts.query.all()
+            return posts
+
         post = Posts.query.filter_by(id=id).first()
         return post
     
-    def create(self, title, text, category, user_id):
+    def create(self, title, text, category, image, user_id):
+
         post = Posts(title=title, text=text, category=category, user_id=user_id)
+
+        if image:
+            post.image = self.save_picture(image)
+
         db.session.add(post)
         db.session.commit()
 
@@ -41,7 +51,7 @@ class PostsHelper(Posts):
 
         if image:
             post.image = self.save_picture(image)
-
+        
         db.session.commit()
 
     @staticmethod

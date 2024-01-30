@@ -13,8 +13,8 @@ def show():
     items = 9
     page = request.args.get("page", 1, type=int)
     pagination = db.show(page, items)
-
-    image = url_for("static", filename="images/posts_thumbnails/default.jpg")
+    image = lambda post: url_for('static', filename=f'images/posts_thumbnails/{post}')
+    
     return render_template("posts.html", title=title, pagination=pagination, image=image)
 
 
@@ -61,6 +61,7 @@ def create():
         request.form.get("title"),
         request.form.get("text"),
         request.form.get("category"),
+        request.files.get("image"),
         current_user.get_id()
     )
     flash("Post was created", "success")
