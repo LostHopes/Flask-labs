@@ -5,7 +5,7 @@ from . import posts, helper
 from .forms import WritePostForm, EditPostForm
 
 
-@posts.route("/list")
+@posts.route("/")
 def show():
     title = "Posts"
 
@@ -13,7 +13,9 @@ def show():
     items = 9
     page = request.args.get("page", 1, type=int)
     pagination = db.show(page, items)
-    return render_template("posts.html", title=title, pagination=pagination)
+
+    image = url_for("static", filename="images/posts_thumbnails/default.jpg")
+    return render_template("posts.html", title=title, pagination=pagination, image=image)
 
 
 @posts.route("/write")
@@ -41,6 +43,7 @@ def edit(id):
 
     form.title.data = post.title
     form.text.data = post.text
+    form.image.data = post.image
 
     if form.validate_on_submit():
         return redirect(url_for("posts.update"))
@@ -49,7 +52,7 @@ def edit(id):
     return render_template("post_edit.html", title=title, form=form, id=id)
 
 
-@posts.route("/create", methods=["POST"])
+@posts.route("/", methods=["POST"])
 @login_required
 def create():
 
@@ -81,7 +84,8 @@ def update(id):
     title = request.form.get("title")
     text = request.form.get("text")
     category = request.form.get("category")
-    db.update(id, title, text, category)
+    image = request.files.get("image")
+    db.update(id, title, text, image, category)
 
     flash("Post was updated", "success")
     return redirect(url_for("posts.show"))
