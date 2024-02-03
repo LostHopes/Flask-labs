@@ -12,6 +12,10 @@ from app import db, app
 
 class PostsHelper(Posts):
 
+    def __init__(self):
+        self.path = os.path.join(app.root_path, "static", "images", "posts_thumbnails", full_filename)
+
+
     def show(self, page, max_items):
         query = db.session.query(Posts, Users)\
             .join(Users).\
@@ -61,19 +65,15 @@ class PostsHelper(Posts):
         
         db.session.commit()
 
-    @staticmethod
-    def save_picture(file):
+    def save_picture(self, file):
         random_hex = secrets.token_hex(8)
         _, file_extension = os.path.split(file.filename)
         full_filename = random_hex + file_extension
-        path = os.path.join(app.root_path, "static", "images", "posts_thumbnails", full_filename)
         image = Image.open(file)
         new_image = image.resize((200, 200))
-        new_image.save(path)
+        new_image.save(self.path)
         return full_filename
 
-    @staticmethod
-    def delete_picture(filename):
-        path = os.path.join(app.root_path, "static", "images", "posts_thumbnails", filename)
-        os.remove(path)
+    def delete_picture(self, filename):
+        os.remove(self.path)
         return filename
