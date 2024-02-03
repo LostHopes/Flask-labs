@@ -13,7 +13,7 @@ from app import db, app
 class PostsHelper(Posts):
 
     def __init__(self):
-        self.path = os.path.join(app.root_path, "static", "images", "posts_thumbnails", full_filename)
+        self.path = lambda filename: os.path.join(app.root_path, "static", "images", "posts_thumbnails", filename)
 
 
     def show(self, page, max_items):
@@ -68,12 +68,16 @@ class PostsHelper(Posts):
     def save_picture(self, file):
         random_hex = secrets.token_hex(8)
         _, file_extension = os.path.split(file.filename)
-        full_filename = random_hex + file_extension
+        filename = random_hex + file_extension
         image = Image.open(file)
         new_image = image.resize((200, 200))
-        new_image.save(self.path)
-        return full_filename
+        new_image.save(self.path(filename))
+        return filename
 
     def delete_picture(self, filename):
-        os.remove(self.path)
+
+        if filename == "default.jpg":
+            return
+
+        os.remove(self.path(filename))
         return filename
