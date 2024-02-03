@@ -1,4 +1,4 @@
-# Nightly branch
+# Main branch
 
 ## TODO
 
