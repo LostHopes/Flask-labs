@@ -41,6 +41,9 @@ class PostsHelper(Posts):
     def delete(self, id):
         post = Posts.query.filter_by(id=id).first()
 
+        if not post:
+            return
+
         self.delete_picture(post.image)
 
         db.session.delete(post)
@@ -53,6 +56,7 @@ class PostsHelper(Posts):
         post.category = category
 
         if image:
+            self.delete_picture(post.image)
             post.image = self.save_picture(image)
         
         db.session.commit()
