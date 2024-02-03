@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Музика</title>
+</head>
+
+<body>
+    <form action="/cgi-bin/webpage.py" method="post">
+        <label for="song">Enter song name: </label>
+        <input type="text" name="song" id="song" placeholder="Enter song name: ">
+        <input type="text" name="author" id="author" placeholder="Enter song author: ">
+        <select name="genre" id="genre">
+            <option value="ambient">Ambient music</option>
+            <option value="classic">Classic music</option>
+            <option value="hip-hop">Hip-hop music</option>
+        </select>
+
+        <input type="radio" name="country" value="Japan"> Japan
+        <input type="radio" name="country" value="England"> England
+        <input type="radio" name="country" value="Germany"> Germany
+        <input type="radio" name="country" value="Ukraine"> Ukraine
+        <input type="submit">
+    </form>
+    <input type="button" value="Remove">
+</body>
+
+</html>
