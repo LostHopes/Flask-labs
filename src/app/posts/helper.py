@@ -40,6 +40,9 @@ class PostsHelper(Posts):
 
     def delete(self, id):
         post = Posts.query.filter_by(id=id).first()
+
+        self.delete_picture(post.image)
+
         db.session.delete(post)
         db.session.commit()
 
@@ -64,3 +67,9 @@ class PostsHelper(Posts):
         new_image = image.resize((200, 200))
         new_image.save(path)
         return full_filename
+
+    @staticmethod
+    def delete_picture(filename):
+        path = os.path.join(app.root_path, "static", "images", "posts_thumbnails", filename)
+        os.remove(path)
+        return filename
