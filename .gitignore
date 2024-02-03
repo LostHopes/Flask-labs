@@ -1,7 +1,2 @@
 *.tar.gz
-.env
 __pycache__
-images
-!default.jpg
-*.sqlite
-.coverage
