@@ -3,27 +3,11 @@ from flask_restful import Resource, Api
 from flask_bcrypt import generate_password_hash, check_password_hash
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
-from flask_marshmallow import Schema
-from flask_marshmallow.fields import fields
 
 from . import user_api
 from app import api, db
 from app.user.models import Users
-
-
-class UserSchema(Schema):
-    id = fields.Int(dump_only=True)
-    login = fields.Str(required=True)
-    email = fields.Email(required=True)
-    name = fields.Str(required=True)
-    surname = fields.Str(required=True)
-    is_active = fields.Bool(dump_only=True)
-    last_seen = fields.DateTime(dump_only=True)
-    about = fields.Str()
-    register_date = fields.DateTime(dump_only=True)
-
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
+from .scheme import user_schema, users_schema
 
 
 class UserAPI(Resource):
