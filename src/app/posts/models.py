@@ -19,3 +19,11 @@ class Posts(db.Model):
     category = db.Column(db.Enum(PostType), nullable=False, default=PostType.NEWS)
     enabled = db.Column(db.Boolean, nullable=False, default=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    post_tags = db.relationship("PostsTags", backref="tags")
+
+
+class PostsTags(db.Model):
+    __tablename__ = "posts_tags"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey("posts.id"), nullable=False)
