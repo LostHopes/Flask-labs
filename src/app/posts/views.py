@@ -29,7 +29,7 @@ def write():
     if form.validate_on_submit():
         return redirect(url_for("posts.create"))
 
-    return render_template("post_write.html", title=title, form=form, tags=tags)
+    return render_template("post_write.html", title=title, form=form)
 
 
 @posts.route("/edit/<int:id>")
