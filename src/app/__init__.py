@@ -17,7 +17,6 @@ bcrypt = Bcrypt()
 login_manager = LoginManager()
 jwt = JWTManager()
 api = Api()
-
 login_manager.login_view = "user.login"
 login_manager.login_message = "You should login before accessing this page"
 login_manager.login_message_category = "info"
@@ -54,6 +53,9 @@ def create_app(config_class=config.DevConfig):
     from .films import films
     app.register_blueprint(films)
     
+    from app.swagger import swagger
+    app.register_blueprint(swagger, url_prefix="/api")
+
     with app.app_context():
         app.config.from_object(config_class)
         db.init_app(app)

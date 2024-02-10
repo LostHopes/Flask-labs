@@ -9,9 +9,11 @@ import secrets
 from app.user.models import Users
 from app import login_manager, db, app
 
+
 @login_manager.user_loader
 def user_loader(user_id):
     return Users.query.get(user_id)
+    
 
 class UsersHelper(Users):
     def register(self, name, surname, login, email, password, confirm_password, register_date):

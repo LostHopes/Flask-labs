@@ -8,9 +8,8 @@ import datetime
 
 from .forms import ChangePasswordForm, LoginForm, \
     LogoutForm, RegisterForm, UpdateAccountForm
-from app.user import user
+from . import user, helper
 from app import login_manager
-from app.helpers import user_db
 
 
 @user.route("/account")
@@ -48,7 +47,7 @@ def account():
 @login_required
 def update_account():
     try:
-        db = user_db.UsersHelper()
+        db = helper.UsersHelper()
         db.update(
             request.form.get("username"),
             request.form.get("email"),
@@ -68,10 +67,10 @@ def update_account():
         return redirect(url_for("user.account"))
 
 
-@user.route("/account/update/credentials", methods=["POST"])
+@user.route("/account", methods=["POST"])
 @login_required
 def change_password():
-    user = user_db.UsersHelper()
+    user = helper.UsersHelper()
     if user.change_password(
         request.form.get("new_password"),
         request.form.get("repeat_password")
@@ -101,7 +100,7 @@ def register():
     try:
         title = "Register"
         form = RegisterForm()
-        user = user_db.UsersHelper()
+        user = helper.UsersHelper()
         
         register_date = datetime.datetime.now().replace(second=0, microsecond=0)
         if form.validate_on_submit():
@@ -132,7 +131,7 @@ def login():
 
     title = "Login"
     form = LoginForm()
-    user = user_db.UsersHelper()
+    user = helper.UsersHelper()
 
     if form.validate_on_submit():
         email = form.email.data
@@ -152,7 +151,7 @@ def login():
 @user.route("/users")
 @login_required
 def users():
-    handler = user_db.UsersHelper()
+    handler = helper.UsersHelper()
     get_all = handler.get_all()
     return render_template("users.html", users=get_all)
 
@@ -162,7 +161,7 @@ def after_request(response):
     now = datetime.datetime.now().replace(second=0, microsecond=0)
     current_user.last_seen = now
     try:
-        db = user_db.UsersHelper()
+        db = helper.UsersHelper()
         db.commit()
     except StatementError:
         flash('Error while updating user last seen!', 'danger')

@@ -6,7 +6,7 @@ from . import skills
 
 @skills.route("/list/")
 @skills.route("/list/<int:s_id>/")
-def skills_list(s_id=None):
+def show(s_id=None):
     title = "My skills"
     if s_id is not None:
         title = title.rstrip("s")

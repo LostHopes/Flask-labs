@@ -11,7 +11,7 @@
             <label class="title" for="skills">My skills: </label>
             {% for s_id, (name, desc, percent) in my_skills.items() %}
             <li>
-                <a href="{{ url_for('skills.skills_list', s_id=s_id) }}" class="p-sm-2">
+                <a href="{{ url_for('skills.show', s_id=s_id) }}" class="p-sm-2">
                     {{ name }}
                     <div class="progress">
                         <div class="progress-bar w-{{ percent }}" role="progressbar"></div>

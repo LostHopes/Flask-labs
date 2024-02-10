@@ -1,7 +1,7 @@
 *.tar.gz
 .env
 __pycache__
-profile_pics
+images
 !default.jpg
 *.sqlite
 .coverage
