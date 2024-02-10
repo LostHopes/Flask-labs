@@ -19,7 +19,7 @@ class Posts(db.Model):
     category = db.Column(db.Enum(PostType), nullable=False, default=PostType.NEWS)
     enabled = db.Column(db.Boolean, nullable=False, default=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    post_tags = db.relationship("PostsTags", backref="tags")
+    tags = db.relationship("PostsTags", backref="tags", lazy="dynamic")
 
 
 class PostsTags(db.Model):

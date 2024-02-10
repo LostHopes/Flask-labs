@@ -13,9 +13,10 @@ def show():
     items = 9
     page = request.args.get("page", 1, type=int)
     pagination = db.show(page, items)
+    tags = db.get_famous_tags()
     image = lambda post: url_for('static', filename=f'images/posts_thumbnails/{post}')
     
-    return render_template("posts.html", title=title, pagination=pagination, image=image)
+    return render_template("posts.html", title=title, pagination=pagination, image=image, tags=tags)
 
 
 @posts.route("/write")
@@ -28,7 +29,7 @@ def write():
     if form.validate_on_submit():
         return redirect(url_for("posts.create"))
 
-    return render_template("post_write.html", title=title, form=form)
+    return render_template("post_write.html", title=title, form=form, tags=tags)
 
 
 @posts.route("/edit/<int:id>")
@@ -43,6 +44,7 @@ def edit(id):
 
     form.title.data = post.title
     form.text.data = post.text
+    form.tags.data = " ".join(tag.name for tag in post.tags)
 
     if form.validate_on_submit():
         return redirect(url_for("posts.update"))
@@ -61,6 +63,7 @@ def create():
         request.form.get("title"),
         request.form.get("text"),
         request.form.get("category"),
+        request.form.get("tags"),
         request.files.get("image"),
         current_user.get_id()
     )
@@ -84,7 +87,8 @@ def update(id):
     text = request.form.get("text")
     category = request.form.get("category")
     image = request.files.get("image")
-    db.update(id, title, text, image, category)
+    tags = request.form.get("tags")
+    db.update(id, title, text, image, category, tags)
 
     flash("Post was updated", "success")
     return redirect(url_for("posts.show"))
