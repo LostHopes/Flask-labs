@@ -1,4 +1,12 @@
+from enum import Enum
+
 from app import db
+
+
+class TodoPriority(Enum):
+    LOW = "Low"
+    MID = "Medium"
+    HIGH = "High"
 
 
 class Todo(db.Model):

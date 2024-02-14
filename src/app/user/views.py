@@ -43,7 +43,7 @@ def account():
     )
 
 
-@user.route("/account/update", methods=["POST"])
+@user.route("/account", methods=["POST"])
 @login_required
 def update_account():
     try:
