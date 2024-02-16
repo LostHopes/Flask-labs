@@ -15,4 +15,5 @@ class Todo(db.Model):
     task = db.Column(db.Text, nullable=False)
     status = db.Column(db.String, default="Planning", nullable=False)
     category = db.Column(db.String, default="Empty", nullable=False)
+    priority = db.Column(db.Enum(TodoPriority), default=TodoPriority.LOW, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)

@@ -24,6 +24,7 @@
                     <td>Task to complete</td>
                     <td>Status</td>
                     <td>Category</td>
+                    <td>Priority</td>
                     <td>Actions</td>
                 </tr>
                 {% for task in todo %}
@@ -38,6 +39,13 @@
                         {% endif %}
                     </td>
                     <td>{{ task.category }}</td>
+                    <td>
+                        <select name="todo_priority" id="todo_priority">
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </td>
                     <td>
                         <div class="d-flex justify-content-center p-2">
                             <form action="{{ url_for('todo.update', id=task.id) }}" method="post" class="p-1">
