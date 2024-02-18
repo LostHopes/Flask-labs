@@ -38,3 +38,38 @@ def test_delete_user(client):
     json = {"id": 2}
     response = client.delete("/api/users/2", json=json)
     assert response.status_code == 200
+
+
+def test_list_todo(client):
+    pass
+
+
+def test_create_task(client):
+    pass
+
+
+def test_update_task(client):
+    pass
+
+
+def test_delete_task(client):
+    pass
+
+
+def test_list_films(client):
+    pass
+
+
+def test_add_film(client):
+    pass
+
+
+def test_update_film(client):
+    pass
+
+
+def test_delete_film(client):
+    pass
+
+
+
