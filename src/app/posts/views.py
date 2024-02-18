@@ -14,7 +14,8 @@ def show():
     page = request.args.get("page", 1, type=int)
     pagination = db.show(page, items)
     tags = db.get_famous_tags()
-    image = lambda post: url_for('static', filename=f'images/posts_thumbnails/{post}')
+    image = lambda post: url_for('posts.static', filename=f'images/posts_thumbnails/{post}')
+    print(image)
     
     return render_template("posts.html", title=title, pagination=pagination, image=image, tags=tags)
 

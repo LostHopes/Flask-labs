@@ -12,7 +12,9 @@ from app import db, app
 class PostsHelper(Posts):
 
     def __init__(self):
-        self.path = lambda filename: os.path.join(app.root_path, "static", "images", "posts_thumbnails", filename)
+        self.path = lambda filename: os.path.join(
+            app.root_path, "posts", "static", "posts", "images", "posts_thumbnails", 
+            filename)
 
 
     def show(self, page, max_items):

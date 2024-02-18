@@ -5,7 +5,7 @@ from wtforms import TextAreaField, SubmitField
 
 
 class FeedbackForm(FlaskForm):
-    comment = TextAreaField("Text", validators=[DataRequired(), Length(min=40)])
+    comment = TextAreaField("Text", validators=[DataRequired(), Length(min=125)])
     file = FileField("File", validators=[FileAllowed(["jpg", "png"], "Images only!")])
     submit = SubmitField("Publish")
 

@@ -32,7 +32,7 @@ def account():
         return redirect(url_for("user.change_password"))
 
 
-    image_file = url_for("static", filename=f"images/profile_pics/{current_user.image}")
+    image_file = url_for("user.static", filename=f"images/profile_pics/{current_user.image}")
     return render_template(
         "account.html",
         title=title,

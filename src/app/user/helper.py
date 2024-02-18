@@ -16,6 +16,11 @@ def user_loader(user_id):
     
 
 class UsersHelper(Users):
+
+    def __init__(self):
+        self.path = lambda filename: os.path.join(app.root_path, "user",
+         "static", "user", "images", "profile_pics", filename)
+
     def register(self, name, surname, login, email, password, confirm_password, register_date):
         
         password_hash = generate_password_hash(password)
@@ -53,7 +58,7 @@ class UsersHelper(Users):
             return validation
 
     def change_password(self, new_password, repeat_password):
-        succeed = False
+        succeed = True
         
         validation = new_password == repeat_password
 
@@ -61,17 +66,16 @@ class UsersHelper(Users):
             password_hash = generate_password_hash(new_password)
             current_user.password = password_hash
             db.session.commit()
-            succeed = True
             return succeed
 
-        return succeed
+        return not succeed
         
-    @staticmethod
-    def save_picture(form_picture):
+
+    def save_picture(self, form_picture):
         random_hex = secrets.token_hex(8)
         _, file_extension = os.path.split(form_picture.filename)
         picture_filename = random_hex + file_extension
-        picture_path = os.path.join(app.root_path, "static", "images", "profile_pics", picture_filename)
+        picture_path = self.path(picture_filename)
         image = Image.open(form_picture)
         new_image = image.resize((300, 300))
         new_image.save(picture_path)
