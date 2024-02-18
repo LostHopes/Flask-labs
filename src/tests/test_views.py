@@ -30,7 +30,7 @@ def test_users_page(client):
 
 def test_todo_page(client):
     """"""
-    response = client.get("/todo/list")
+    response = client.get("/todo/")
     assert response.status_code == 302
 
 

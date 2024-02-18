@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-      "title": "Sample API",
-      "description": "A sample API that demonstrates how to use Flask-SwaggerUI.",
+      "title": "Portfolio API",
+      "description": "A simple portfolio api for developers.",
       "version": "1.0"
     },
     "basePath": "/api",
@@ -16,9 +16,9 @@
       "application/json"
     ],
     "paths": {
-      "/hello": {
+      "/todo": {
         "get": {
-          "summary": "Returns a simple greeting message.",
+          "summary": "Returns a collection of todos.",
           "produces": [
             "application/json"
           ],
