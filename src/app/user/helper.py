@@ -88,12 +88,23 @@ class UsersHelper(Users):
         current_user.email = email
 
         if image:
+            self.delete_picture(current_user.image)
             current_user.image = self.save_picture(image)
 
         current_user.about = about
 
 
         self.commit()
+
+
+    def delete_picture(self, filename):
+
+        if filename == "default.jpg":
+            return
+
+        os.remove(self.path(filename))
+        return filename
+
 
     @staticmethod
     def commit():
