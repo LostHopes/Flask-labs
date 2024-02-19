@@ -1,0 +1,61 @@
+{% macro write_post_form(form) %}
+<div class="form-group p-2">
+    {{ form.title.label }}
+    {{ form.title(class="border rounded form-control") }}
+</div>
+
+<div class="form-group p-2">
+    {{ form.text.label }}
+    {{ form.text(class="border rounded form-control") }}
+</div>
+
+<div class="form-group p-2">
+    {{ form.category.label }}
+    {{ form.category(class="border rounded form-control w-50") }}
+</div>
+
+<div class="form-group p-2">
+    {{ form.tags.label }}
+    {{ form.tags(class="border rounded form-control w-75") }}
+</div>
+
+<div class="form-group p-2">
+    {{ form.image.label }}
+    {{ form.image(class="border rounded form-control w-50") }}
+</div>
+
+<div class="form-group p-2">
+    {{ form.submit(class="btn btn-primary form-control w-auto") }}
+</div>
+{% endmacro %}
+
+{% macro edit_post_form(form) %}
+<div class="form-group p-2">
+    {{ form.title.label }}
+    {{ form.title(class="border rounded form-control") }}
+</div>
+
+<div class="form-group p-2">
+    {{ form.text.label }}
+    {{ form.text(class="border rounded form-control") }}
+</div>
+
+<div class="form-group p-2">
+    {{ form.category.label }}
+    {{ form.category(class="border rounded form-control w-50") }}
+</div>
+
+<div class="form-group p-2">
+    {{ form.tags.label }}
+    {{ form.tags(class="border rounded form-control w-75") }}
+</div>
+
+<div class="form-group p-2">
+    {{ form.image.label }}
+    {{ form.image(class="border rounded form-control w-50") }}
+</div>
+
+<div class="form-group p-2">
+    {{ form.submit(class="btn btn-primary form-control w-auto") }}
+</div>
+{% endmacro %}

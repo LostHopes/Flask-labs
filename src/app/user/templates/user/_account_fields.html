@@ -1,0 +1,47 @@
+{% macro update_account_form(form) %}
+
+<div class="form-group p-2">
+    {{ form.username.label }}
+    {{ form.username(class="border rounded form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.email.label }}
+    {{ form.email(class="border rounded form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.image.label }}
+    {{ form.image(class="border rounded form-control") }}
+</div>
+
+<div class="form-group p-2 text-center">
+    {{ form.about.label }}
+    {{ form.about(class="form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.submit(class="btn btn-primary btn-md form-control w-auto") }}
+</div>
+{% endmacro %}
+
+
+{% macro logout_form(form) %}
+<div class="form-group p-2">
+    {{ form.submit(class="btn btn-primary") }}
+</div>
+{% endmacro %}
+
+
+{% macro change_password_form(form) %}
+{{ form.csrf_token() }}
+<div class="form-group p-2">
+    {{ form.new_password.label }}
+    {{ form.new_password(class="form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.repeat_password.label }}
+    {{ form.repeat_password(class="form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.submit(class="btn btn-primary") }}
+</div>
+
+{% endmacro %}

@@ -1,0 +1,14 @@
+{% macro feedback_form(form) %}
+
+<div class="form-group p-2">
+    {{ form.comment.label }}
+    {{ form.comment(class="border rounded form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.file.label }}
+    {{ form.file(class="form-control") }}
+</div>
+<div class="form-group p-2">
+    {{ form.submit(class="btn btn-primary btn-md form-control w-auto") }}
+</div>
+{% endmacro %}
