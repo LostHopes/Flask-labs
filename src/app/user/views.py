@@ -43,7 +43,7 @@ def account():
     )
 
 
-@user.route("/account", methods=["POST"])
+@user.route("/account/update", methods=["POST"])
 @login_required
 def update_account():
     try:
@@ -67,7 +67,7 @@ def update_account():
         return redirect(url_for("user.account"))
 
 
-@user.route("/account", methods=["POST"])
+@user.route("/account/", methods=["POST"])
 @login_required
 def change_password():
     user = helper.UsersHelper()
@@ -91,39 +91,45 @@ def logout():
     return redirect(url_for("user.login"))
 
 
-@user.route("/register", methods=["GET","POST"])
+@user.route("/register", methods=["GET"])
 def register():
 
     if current_user.is_authenticated:
         return redirect(url_for("user.account"))
 
-    try:
-        title = "Register"
-        form = RegisterForm()
-        user = helper.UsersHelper()
-        
-        register_date = datetime.datetime.now().replace(second=0, microsecond=0)
-        if form.validate_on_submit():
-            user.register(
-                form.name.data,
-                form.surname.data, 
-                form.login.data, 
-                form.email.data, 
-                form.password.data,
-                form.confirm_password.data,
-                register_date
-            )
-            flash("User was registered", "success")
-            return redirect(url_for("user.login"))
+    title = "Register"
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        return redirect(url_for("user.register_process"))
+
+    return render_template("register.html", title=title, form=form)
+
+@user.route("/register", methods=["POST"])
+def register_process():
+
+    user = helper.UsersHelper()
+    register_date = datetime.datetime.now().replace(second=0, microsecond=0)
+
+    try:    
+        user.register(
+            request.form.get("name"),
+            request.form.get("surname"),
+            request.form.get("login"), 
+            request.form.get("email"), 
+            request.form.get("password"),
+            request.form.get("confirm_password"),
+            register_date
+        )
+        flash("User was registered", "success")
+        return redirect(url_for("user.login"))
     except IntegrityError:
         flash("User already exist", "danger")
         user.rollback()
         return redirect(url_for("user.register"))
-    
-    return render_template("register.html", title=title, form=form)
 
 
-@user.route("/login", methods=["GET", "POST"])
+@user.route("/login", methods=["GET"])
 def login():
 
     if current_user.is_authenticated:
@@ -131,21 +137,30 @@ def login():
 
     title = "Login"
     form = LoginForm()
-    user = helper.UsersHelper()
 
     if form.validate_on_submit():
-        email = form.email.data
-        password = form.password.data
-        success = user.login(email, password)
-        if success:
-            login_user(user.get_username(email), remember=form.remember.data)
-            flash("Login successful", "success")
-            return redirect(url_for("user.account"))
-        else:
-            flash("Login failed", "danger")
-            return redirect(url_for("user.login"))
+        return redirect(url_for("user.login_process"))
+        
         
     return render_template("login.html", title=title, form=form)
+
+
+@user.route("/login", methods=["POST"])
+def login_process():
+    user = helper.UsersHelper()
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+    remember = request.form.get("remember")
+    success = user.login(email, password)
+
+    if not success:
+        flash("Login failed", "danger")
+        return redirect(url_for("user.login"))
+    
+    login_user(user.get_username(email), remember=remember)
+    flash("Login successful", "success")
+    return redirect(url_for("user.account"))
 
 
 @user.route("/users")

@@ -9,7 +9,7 @@
   <div class="border rounded p-5 centered-content">
     <h1 class="title">Welcome to the login page</h1>
     {% include "_flashes.html" %}
-    <form action="{{ url_for('user.login') }}" method="post">
+    <form action="{{ url_for('user.login_process') }}" method="post">
       {{ field.login_form(form) }}
     </form>
   </div>

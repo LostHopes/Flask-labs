@@ -13,7 +13,7 @@ def show():
     items = 9
     page = request.args.get("page", 1, type=int)
     pagination = db.show(page, items)
-    tags = db.get_famous_tags()
+    tags = db.get_popular_tags()
     image = lambda post: url_for('posts.static', filename=f'images/posts_thumbnails/{post}')
     print(image)
     

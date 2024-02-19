@@ -88,7 +88,7 @@ class PostsHelper(Posts):
         db.session.commit()
 
     @staticmethod
-    def get_famous_tags(amount=3):
+    def get_popular_tags(amount=3):
         query  = db.session.query(PostsTags.name, db.func.count(PostsTags.name)).group_by(PostsTags.name).order_by(db.func.count(PostsTags.name).desc()).limit(amount).all()
         return query
 
