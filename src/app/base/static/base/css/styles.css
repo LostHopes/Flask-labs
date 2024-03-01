@@ -32,50 +32,8 @@ a{
   font-family: 'Open Sans', sans-serif;
 }
 
-
-/* Skills file styles */
-
-@counter-style emojis {
-  system: cyclic;
-  symbols: 💻 🏃 🗣 🏦 📚 🤓;
-  suffix: " ";
-}
-
-.skills > li {
-  list-style: emojis;
-  list-style-position: inside;
-  line-height: 3.5vh;
-  align-items: center;
-}
-
-.skills > li > a {
-  text-decoration: none;
-  color: black;
-  font-size: var(--content);
-}
-
-ul.skills {
-  display: block;
-  text-align: center;
-}
-
-
 h1.title,
 .title {
   text-align: center;
   font-size: var(--title);
 }
-
-.skill-desc{
-  padding: 0 20%;
-  font-size: var(--content);
-}
-
-.skills li > a:hover{
-  color: #177cdb9d;
-}
-
-.list-users{
-  font-size: 2.5vw;
-}
-

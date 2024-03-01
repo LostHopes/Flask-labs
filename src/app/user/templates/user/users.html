@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% import "_fields.html" as field %}
 {% block title %} {{ super() }} {% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('user.static', filename='css/styles.css') }}">
+{% endblock %}
+
 {% block content %}
 
 <div class="justify-content-center">
