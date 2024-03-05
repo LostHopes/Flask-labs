@@ -30,13 +30,13 @@ def test_update_user(client):
         "last_seen": "2024-02-13 16:55:00",
         "about": "test1234"
     }
-    response = client.put("/api/users/2", json=json)
+    response = client.put("/api/users/1", json=json)
     assert response.status_code == 200
 
 
 def test_delete_user(client):
-    json = {"id": 2}
-    response = client.delete("/api/users/2", json=json)
+    json = {"id": 1}
+    response = client.delete("/api/users/1", json=json)
     assert response.status_code == 200
 
 

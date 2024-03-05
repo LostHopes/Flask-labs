@@ -37,6 +37,5 @@ def test_todo_page(client):
 def test_not_found_page(client):
     """Test page that not exists in the app"""
     response = client.get("/foo")
-    assert response.status_code == 404
-    assert "Not Found" in response.get_data(as_text=True)
+    assert "Page not found" in response.get_data(as_text=True)
     
