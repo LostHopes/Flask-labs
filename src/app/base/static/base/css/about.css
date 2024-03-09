@@ -1,0 +1,13 @@
+:root {
+  --original-width: 300px;
+}
+
+ul.hobbies > li,
+ul.tech-stack > li {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+
+.profile-pic {
+  width: var(--original-width);
+}

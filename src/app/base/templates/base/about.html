@@ -4,20 +4,56 @@
 {{ super() }}
 {% endblock %}
 
+{% block css %}
+
+{{ super() }}
+
+<link rel="stylesheet" href="{{ url_for('base.static', filename='css/about.css') }}">
+
+{% endblock %}
+
 {% block content %}
 
 <div class="container">
     <div class="flex-row">
         <h1 class="title fs-1">About</h1>
     </div>
-    <div class="fs-5 p-5">
+    <div class="fs-5 p-5 border rounded-3">
         <p>
             Hi there! My name is Arsen.
             I'm currently study at Prikarpatskiy National University in Ivano-Frankivsk.
+
+        <div class="text-center">
+            <img src="{{ url_for('base.static', filename='images/arrested.jpg') }}" alt="Profile"
+                class="img-fluid rounded-3 profile-pic">
+        </div>
+        </p>
+        <p>
+            I'm highly insterested in
+            <a href="https://fsf.org" target="_blank" rel="noopener noreferrer">FSF</a>
+            and planning to contribute to the other open source project
+            to improve my software engineering skills.
+
+
+            My hobbies:
+        <ul class="hobbies">
+            <li>Sport</li>
+            <li>History</li>
+            <li>Computer Science</li>
+            <li>Traveling</li>
+            <li>Music</li>
+            <li>Gaming</li>
+            <li>Politics</li>
+            <li>Reading</li>
+        </ul>
         </p>
         <p>
             The list of my skills can be found
             <a href="{{ url_for('skills.show') }}">here</a>
+        </p>
+        <p>
+            Make sure to follow me on
+            <a href="{{ url_for('base.contact') }}">social medias</a>
         </p>
     </div>
 </div>
