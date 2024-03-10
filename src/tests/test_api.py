@@ -1,4 +1,5 @@
 from tests.conftest import client
+from app.user.models import Users
 
 
 def test_create_user(client):
@@ -22,22 +23,26 @@ def test_list_users(client):
 
 
 def test_update_user(client):
-    json = {
-        "login": "test1234",
-        "email": "test1234@gmail.com",
-        "password": "password1234",
-        "confirm_password": "password1234",
-        "last_seen": "2024-02-13 16:55:00",
-        "about": "test1234"
-    }
-    response = client.put("/api/users/1", json=json)
-    assert response.status_code == 200
+    with client.application.app_context():
+        user = Users.query.filter_by(email="test123@gmail.com").first()
+        json = {
+            "login": "test1234",
+            "email": "test1234@gmail.com",
+            "password": "password1234",
+            "confirm_password": "password1234",
+            "last_seen": "2024-02-13 16:55:00",
+            "about": "test1234"
+        }
+
+        response = client.put(f"/api/users/{user.id}", json=json)
+        assert response.status_code == 200
 
 
 def test_delete_user(client):
-    json = {"id": 1}
-    response = client.delete("/api/users/1", json=json)
-    assert response.status_code == 200
+    with client.application.app_context():
+        user = Users.query.filter_by(email="test1234@gmail.com").first()
+        response = client.delete(f"/api/users/{user.id}")
+        assert response.status_code == 200
 
 
 def test_list_todo(client):
