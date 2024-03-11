@@ -2,9 +2,10 @@
 {% import "_todo_fields.html" as field %}
 {% block title %} {{ super() }} {% endblock %}
 {% block content %}
-{% include "_flashes.html" %}
-<div class="d-flex justify-content-center flex-wrap gap-5 p-3">
-    <div >
+
+<div class="border rounded-3 p-5">
+    {% include "_flashes.html" %}
+    <div class="d-flex justify-content-center flex-wrap gap-5 p-3">
         <div class="flex-row p-5 border rounded-5">
             <form action="{{ url_for('todo.add') }}" method="post">
                 {{ field.todo_form(form) }}

@@ -17,3 +17,4 @@ class Todo(db.Model):
     category = db.Column(db.String, default="Empty", nullable=False)
     priority = db.Column(db.Enum(TodoPriority), default=TodoPriority.LOW, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    db.relationship("Users", lazy=True)

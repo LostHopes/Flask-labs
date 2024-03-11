@@ -5,10 +5,10 @@ from .data import data
 from . import skills
 
 @skills.route("/")
-@skills.route("/<int:s_id>/")
-def show(s_id=None):
+@skills.route("/<int:id>/")
+def show(id=None):
     title = "My skills"
-    if s_id is not None:
+    if id is not None:
         title = title.rstrip("s")
     my_skills = data.my_skills
-    return render_template("skills.html", title=title, my_skills=my_skills, s_id=s_id)
+    return render_template("skills.html", title=title, my_skills=my_skills, id=id)
