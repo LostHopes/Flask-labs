@@ -69,5 +69,5 @@ class UsersGroupAPI(Resource):
         return {"msg": "User already exists"}, 409
 
 
-api.add_resource(UserAPI, "/api/users/<int:id>")
-api.add_resource(UsersGroupAPI, "/api/users")
+api.add_resource(UserAPI, "/api/users/<int:id>/")
+api.add_resource(UsersGroupAPI, "/api/users/")
