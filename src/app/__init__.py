@@ -47,14 +47,8 @@ def create_app(config_class=config.DevConfig):
     from app.swagger import swagger
     app.register_blueprint(swagger, url_prefix="/api")
 
-    from .todo_api import todo_api
-    app.register_blueprint(todo_api, url_prefix="/api")
-
-    from app.user_api import user_api
-    app.register_blueprint(user_api)
-
-    from app.films import films
-    app.register_blueprint(films)
+    from app.rest_api import rest_api
+    app.register_blueprint(rest_api, url_prefix="/api")
 
     with app.app_context():
         app.config.from_object(config_class)

@@ -1,10 +1,9 @@
 from flask import request
-from flask_restful import Resource, Api
+from flask_restful import Resource
 from flask_bcrypt import generate_password_hash, check_password_hash
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 
-from . import user_api
 from app import api, db
 from app.user.models import Users
 from .scheme import user_schema, users_schema
@@ -70,5 +69,5 @@ class UsersGroupAPI(Resource):
         return {"msg": "User already exists"}, 409
 
 
-api.add_resource(UserAPI, "/api/users/<int:id>/")
-api.add_resource(UsersGroupAPI, "/api/users/")
+api.add_resource(UserAPI, "/api/users/<int:id>")
+api.add_resource(UsersGroupAPI, "/api/users")
