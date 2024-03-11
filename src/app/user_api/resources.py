@@ -12,25 +12,17 @@ from .scheme import user_schema, users_schema
 
 class UserAPI(Resource):
     def get(self, id):
-        user = Users.query.get(id)
-        if not user:
-            return {"msg": "User not found"}, 404
+        user = Users.query.filter_by(id=id).first_or_404("User not found")
         return user_schema.jsonify(user)
 
     def delete(self, id):
-        user = Users.query.get(id)
-        if not user:
-            return {"msg": "User not found"}, 404
+        user = Users.query.filter_by(id=id).first_or_404("User not found")
         db.session.delete(user)
         db.session.commit()
-        return {"msg": "User was deleted"}
+        return {"message": "User was deleted"}
 
     def put(self, id):
-        user = Users.query.get(id)
-
-        if not user:
-            return {"msg": "User not found"}, 404
-
+        user = Users.query.filter_by(id=id).first_or_404("User not found")
         data = request.get_json()
         password = data.get("password")
         confirm_password = data.get("confirm_password")
@@ -78,5 +70,5 @@ class UsersGroupAPI(Resource):
         return {"msg": "User already exists"}, 409
 
 
-api.add_resource(UserAPI, "/api/users/<int:id>")
-api.add_resource(UsersGroupAPI, "/api/users")
+api.add_resource(UserAPI, "/api/users/<int:id>/")
+api.add_resource(UsersGroupAPI, "/api/users/")

@@ -67,10 +67,7 @@ def create_task():
 @todo_api.route("/todos/<int:id>")
 @jwt.jwt_required()
 def get_task(id):
-    task = Todo.query.get(id)
-
-    if not task:
-        return jsonify({"message": "Task not found"}), 404
+    task = Todo.query.filter_by(id=id).first_or_404("Task not found")
 
     return jsonify({
         "id": task.id,
@@ -86,11 +83,7 @@ def update_task(id):
     identity = jwt.get_jwt_identity()
     user = Users.query.filter_by(email=identity).first()
 
-    todo = Todo.query.get(id)
-
-    if not todo:
-        return jsonify({"message": "Task not found"}), 404
-
+    todo = Todo.query.filter_by(id=id).first_or_404("Task not found")
    
     if todo.user_id != user.id:
         return jsonify({"message": "Unauthorized"}), 401
@@ -107,10 +100,7 @@ def update_task(id):
 @todo_api.route("/todos/<int:id>", methods=["DELETE"])
 @jwt.jwt_required()
 def delete_task(id):
-    task = Todo.query.get(id)
-
-    if not task:
-        return jsonify({"message": "Task not found"}), 404
+    task = Todo.query.filter_by(id=id).first_or_404("Task not found")
 
     identity = jwt.get_jwt_identity()
     user = Users.query.filter_by(email=identity).first()

@@ -12,37 +12,27 @@ from app import db, api
 class SingleFilmAPI(Resource):       
 
     def get(self, id):
-        film = Films.query.get(id)
-
-        if not film:
-            return {"msg": "Film not found"}, 404
-
+        film = Films.query.filter_by(id=id).first_or_404("Film not found")
         return film_scheme.jsonify(film)
 
     @jwt.jwt_required()
     def delete(self, id):
-        film = Films.query.get(id)
-
-        if not film:
-            return {"msg": "Film not found"}, 404
+        film = Films.query.filter_by(id=id).first_or_404("Film not found")
 
         indentity = jwt.get_jwt_identity()
         user = Users.query.filter_by(email=indentity).first()
 
         if film.user_id != user.id:
-            return {"msg": "Unauthorized"}, 401
+            return {"message": "Unauthorized"}, 401
 
         db.session.delete(film)
         db.session.commit()
-        return {"msg": "Film was deleted"}
+        return {"message": "Film was deleted"}
         
     @jwt.jwt_required()
     def put(self, id):
 
-        film = Films.query.get(id)
-
-        if not film:
-            return {"msg": "Film not found"}, 404
+        film = Films.query.filter_by(id=id).first_or_404("Film not found")
 
         data = request.get_json()
 
@@ -50,7 +40,7 @@ class SingleFilmAPI(Resource):
         user = Users.query.filter_by(email=indentity).first()
 
         if film.user_id != user.id:
-            return {"msg": "Unauthorized"}, 401
+            return {"message": "Unauthorized"}, 401
 
         film.name = data.get("name")
         film.date_out = datetime.strptime(data.get("date_out"), "%Y-%m-%d")
@@ -60,7 +50,7 @@ class SingleFilmAPI(Resource):
 
         db.session.commit()
 
-        return {"msg": "Film was successfully updated"}
+        return {"message": "Film was successfully updated"}
 
 
 class GroupFilmAPI(Resource):
@@ -87,7 +77,7 @@ class GroupFilmAPI(Resource):
         db.session.add(film)
         db.session.commit()
 
-        return {"msg": "Film was successfully added"}
+        return {"message": "Film was successfully added"}
 
 
 api.add_resource(SingleFilmAPI, "/api/films/<int:id>")
