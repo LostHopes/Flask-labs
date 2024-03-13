@@ -1,14 +1,18 @@
 {% extends "base.html" %}
 {% import "_post_fields.html" as field %}
 {% block title %} {{ super() }} {% endblock %}
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('posts.static', filename='css/styles.css') }}">
+{% endblock %}
 {% block content %}
 
-<div class="container justify-content-center fs-4 border rounded-3 p-5">
+<div class="container justify-content-center fs-4 border rounded-3 p-5 text-wrap">
     <div>
         <h1 class="title p-5">{{ post.title }}</h1>
     </div>
     <div>
-        <p>{{ post.text }}</p>
+        <p class="text-break">{{ post.text }}</p>
     </div>
     <div>
         <p>
