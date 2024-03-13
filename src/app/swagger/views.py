@@ -3,7 +3,7 @@ import os
 
 from . import swagger
 
-@swagger.route("/swagger.json")
+@swagger.route("/docs")
 def swagger():
     base = os.path.abspath(os.path.dirname(__file__))
     path = os.path.join(base, "swagger.json")
