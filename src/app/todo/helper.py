@@ -3,21 +3,21 @@ from app.todo.models import Todo
 
 
 class TodosHelper(Todo):
-    def show(self, id):
+    def show(self, id: int) -> list:
         todos = db.session.query(Todo).where(Todo.user_id == id)
         return todos
 
-    def remove(self, id: int | None):
+    def remove(self, id: int | None) -> None:
         todo = Todo.query.filter_by(id=id).first()
         db.session.delete(todo)
         db.session.commit()
 
-    def add(self, name: str, id: int):
+    def add(self, name: str, id: int) -> None:
         task = Todo(task=name, user_id=id)
         db.session.add(task)
         db.session.commit()
 
-    def update(self, id: int):
+    def update(self, id: int) -> None:
         task = db.session.query(Todo).filter(Todo.id == id).first()
         task.status = "Completed"
         db.session.commit()

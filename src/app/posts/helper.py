@@ -17,14 +17,14 @@ class PostsHelper(Posts):
             filename)
 
 
-    def show(self, page, max_items):
-        query = db.session.query(Posts, Users)\
+    def show(self, page: int, max_items: int) -> list:
+        posts = db.session.query(Posts, Users)\
             .join(Users).\
                 order_by(Posts.created_at.desc())\
                     .paginate(page=page, per_page=max_items)
-        return query
+        return posts
 
-    def get(self, id=None):
+    def get(self, id=None) -> list | int:
 
         if id is None:
             posts = Posts.query.all()
@@ -33,7 +33,7 @@ class PostsHelper(Posts):
         post = Posts.query.filter_by(id=id).first()
         return post
     
-    def create(self, title, text, category, tags_str, image, user_id):
+    def create(self, title, text, category, tags_str, image, user_id) -> None:
 
         post = Posts(title=title, text=text, category=category, user_id=user_id)
 
@@ -53,7 +53,7 @@ class PostsHelper(Posts):
 
         
 
-    def delete(self, id):
+    def delete(self, id: int):
         post = Posts.query.filter_by(id=id).first()
 
         if not post:
@@ -64,7 +64,7 @@ class PostsHelper(Posts):
         db.session.delete(post)
         db.session.commit()
 
-    def update(self, id, title, text, image, category, tags_str):
+    def update(self, id: int, title: str, text: str, image: str, category: str, tags_str: str) -> None:
         post = Posts.query.filter_by(id=id).first()
         post.title = title
         post.text = text
@@ -88,11 +88,11 @@ class PostsHelper(Posts):
         db.session.commit()
 
     @staticmethod
-    def get_popular_tags(amount=3):
+    def get_popular_tags(amount: int = 3) -> list:
         query  = db.session.query(PostsTags.name, db.func.count(PostsTags.name)).group_by(PostsTags.name).order_by(db.func.count(PostsTags.name).desc()).limit(amount).all()
         return query
 
-    def save_picture(self, file):
+    def save_picture(self, file: str):
         random_hex = secrets.token_hex(8)
         _, file_extension = os.path.split(file.filename)
         filename = random_hex + file_extension
@@ -101,7 +101,7 @@ class PostsHelper(Posts):
         new_image.save(self.path(filename))
         return filename
 
-    def delete_picture(self, filename):
+    def delete_picture(self, filename: str) -> str:
 
         if filename == "default.jpg":
             return

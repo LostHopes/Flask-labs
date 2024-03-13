@@ -21,7 +21,7 @@ class UsersHelper(Users):
         self.path = lambda filename: os.path.join(app.root_path, "user",
          "static", "user", "images", "profile_pics", filename)
 
-    def register(self, name, surname, login, email, password, confirm_password, register_date):
+    def register(self, name: str, surname: str, login: str, email: str, password: str, confirm_password: str, register_date: str) -> None:
         
         password_hash = generate_password_hash(password)
         if check_password_hash(password_hash, confirm_password):
@@ -40,15 +40,15 @@ class UsersHelper(Users):
         user_info = db.session.query(Users)
         return user_info
 
-    def get_username(self, email):
+    def get_username(self, email: str) -> str:
         username = db.session.query(Users).filter_by(email=email).first()
         return username
 
-    def get_all(self):
+    def get_all(self) -> list:
         users = db.session.query(Users).all()
         return users
 
-    def login(self, email, password):
+    def login(self, email: str, password: str) -> bool|None:
         exist = db.session.query(
             Users.query.filter_by(email=email)\
                 .exists()).scalar()
@@ -57,7 +57,7 @@ class UsersHelper(Users):
             validation = info.email == email and check_password_hash(info.password, password)
             return validation
 
-    def change_password(self, new_password, repeat_password):
+    def change_password(self, new_password: str, repeat_password: str) -> bool:
         succeed = True
         
         validation = new_password == repeat_password
@@ -71,7 +71,7 @@ class UsersHelper(Users):
         return not succeed
         
 
-    def save_picture(self, form_picture):
+    def save_picture(self, form_picture: str) -> str:
         random_hex = secrets.token_hex(8)
         _, file_extension = os.path.split(form_picture.filename)
         picture_filename = random_hex + file_extension
@@ -82,7 +82,7 @@ class UsersHelper(Users):
         return picture_filename
     
     
-    def update(self, username, email, image, about):
+    def update(self, username: str, email: str, image: str, about: str) -> None:
 
         current_user.login = username
         current_user.email = email
@@ -97,7 +97,7 @@ class UsersHelper(Users):
         self.commit()
 
 
-    def delete_picture(self, filename):
+    def delete_picture(self, filename: str) -> str:
 
         if filename == "default.jpg":
             return
@@ -107,15 +107,15 @@ class UsersHelper(Users):
 
 
     @staticmethod
-    def commit():
+    def commit() -> None:
         db.session.commit()
 
     @staticmethod
-    def rollback():
+    def rollback() -> None:
         db.session.rollback()
 
     
-    def delete():
+    def disable() -> bool:
         pass
 
 

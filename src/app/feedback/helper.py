@@ -7,21 +7,21 @@ from app import db
 
 class FeedbackHelper(Feedback):
 
-    def show(self):
+    def show(self) -> list:
         feedbacks = db.session.query(Feedback, Users).join(Users).all()
         return feedbacks
 
-    def add(self, comment, file, user_id):
+    def add(self, comment: str, file: str, user_id: int) -> None:
         comment_date = datetime.now().replace(microsecond=0)
         feedback = Feedback(comment=comment, file=file, comment_date=comment_date, user_id=user_id)
         db.session.add(feedback)
         db.session.commit()
 
-    def remove(self, id):
+    def remove(self, id: int) -> None:
         comment = Feedback.query.filter_by(id=id).first()
         db.session.delete(comment)
         db.session.commit()
 
 
-    def update(self):
+    def update(self) -> None:
         pass
