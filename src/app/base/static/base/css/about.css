@@ -10,4 +10,10 @@ ul.tech-stack > li {
 
 .profile-pic {
   width: var(--original-width);
+  transition-duration: 3s;
+}
+
+.profile-pic:hover {
+  transform: rotateZ(360deg) scale(2.5) rotateY(360deg);
+  transition-duration: 5s;
 }

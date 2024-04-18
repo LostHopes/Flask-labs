@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}
     <title>{{ title }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('base.static', filename='images/favicon.ico') }}">
     {% endblock %}
     {% block css %}
     <link rel="stylesheet" href="{{ url_for('base.static', filename='css/bootstrap.theme.css') }}">
