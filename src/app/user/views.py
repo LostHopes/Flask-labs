@@ -79,7 +79,7 @@ def change_password():
         flash("Password changed!", "success")
         return redirect(url_for("user.account"))
 
-    flash("Passwords isn't the same!", "danger")
+    flash("Passwords aren't the same!", "danger")
     return redirect(url_for("user.account"))
 
 
