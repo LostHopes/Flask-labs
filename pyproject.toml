@@ -19,9 +19,11 @@ flask-restful = "^0.3.10"
 flask-wtf = "^1.2.2"
 flask-swagger-ui = "^4.11.1"
 flask-marshmallow = "^1.2.1"
+pillow = "^11.0.0"
+marshmallow-sqlalchemy = "^1.1.0"
 
 [tool.poetry.group.dev.dependencies]
-pillow = "^11.0.0"
+pytest = "^8.3.3"
 
 [build-system]
 requires = ["poetry-core"]

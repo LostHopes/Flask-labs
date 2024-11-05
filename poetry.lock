@@ -372,6 +372,17 @@ docs = ["Sphinx", "furo"]
 test = ["objgraph", "psutil"]
 
 [[package]]
+name = "iniconfig"
+version = "2.0.0"
+description = "brain-dead simple config-ini parsing"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
+    {file = "iniconfig-2.0.0.tar.gz", hash = "sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3"},
+]
+
+[[package]]
 name = "itsdangerous"
 version = "2.2.0"
 description = "Safely pass data to untrusted environments and back."
@@ -508,6 +519,26 @@ docs = ["alabaster (==1.0.0)", "autodocsumm (==0.2.14)", "sphinx (==8.1.3)", "sp
 tests = ["pytest", "simplejson"]
 
 [[package]]
+name = "marshmallow-sqlalchemy"
+version = "1.1.0"
+description = "SQLAlchemy integration with the marshmallow (de)serialization library"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "marshmallow_sqlalchemy-1.1.0-py3-none-any.whl", hash = "sha256:cce261148e4c6ec4ee275f3d29352933380a1afa2fd3933f5e9ecd02fdc16ade"},
+    {file = "marshmallow_sqlalchemy-1.1.0.tar.gz", hash = "sha256:2ab092da269dafa8a05d51a58409af71a8d2183958ba47143127dd239e0359d8"},
+]
+
+[package.dependencies]
+marshmallow = ">=3.18.0"
+SQLAlchemy = ">=1.4.40,<3.0"
+
+[package.extras]
+dev = ["marshmallow-sqlalchemy[tests]", "pre-commit (>=3.5,<4.0)", "tox"]
+docs = ["alabaster (==1.0.0)", "sphinx (==8.0.2)", "sphinx-issues (==4.1.0)"]
+tests = ["pytest (<9)", "pytest-lazy-fixtures"]
+
+[[package]]
 name = "packaging"
 version = "24.1"
 description = "Core utilities for Python packages"
@@ -611,6 +642,21 @@ typing = ["typing-extensions"]
 xmp = ["defusedxml"]
 
 [[package]]
+name = "pluggy"
+version = "1.5.0"
+description = "plugin and hook calling mechanisms for python"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pluggy-1.5.0-py3-none-any.whl", hash = "sha256:44e1ad92c8ca002de6377e165f3e0f1be63266ab4d554740532335b9d75ea669"},
+    {file = "pluggy-1.5.0.tar.gz", hash = "sha256:2cffa88e94fdc978c4c574f15f9e59b7f4201d439195c3715ca9e2486f1d0cf1"},
+]
+
+[package.extras]
+dev = ["pre-commit", "tox"]
+testing = ["pytest", "pytest-benchmark"]
+
+[[package]]
 name = "pyjwt"
 version = "2.9.0"
 description = "JSON Web Token implementation in Python"
@@ -626,6 +672,26 @@ crypto = ["cryptography (>=3.4.0)"]
 dev = ["coverage[toml] (==5.0.4)", "cryptography (>=3.4.0)", "pre-commit", "pytest (>=6.0.0,<7.0.0)", "sphinx", "sphinx-rtd-theme", "zope.interface"]
 docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
 tests = ["coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)"]
+
+[[package]]
+name = "pytest"
+version = "8.3.3"
+description = "pytest: simple powerful testing with Python"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pytest-8.3.3-py3-none-any.whl", hash = "sha256:a6853c7375b2663155079443d2e45de913a911a11d669df02a50814944db57b2"},
+    {file = "pytest-8.3.3.tar.gz", hash = "sha256:70b98107bd648308a7952b06e6ca9a50bc660be218d53c257cc1fc94fda10181"},
+]
+
+[package.dependencies]
+colorama = {version = "*", markers = "sys_platform == \"win32\""}
+iniconfig = "*"
+packaging = "*"
+pluggy = ">=1.5,<2"
+
+[package.extras]
+dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
 
 [[package]]
 name = "pytz"
@@ -792,4 +858,4 @@ email = ["email-validator"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "a244d6c0ccc23f1e4ed17322f55e6e3bb8ec58bdaf9989f89141ea98b32e0143"
+content-hash = "ddc3b8617d9ad5126535f1dd9e5e89e8adef981ba289f8747330f70d8b3416d7"
