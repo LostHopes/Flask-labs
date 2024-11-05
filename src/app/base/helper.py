@@ -1,12 +1,14 @@
 from flask_login import current_user
 from flask import url_for
 
+
 class BaseHelper:
 
     def __init__(self):
         pass
+    
 
-    def get_menu() -> list:
+    def get_menu() -> list[dict]:
         menu = [
             {"text": "Albums", "link": url_for("base.albums")},
             {"text": "Contact", "link": url_for("base.contact")},
@@ -29,7 +31,8 @@ class BaseHelper:
 
         return menu
 
-    def get_albums() -> dict:
+
+    def get_albums() -> list[dict]:
         albums = [
             {
                 "title": "The Night Shift",
