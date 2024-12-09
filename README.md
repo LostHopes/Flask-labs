@@ -10,3 +10,4 @@
 - [ ] Modify footer information
 - [x] Add poetry as a package manager
 - [ ] strip away unnecessary features
+- [ ] fix tests
