@@ -29,18 +29,8 @@ def create_app(config_class=config.DevConfig):
     from .user import user
     app.register_blueprint(user)
 
-    from .feedback import feedback
-    app.register_blueprint(feedback, url_prefix="/feedback")
-
     from .todo import todo
     app.register_blueprint(todo, url_prefix="/todo")
-
-    from .cookies import cookies
-    app.register_blueprint(cookies, url_prefix="/cookies")
-
-    from .skills import skills
-    app.register_blueprint(skills, url_prefix="/skills")
-
     from .posts import posts
     app.register_blueprint(posts, url_prefix="/posts")
 

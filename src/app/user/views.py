@@ -67,7 +67,7 @@ def update_account():
         return redirect(url_for("user.account"))
 
 
-@user.route("/account/", methods=["POST"])
+@user.post("/account/")
 @login_required
 def change_password():
     user = helper.UsersHelper()
@@ -83,7 +83,7 @@ def change_password():
     return redirect(url_for("user.account"))
 
 
-@user.route("/logout", methods=["POST"])
+@user.post("/logout")
 @login_required
 def logout():
     logout_user()
@@ -91,7 +91,7 @@ def logout():
     return redirect(url_for("user.login"))
 
 
-@user.route("/register", methods=["GET"])
+@user.get("/register")
 def register():
 
     if current_user.is_authenticated:
@@ -105,7 +105,7 @@ def register():
 
     return render_template("register.html", title=title, form=form)
 
-@user.route("/register", methods=["POST"])
+@user.post("/register")
 def register_process():
 
     user = helper.UsersHelper()
@@ -129,7 +129,7 @@ def register_process():
         return redirect(url_for("user.register"))
 
 
-@user.route("/login", methods=["GET"])
+@user.get("/login")
 def login():
 
     if current_user.is_authenticated:
@@ -145,7 +145,7 @@ def login():
     return render_template("login.html", title=title, form=form)
 
 
-@user.route("/login", methods=["POST"])
+@user.post("/login")
 def login_process():
     user = helper.UsersHelper()
 
@@ -163,7 +163,7 @@ def login_process():
     return redirect(url_for("user.account"))
 
 
-@user.route("/users")
+@user.get("/users")
 @login_required
 def users():
     handler = helper.UsersHelper()

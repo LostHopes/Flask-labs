@@ -4,7 +4,6 @@ import platform
 import datetime
 
 from app.base import base
-from app.base.helper import BaseHelper
 from app import app
 
 
@@ -12,12 +11,11 @@ from app import app
 def links():
     now = datetime.datetime.now()
     time = now.strftime("%d/%m/%y %H:%M:%S")
-    menu = BaseHelper.get_menu()
     
     return dict(
         platform=platform,
-        time=time,
-        menu=menu)
+        time=time
+    )
 
 
 @base.route("/")
@@ -36,14 +34,5 @@ def about():
 def contact():
     title = "Contact"
     return render_template("contact.html", title=title)
-
-
-@base.route("/albums")
-def albums():
-    title="Albums"
-
-    albums = BaseHelper.get_albums()
-
-    return render_template("albums.html", title=title, albums=albums)
 
 

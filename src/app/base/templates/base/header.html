@@ -1,3 +1,21 @@
+{% set menu = [
+    {"text": "Contact", "link": url_for("base.contact")},
+    {"text": "Todo", "link": url_for("todo.todo_list")},
+    {"text": "Posts", "link": url_for("posts.show")},
+    {"text": "About", "link": url_for("base.about")}
+] %}
+
+{% if current_user.is_anonymous %}
+    {% set menu = menu + [
+        {"text": "Login", "link": url_for("user.login")},
+        {"text": "Register", "link": url_for("user.register")}
+    ] %}
+{% else %}
+    {% set menu = menu + [
+        {"text": "Account", "link": url_for("user.account")}
+    ] %}
+{% endif %}
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container px-lg-5">
         <a class="navbar-brand" href="{{ url_for('base.index') }}">Home</a>
