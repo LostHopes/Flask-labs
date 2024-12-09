@@ -3,12 +3,10 @@ from sqlalchemy.exc import IntegrityError, StatementError
 from PIL import UnidentifiedImageError
 from flask_login import login_required, current_user, logout_user, login_user
 import flask_jwt_extended as jwt
-
 import datetime
-
-from .forms import ChangePasswordForm, LoginForm, \
-    LogoutForm, RegisterForm, UpdateAccountForm
-from . import user, helper
+from app.user.forms import (ChangePasswordForm, LoginForm,
+    LogoutForm, RegisterForm, UpdateAccountForm)
+from app.user import user, helper
 from app import login_manager
 
 

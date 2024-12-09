@@ -1,8 +1,8 @@
 from flask import url_for, redirect, render_template, request, flash
 from flask_login import login_required, current_user
 
-from . import posts, helper
-from .forms import WritePostForm, EditPostForm
+from app.posts import posts, helper
+from app.posts.forms import WritePostForm, EditPostForm
 
 
 @posts.route("/")
@@ -15,7 +15,6 @@ def show():
     pagination = db.show(page, items)
     tags = db.get_popular_tags()
     image = lambda post: url_for('posts.static', filename=f'images/posts_thumbnails/{post}')
-    print(image)
     
     return render_template("posts.html", title=title, pagination=pagination, image=image, tags=tags)
 
@@ -33,7 +32,7 @@ def write():
     return render_template("post_write.html", title=title, form=form)
 
 
-@posts.route("/edit/<int:id>")
+@posts.get("/edit/<int:id>")
 @login_required
 def edit(id):
     title = "Edit post"
@@ -54,7 +53,7 @@ def edit(id):
     return render_template("post_edit.html", title=title, form=form, id=id)
 
 
-@posts.route("/", methods=["POST"])
+@posts.post("/")
 @login_required
 def create():
 
@@ -72,14 +71,14 @@ def create():
     return redirect(url_for("posts.show"))
 
 
-@posts.route("/<int:id>")
+@posts.get("/<int:id>")
 def get(id):
     db = helper.PostsHelper()
     post = db.get(id)
     return render_template("article.html", post=post)
 
 
-@posts.route("/update/<int:id>", methods=["POST"])
+@posts.post("/update/<int:id>")
 @login_required
 def update(id):
     db = helper.PostsHelper()
@@ -95,7 +94,7 @@ def update(id):
     return redirect(url_for("posts.show"))
 
 
-@posts.route("/delete/<int:id>", methods=["POST"])
+@posts.post("/delete/<int:id>")
 @login_required
 def delete(id):
     db = helper.PostsHelper()

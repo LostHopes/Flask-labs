@@ -18,19 +18,19 @@ def links():
     )
 
 
-@base.route("/")
+@base.get("/")
 def index():
     title = "Home"
     return render_template("index.html", title=title)
 
 
-@base.route("/about")
+@base.get("/about")
 def about():
     title = "About"
     return render_template("about.html", title=title)
 
 
-@base.route("/contact")
+@base.get("/contact")
 def contact():
     title = "Contact"
     return render_template("contact.html", title=title)

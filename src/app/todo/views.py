@@ -1,12 +1,11 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from sqlalchemy.exc import IntegrityError
+from app.todo import helper, todo
+from app.todo.forms import TodoForm
 
-from . import helper, todo
-from .forms import TodoForm
 
-
-@todo.route("/")
+@todo.get("/")
 @login_required
 def todo_list():
     title = "Todo list"
@@ -17,7 +16,7 @@ def todo_list():
     return render_template("todo.html", title=title, form=form, todo=todo)
 
 
-@todo.route("/", methods=["POST"])
+@todo.post("/")
 @login_required
 def add():
 
@@ -35,7 +34,7 @@ def add():
     return redirect(url_for("todo.todo_list"))
 
 
-@todo.route("<int:id>/delete/", methods=["POST"])
+@todo.post("<int:id>/delete/")
 @login_required
 def remove(id=None):
 
@@ -46,7 +45,7 @@ def remove(id=None):
     return redirect(url_for("todo.todo_list"))
 
 
-@todo.route("<int:id>/update/", methods=["POST"])
+@todo.post("<int:id>/update/")
 @login_required
 def update(id=None):
     todo = helper.TodosHelper()

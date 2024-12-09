@@ -2,10 +2,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import current_user
 from PIL import Image
-
 import os
 import secrets
-
 from app.user.models import Users
 from app import login_manager, db, app
 
