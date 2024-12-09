@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 
-from . import config
+from app import config
 
 
 app = Flask(__name__)
