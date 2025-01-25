@@ -2,18 +2,20 @@ from flask import render_template, redirect, url_for, flash, request
 from sqlalchemy.exc import IntegrityError, StatementError
 from PIL import UnidentifiedImageError
 from flask_login import login_required, current_user, logout_user, login_user
-import flask_jwt_extended as jwt
 import datetime
-from app.user.forms import (ChangePasswordForm, LoginForm,
-    LogoutForm, RegisterForm, UpdateAccountForm)
+from app.user.forms import (
+    ChangePasswordForm,
+    LoginForm,
+    LogoutForm,
+    RegisterForm,
+    UpdateAccountForm,
+)
 from app.user import user, helper
-from app import login_manager
 
 
 @user.route("/account")
 @login_required
 def account():
-
     title = "Account"
     logout_form = LogoutForm()
     update_form = UpdateAccountForm()
@@ -29,19 +31,20 @@ def account():
     if password_form.validate_on_submit():
         return redirect(url_for("user.change_password"))
 
-
-    image_file = url_for("user.static", filename=f"images/profile_pics/{current_user.image}")
+    image_file = url_for(
+        "user.static", filename=f"images/profile_pics/{current_user.image}"
+    )
     return render_template(
         "account.html",
         title=title,
         logout_form=logout_form,
         update_form=update_form,
         password_form=password_form,
-        image_file=image_file
+        image_file=image_file,
     )
 
 
-@user.route("/account/update", methods=["POST"])
+@user.post("/account/update")
 @login_required
 def update_account():
     try:
@@ -50,9 +53,9 @@ def update_account():
             request.form.get("username"),
             request.form.get("email"),
             request.files.get("image"),
-            request.form.get("about")
+            request.form.get("about"),
         )
-        
+
         flash("Your account has been updated!", "success")
         return redirect(url_for("user.account"))
 
@@ -70,10 +73,8 @@ def update_account():
 def change_password():
     user = helper.UsersHelper()
     if user.change_password(
-        request.form.get("new_password"),
-        request.form.get("repeat_password")
-        ):
-        
+        request.form.get("new_password"), request.form.get("repeat_password")
+    ):
         flash("Password changed!", "success")
         return redirect(url_for("user.account"))
 
@@ -91,7 +92,6 @@ def logout():
 
 @user.get("/register")
 def register():
-
     if current_user.is_authenticated:
         return redirect(url_for("user.account"))
 
@@ -103,21 +103,21 @@ def register():
 
     return render_template("register.html", title=title, form=form)
 
+
 @user.post("/register")
 def register_process():
-
     user = helper.UsersHelper()
     register_date = datetime.datetime.now().replace(second=0, microsecond=0)
 
-    try:    
+    try:
         user.register(
             request.form.get("name"),
             request.form.get("surname"),
-            request.form.get("login"), 
-            request.form.get("email"), 
+            request.form.get("login"),
+            request.form.get("email"),
             request.form.get("password"),
             request.form.get("confirm_password"),
-            register_date
+            register_date,
         )
         flash("User was registered", "success")
         return redirect(url_for("user.login"))
@@ -129,7 +129,6 @@ def register_process():
 
 @user.get("/login")
 def login():
-
     if current_user.is_authenticated:
         return redirect(url_for("user.account"))
 
@@ -138,8 +137,7 @@ def login():
 
     if form.validate_on_submit():
         return redirect(url_for("user.login_process"))
-        
-        
+
     return render_template("login.html", title=title, form=form)
 
 
@@ -155,7 +153,7 @@ def login_process():
     if not success:
         flash("Login failed", "danger")
         return redirect(url_for("user.login"))
-    
+
     login_user(user.get_username(email), remember=remember)
     flash("Login successful", "success")
     return redirect(url_for("user.account"))
@@ -177,7 +175,5 @@ def after_request(response):
         db = helper.UsersHelper()
         db.commit()
     except StatementError:
-        flash('Error while updating user last seen!', 'danger')
+        flash("Error while updating user last seen!", "danger")
     return response
-
-    

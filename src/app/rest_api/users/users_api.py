@@ -1,7 +1,6 @@
 from flask import request
 from flask_restful import Resource
 from flask_bcrypt import generate_password_hash, check_password_hash
-from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 
 from app import api, db
@@ -61,7 +60,7 @@ class UsersGroupAPI(Resource):
                 password=password_hash,
                 name=name,
                 surname=surname,
-                register_date=register_date
+                register_date=register_date,
             )
             db.session.add(user)
             db.session.commit()

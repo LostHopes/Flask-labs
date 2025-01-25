@@ -21,7 +21,9 @@ def generate_token():
         return jsonify({"message": "Invalid login or password"}), 401
 
     user = Users.query.filter_by(email=email).first()
-    access_token = jwt.create_access_token(identity=user.email, expires_delta=timedelta(days=1))
+    access_token = jwt.create_access_token(
+        identity=user.email, expires_delta=timedelta(days=1)
+    )
 
     response = jsonify(token=access_token), 200
 
@@ -41,7 +43,7 @@ def get_todos():
             "id": todo.id,
             "task": todo.task,
             "status": todo.status,
-            "category": todo.category
+            "category": todo.category,
         }
         todos_list.append(todo_dict)
 
@@ -69,13 +71,16 @@ def create_task():
 def get_task(id):
     task = Todo.query.filter_by(id=id).first_or_404("Task not found")
 
-    return jsonify({
-        "id": task.id,
-        "task": task.task,
-        "status": task.status,
-        "category": task.category,
-        "user_id": task.user_id
-    }), 200
+    return jsonify(
+        {
+            "id": task.id,
+            "task": task.task,
+            "status": task.status,
+            "category": task.category,
+            "user_id": task.user_id,
+        }
+    ), 200
+
 
 @rest_api.route("/todos/<int:id>", methods=["PUT"])
 @jwt.jwt_required()
@@ -84,7 +89,7 @@ def update_task(id):
     user = Users.query.filter_by(email=identity).first()
 
     todo = Todo.query.filter_by(id=id).first_or_404("Task not found")
-   
+
     if todo.user_id != user.id:
         return jsonify({"message": "Unauthorized"}), 401
 

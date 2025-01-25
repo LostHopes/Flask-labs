@@ -13,7 +13,7 @@ def test_create_user(client):
             password="password",
             name="Admin",
             surname="Admin",
-            register_date=datetime.now().replace(second=0, microsecond=0)
+            register_date=datetime.now().replace(second=0, microsecond=0),
         )
         db.session.add(user)
         db.session.commit()

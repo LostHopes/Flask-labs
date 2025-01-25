@@ -14,9 +14,13 @@ def show():
     page = request.args.get("page", 1, type=int)
     pagination = db.show(page, items)
     tags = db.get_popular_tags()
-    image = lambda post: url_for('posts.static', filename=f'images/posts_thumbnails/{post}')
-    
-    return render_template("posts.html", title=title, pagination=pagination, image=image, tags=tags)
+    image = lambda post: url_for(
+        "posts.static", filename=f"images/posts_thumbnails/{post}"
+    )
+
+    return render_template(
+        "posts.html", title=title, pagination=pagination, image=image, tags=tags
+    )
 
 
 @posts.route("/write")
@@ -49,14 +53,12 @@ def edit(id):
     if form.validate_on_submit():
         return redirect(url_for("posts.update"))
 
-
     return render_template("post_edit.html", title=title, form=form, id=id)
 
 
 @posts.post("/")
 @login_required
 def create():
-
     db = helper.PostsHelper()
 
     db.create(
@@ -65,7 +67,7 @@ def create():
         request.form.get("category"),
         request.form.get("tags"),
         request.files.get("image"),
-        current_user.get_id()
+        current_user.get_id(),
     )
     flash("Post was created", "success")
     return redirect(url_for("posts.show"))

@@ -1,5 +1,4 @@
-from flask import render_template, url_for
-from flask_login import current_user
+from flask import render_template
 import platform
 import datetime
 
@@ -11,11 +10,8 @@ from app import app
 def links():
     now = datetime.datetime.now()
     time = now.strftime("%d/%m/%y %H:%M:%S")
-    
-    return dict(
-        platform=platform,
-        time=time
-    )
+
+    return dict(platform=platform, time=time)
 
 
 @base.get("/")
@@ -34,5 +30,3 @@ def about():
 def contact():
     title = "Contact"
     return render_template("contact.html", title=title)
-
-

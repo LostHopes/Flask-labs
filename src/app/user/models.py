@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 from datetime import datetime
-from app import app, db
+from app import db
 
 
 class Users(db.Model, UserMixin):
@@ -13,8 +13,10 @@ class Users(db.Model, UserMixin):
     surname = db.Column(db.String, nullable=False)
     is_active = db.Column(db.Boolean, default=True, nullable=False)
     image = db.Column(db.String(20), nullable=False, default="default.jpg")
-    last_seen = db.Column(db.DateTime, default=datetime.now().replace(second=0, microsecond=0))
-    about = db.Column(db.Text , default="", nullable=False)
+    last_seen = db.Column(
+        db.DateTime, default=datetime.now().replace(second=0, microsecond=0)
+    )
+    about = db.Column(db.Text, default="", nullable=False)
     register_date = db.Column(db.DateTime, nullable=False)
     todos = db.relationship("Todo", backref="users", lazy=True)
     posts = db.relationship("Posts", backref="users", lazy=True)

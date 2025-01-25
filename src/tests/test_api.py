@@ -10,7 +10,7 @@ def test_create_user(client):
         "confirm_password": "password123",
         "name": "Test123",
         "surname": "Test123",
-        "register_date": "2024-02-13 16:54:00"
+        "register_date": "2024-02-13 16:54:00",
     }
     response = client.post("/api/users", json=json)
     assert response.status_code == 200
@@ -31,7 +31,7 @@ def test_update_user(client):
             "password": "password1234",
             "confirm_password": "password1234",
             "last_seen": "2024-02-13 16:55:00",
-            "about": "test1234"
+            "about": "test1234",
         }
 
         response = client.put(f"/api/users/{user.id}", json=json)
@@ -45,36 +45,33 @@ def test_delete_user(client):
         assert response.status_code == 200
 
 
-def test_list_todo(client):
+def test_list_todo(client: client):
     pass
 
 
-def test_create_task(client):
+def test_create_task(client: client):
     pass
 
 
-def test_update_task(client):
+def test_update_task(client: client):
     pass
 
 
-def test_delete_task(client):
+def test_delete_task(client: client):
     pass
 
 
-def test_list_films(client):
+def test_list_films(client: client):
     pass
 
 
-def test_add_film(client):
+def test_add_film(client: client):
     pass
 
 
-def test_update_film(client):
+def test_update_film(client: client):
     pass
 
 
-def test_delete_film(client):
+def test_delete_film(client: client):
     pass
-
-
-

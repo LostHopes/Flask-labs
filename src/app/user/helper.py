@@ -1,4 +1,3 @@
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import current_user
 from PIL import Image
@@ -11,16 +10,24 @@ from app import login_manager, db, app
 @login_manager.user_loader
 def user_loader(user_id):
     return Users.query.get(user_id)
-    
+
 
 class UsersHelper(Users):
-
     def __init__(self):
-        self.path = lambda filename: os.path.join(app.root_path, "user",
-         "static", "user", "images", "profile_pics", filename)
+        self.path = lambda filename: os.path.join(
+            app.root_path, "user", "static", "user", "images", "profile_pics", filename
+        )
 
-    def register(self, name: str, surname: str, login: str, email: str, password: str, confirm_password: str, register_date: str) -> None:
-        
+    def register(
+        self,
+        name: str,
+        surname: str,
+        login: str,
+        email: str,
+        password: str,
+        confirm_password: str,
+        register_date: str,
+    ) -> None:
         password_hash = generate_password_hash(password)
         if check_password_hash(password_hash, confirm_password):
             user = Users(
@@ -29,11 +36,11 @@ class UsersHelper(Users):
                 login=login,
                 email=email,
                 password=password_hash,
-                register_date=register_date
+                register_date=register_date,
             )
             db.session.add(user)
             db.session.commit()
-    
+
     def profile(self):
         user_info = db.session.query(Users)
         return user_info
@@ -46,18 +53,18 @@ class UsersHelper(Users):
         users = db.session.query(Users).all()
         return users
 
-    def login(self, email: str, password: str) -> bool|None:
-        exist = db.session.query(
-            Users.query.filter_by(email=email)\
-                .exists()).scalar()
+    def login(self, email: str, password: str) -> bool | None:
+        exist = db.session.query(Users.query.filter_by(email=email).exists()).scalar()
         if exist:
             info = Users.query.filter_by(email=email).first()
-            validation = info.email == email and check_password_hash(info.password, password)
+            validation = info.email == email and check_password_hash(
+                info.password, password
+            )
             return validation
 
     def change_password(self, new_password: str, repeat_password: str) -> bool:
         succeed = True
-        
+
         validation = new_password == repeat_password
 
         if validation:
@@ -67,7 +74,6 @@ class UsersHelper(Users):
             return succeed
 
         return not succeed
-        
 
     def save_picture(self, form_picture: str) -> str:
         random_hex = secrets.token_hex(8)
@@ -78,10 +84,8 @@ class UsersHelper(Users):
         new_image = image.resize((300, 300))
         new_image.save(picture_path)
         return picture_filename
-    
-    
-    def update(self, username: str, email: str, image: str, about: str) -> None:
 
+    def update(self, username: str, email: str, image: str, about: str) -> None:
         current_user.login = username
         current_user.email = email
 
@@ -91,18 +95,14 @@ class UsersHelper(Users):
 
         current_user.about = about
 
-
         self.commit()
 
-
     def delete_picture(self, filename: str) -> str:
-
         if filename == "default.jpg":
             return
 
         os.remove(self.path(filename))
         return filename
-
 
     @staticmethod
     def commit() -> None:
@@ -112,9 +112,5 @@ class UsersHelper(Users):
     def rollback() -> None:
         db.session.rollback()
 
-    
     def disable() -> bool:
         pass
-
-
-

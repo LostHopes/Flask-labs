@@ -3,6 +3,7 @@ from datetime import datetime
 
 from app import db
 
+
 class PostType(enum.Enum):
     NEWS = "News"
     PUBLICATIONS = "Publications"
@@ -15,11 +16,15 @@ class Posts(db.Model):
     title = db.Column(db.String, nullable=False)
     text = db.Column(db.Text, nullable=False)
     image = db.Column(db.String, nullable=False, default="default.jpg")
-    created_at = db.Column(db.TIMESTAMP, nullable=False, default=datetime.now().replace(microsecond=0))
+    created_at = db.Column(
+        db.TIMESTAMP, nullable=False, default=datetime.now().replace(microsecond=0)
+    )
     category = db.Column(db.Enum(PostType), nullable=False, default=PostType.NEWS)
     enabled = db.Column(db.Boolean, nullable=False, default=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    tags = db.relationship("PostsTags", backref="tags", lazy="dynamic", cascade="all, delete")
+    tags = db.relationship(
+        "PostsTags", backref="tags", lazy="dynamic", cascade="all, delete"
+    )
 
 
 class PostsTags(db.Model):

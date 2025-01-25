@@ -9,8 +9,7 @@ from app.user.models import Users
 from app import db, api
 
 
-class SingleFilmAPI(Resource):       
-
+class SingleFilmAPI(Resource):
     def get(self, id):
         film = Films.query.filter_by(id=id).first_or_404("Film not found")
         return film_scheme.jsonify(film)
@@ -28,10 +27,9 @@ class SingleFilmAPI(Resource):
         db.session.delete(film)
         db.session.commit()
         return {"message": "Film was deleted"}
-        
+
     @jwt.jwt_required()
     def put(self, id):
-
         film = Films.query.filter_by(id=id).first_or_404("Film not found")
 
         data = request.get_json()
@@ -60,7 +58,6 @@ class GroupFilmAPI(Resource):
 
     @jwt.jwt_required()
     def post(self):
-
         indentity = jwt.get_jwt_identity()
         user = Users.query.filter_by(email=indentity).first()
 
@@ -73,7 +70,7 @@ class GroupFilmAPI(Resource):
         film.time_added = datetime.now().replace(microsecond=0)
         film.genre = data.get("genre")
         film.user_id = user.id
-        
+
         db.session.add(film)
         db.session.commit()
 
@@ -82,8 +79,3 @@ class GroupFilmAPI(Resource):
 
 api.add_resource(SingleFilmAPI, "/api/films/<int:id>")
 api.add_resource(GroupFilmAPI, "/api/films")
-
-
-
-
-

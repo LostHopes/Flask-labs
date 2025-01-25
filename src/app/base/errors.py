@@ -4,12 +4,13 @@ from flask import render_template
 
 _ERROR_FILE = "error.html"
 
+
 @app.errorhandler(405)
 def access_denied(request):
     title = "Access denied"
     error = "You have no permissions to do this"
     return render_template(_ERROR_FILE, title=title, error=error)
-    
+
 
 @app.errorhandler(404)
 def page_not_found(request):

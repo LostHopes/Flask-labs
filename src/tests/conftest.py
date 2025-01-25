@@ -14,10 +14,7 @@ def app():
 
 @pytest.fixture
 def client(app):
-    """Create test client 
+    """Create test client
     to pass as an argument to other tests"""
     with app.test_client() as test_client:
         yield test_client
-
-
-

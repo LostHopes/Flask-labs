@@ -19,7 +19,6 @@ def todo_list():
 @todo.post("/")
 @login_required
 def add():
-
     try:
         todo = helper.TodosHelper()
         task = request.form.get("task")
@@ -30,14 +29,12 @@ def add():
         flash("Task with this name already exist", "danger")
         return redirect(url_for("todo.todo_list"))
 
-
     return redirect(url_for("todo.todo_list"))
 
 
 @todo.post("<int:id>/delete/")
 @login_required
 def remove(id=None):
-
     todo = helper.TodosHelper()
     todo.remove(id)
     flash("Item was successfully removed from todo list", "success")

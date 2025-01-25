@@ -1,4 +1,3 @@
-from flask import request
 from PIL import Image
 
 import os
@@ -10,31 +9,35 @@ from app import db, app
 
 
 class PostsHelper(Posts):
-
     def __init__(self):
         self.path = lambda filename: os.path.join(
-            app.root_path, "posts", "static", "posts", "images", "posts_thumbnails", 
-            filename)
-
+            app.root_path,
+            "posts",
+            "static",
+            "posts",
+            "images",
+            "posts_thumbnails",
+            filename,
+        )
 
     def show(self, page: int, max_items: int) -> list:
-        posts = db.session.query(Posts, Users)\
-            .join(Users).\
-                order_by(Posts.created_at.desc())\
-                    .paginate(page=page, per_page=max_items)
+        posts = (
+            db.session.query(Posts, Users)
+            .join(Users)
+            .order_by(Posts.created_at.desc())
+            .paginate(page=page, per_page=max_items)
+        )
         return posts
 
     def get(self, id=None) -> list | int:
-
         if id is None:
             posts = Posts.query.all()
             return posts
 
         post = Posts.query.filter_by(id=id).first()
         return post
-    
-    def create(self, title, text, category, tags_str, image, user_id) -> None:
 
+    def create(self, title, text, category, tags_str, image, user_id) -> None:
         post = Posts(title=title, text=text, category=category, user_id=user_id)
 
         if image:
@@ -48,10 +51,8 @@ class PostsHelper(Posts):
         for tag in tags:
             posts_tags = PostsTags(name=tag, post_id=post.id)
             db.session.add(posts_tags)
-        
-        db.session.commit()
 
-        
+        db.session.commit()
 
     def delete(self, id: int):
         post = Posts.query.filter_by(id=id).first()
@@ -64,7 +65,9 @@ class PostsHelper(Posts):
         db.session.delete(post)
         db.session.commit()
 
-    def update(self, id: int, title: str, text: str, image: str, category: str, tags_str: str) -> None:
+    def update(
+        self, id: int, title: str, text: str, image: str, category: str, tags_str: str
+    ) -> None:
         post = Posts.query.filter_by(id=id).first()
         post.title = title
         post.text = text
@@ -82,14 +85,19 @@ class PostsHelper(Posts):
             exists = PostsTags.query.filter_by(post_id=id, name=tag).first()
 
             if not exists:
-
                 db.session.add(posts_tags)
-        
+
         db.session.commit()
 
     @staticmethod
     def get_popular_tags(amount: int = 3) -> list:
-        query  = db.session.query(PostsTags.name, db.func.count(PostsTags.name)).group_by(PostsTags.name).order_by(db.func.count(PostsTags.name).desc()).limit(amount).all()
+        query = (
+            db.session.query(PostsTags.name, db.func.count(PostsTags.name))
+            .group_by(PostsTags.name)
+            .order_by(db.func.count(PostsTags.name).desc())
+            .limit(amount)
+            .all()
+        )
         return query
 
     def save_picture(self, file: str):
@@ -102,7 +110,6 @@ class PostsHelper(Posts):
         return filename
 
     def delete_picture(self, filename: str) -> str:
-
         if filename == "default.jpg":
             return
 
