@@ -1,6 +1,8 @@
-# Nightly branch
+# Minimal (stripped-up) version
 
-## TODO
+
+
+# TODO
 
 - [x] Add images to the posts
 - [x] Write documentation for all the features
