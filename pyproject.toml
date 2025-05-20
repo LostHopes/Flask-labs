@@ -25,10 +25,11 @@ marshmallow-sqlalchemy = "^1.1.0"
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
 ruff = "^0.8.3"
+pytest-cov = "^6.1.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
-addopts="-v"
+addopts="-v --cov --cov-fail-under=50"
