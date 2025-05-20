@@ -12,12 +12,12 @@ def test_create_user(client):
         "surname": "Test123",
         "register_date": "2024-02-13 16:54:00",
     }
-    response = client.post("/api/users", json=json)
+    response = client.post("/api/users/", json=json)
     assert response.status_code == 200
 
 
 def test_list_users(client):
-    response = client.get("/api/users")
+    response = client.get("/api/users/")
     assert "test123@gmail.com" in response.get_data(as_text=True)
     assert response.status_code == 200
 
@@ -26,6 +26,7 @@ def test_update_user(client):
     with client.application.app_context():
         user = Users.query.filter_by(email="test123@gmail.com").first()
         json = {
+            "id": 1,
             "login": "test1234",
             "email": "test1234@gmail.com",
             "password": "password1234",
@@ -34,14 +35,14 @@ def test_update_user(client):
             "about": "test1234",
         }
 
-        response = client.put(f"/api/users/{user.id}", json=json)
+        response = client.put(f"/api/users/1/", json=json)
         assert response.status_code == 200
 
 
 def test_delete_user(client):
     with client.application.app_context():
         user = Users.query.filter_by(email="test1234@gmail.com").first()
-        response = client.delete(f"/api/users/{user.id}")
+        response = client.delete(f"/api/users/1/")
         assert response.status_code == 200
 
 
