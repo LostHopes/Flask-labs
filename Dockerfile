@@ -17,4 +17,4 @@ COPY . /labs/
 
 EXPOSE 5000
 ENTRYPOINT [ "python" ]
-CMD ["src/run.py"]
+CMD ["src/wsgi.py"]
