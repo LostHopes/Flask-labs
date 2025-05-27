@@ -11,5 +11,5 @@
 - [ ] Add tests to the api using pytest
 - [ ] Modify footer information
 - [x] Add poetry as a package manager
-- [ ] strip away unnecessary features
-- [ ] fix tests
+- [x] strip away unnecessary features
+- [x] fix tests
